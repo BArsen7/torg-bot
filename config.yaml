@@ -1,0 +1,88 @@
+# ============================================================
+# Конфигурация бэктест-фреймворка
+# Range Trading with Trend Filter
+# ============================================================
+
+data:
+  exchange: "binance"
+  # 'spot' или 'futures' (perpetual)
+  market_type: "futures"
+  # Таймфреймы: 1h, 4h, 1d
+  timeframe: "1h"
+  # Период загрузки данных (дни)
+  data_years: 2
+  # Топ-N монет по объёму
+  top_coins: 30
+  # Исключить из анализа
+  exclude: ["USDT", "BUSD", "FDUSD", "TUSD", "USDC", "DAI", "BUSD", "EUR", "GBP", "AUD", "BTC", "ETH"]
+  # Директория кэша
+  cache_dir: "data_cache"
+  # Пропуск загрузки, если есть кэш (дни)
+  cache_max_age_days: 1
+
+strategy:
+  # --- Trend detection (S1) ---
+  pivot_order: 3          # k для свинг-пивотов
+  trend_timeframes:       # ТФ для определения тренда
+    - "1d"
+    - "1w"
+
+  # --- Channels (M2) ---
+  sma_period: 30          # Период SMA для центральной линии
+  atr_period: 14          # Период ATR
+  atr_multiplier: 2.2     # k для ширины канала
+  # 'atr' или 'donchian' — метод расчёта каналов
+  channel_method: "atr"
+  donchian_period: 30     # Период для Donchian channel
+
+  # --- Entry conditions (M3) ---
+  rsi_period: 14
+  rsi_threshold: 35       # RSI < threshold = oversold
+  atr_pct_min: 1.0        # Минимальная ATR % (в процентах)
+  atr_pct_max: 6.0        # Максимальная ATR %
+  volume_sma_period: 50   # Период для SMA объёма
+
+  # --- Exit conditions (M4) ---
+  stop_multiplier: 1.8    # Стоп = entry - stop_mult * ATR
+  take_profit: "upper_band"  # 'upper_band' или фиксированный множитель
+  trailing_multiplier: 1.5  # Трейлинг = highest_close - 1.5*ATR
+
+  # --- Risk management (M5) ---
+  risk_per_trade: 0.02    # 2% от депозита на сделку
+  max_positions: 4        # Максимум одновременных позиций
+  correlation_symbol: "BTC/USDT"
+  correlation_window: 60  # Rolling window для корреляции (дни)
+  correlation_threshold: 0.8
+  leverage: 1             # Плечо (1 = без плеча, spot)
+  liquidation_buffer: 2.0 # Минимум в 2x расстояние до ликвидации
+
+  # --- Costs (M6) ---
+  maker_fee: 0.0004       # 0.04%
+  taker_fee: 0.0006       # 0.06%
+  slippage_pct: 0.0005    # 0.05%
+  # Funding rate для перпетуалов (фиксированный или реальные данные)
+  use_real_funding: false
+  fixed_funding_pct: 0.0001  # 0.01% каждые 8 часов
+  funding_interval_hours: 8
+
+backtest:
+  initial_cash: 100000.0  # Начальный капитал
+  # Валютная пара (базовая)
+  quote_currency: "USDT"
+  print_table: true       # Таблица в консоль
+  plot: true              # Включить визуализацию
+  plot_style: "candlestick"  # 'bar' или 'candlestick'
+
+output:
+  # Директория для результатов
+  results_dir: "results"
+  # Генерировать HTML-отчёт
+  generate_html: true
+  # Сохранять историю сделок в CSV
+  save_trades_csv: true
+  # Сохранять equity curve в CSV
+  save_equity_curve: true
+
+logging:
+  level: "INFO"           # DEBUG, INFO, WARNING, ERROR
+  file: "backtest.log"

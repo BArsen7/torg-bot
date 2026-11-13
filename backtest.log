@@ -1,0 +1,374 @@
+2026-11-13 15:36:51 [INFO] __main__: Config loaded: timeframe=1h, coins=3, years=1, market=spot
+2026-11-13 15:36:51 [INFO] src.backtest_engine: ============================================================
+2026-11-13 15:36:51 [INFO] src.backtest_engine: BACKTEST START
+2026-11-13 15:36:51 [INFO] src.backtest_engine: ============================================================
+2026-11-13 15:36:51 [INFO] src.backtest_engine: [1/6] Loading data...
+2026-11-13 15:36:54 [ERROR] src.data_loader: Failed to load markets: 'DataConfig' object has no attribute 'quote_currency'
+2026-11-13 15:36:54 [WARNING] src.data_loader: No symbols found
+2026-11-13 15:36:54 [ERROR] src.backtest_engine: No data loaded. Aborting.
+2026-11-13 15:38:56 [INFO] __main__: Config loaded: timeframe=1h, coins=3, years=1, market=spot
+2026-11-13 15:38:56 [INFO] src.backtest_engine: ============================================================
+2026-11-13 15:38:56 [INFO] src.backtest_engine: BACKTEST START
+2026-11-13 15:38:56 [INFO] src.backtest_engine: ============================================================
+2026-11-13 15:38:56 [INFO] src.backtest_engine: [1/6] Loading data...
+2026-11-13 15:38:59 [ERROR] src.data_loader: Failed to load markets: 'binance' object has no attribute 'symbols_in'
+2026-11-13 15:38:59 [WARNING] src.data_loader: No symbols found
+2026-11-13 15:38:59 [ERROR] src.backtest_engine: No data loaded. Aborting.
+2026-11-13 15:40:08 [INFO] __main__: Config loaded: timeframe=1h, coins=3, years=1, market=spot
+2026-11-13 15:40:08 [INFO] src.backtest_engine: ============================================================
+2026-11-13 15:40:08 [INFO] src.backtest_engine: BACKTEST START
+2026-11-13 15:40:08 [INFO] src.backtest_engine: ============================================================
+2026-11-13 15:40:08 [INFO] src.backtest_engine: [1/6] Loading data...
+2026-11-13 15:40:10 [INFO] src.data_loader: Selected 0 symbols from 0 candidates (top-3 by volume)
+2026-11-13 15:40:10 [WARNING] src.data_loader: No symbols found
+2026-11-13 15:40:10 [ERROR] src.backtest_engine: No data loaded. Aborting.
+2026-11-13 15:42:57 [INFO] __main__: Config loaded: timeframe=1h, coins=3, years=1, market=spot
+2026-11-13 15:42:57 [INFO] src.backtest_engine: ============================================================
+2026-11-13 15:42:57 [INFO] src.backtest_engine: BACKTEST START
+2026-11-13 15:42:57 [INFO] src.backtest_engine: ============================================================
+2026-11-13 15:42:57 [INFO] src.backtest_engine: [1/6] Loading data...
+2026-11-13 15:42:59 [INFO] src.data_loader: Selected 0 symbols from 0 candidates (top-3 by volume)
+2026-11-13 15:42:59 [WARNING] src.data_loader: No symbols found
+2026-11-13 15:42:59 [ERROR] src.backtest_engine: No data loaded. Aborting.
+2026-11-13 15:48:54 [INFO] __main__: Config loaded: timeframe=1h, coins=3, years=1, market=spot
+2026-11-13 15:48:54 [INFO] src.backtest_engine: ============================================================
+2026-11-13 15:48:54 [INFO] src.backtest_engine: BACKTEST START
+2026-11-13 15:48:54 [INFO] src.backtest_engine: ============================================================
+2026-11-13 15:48:54 [INFO] src.backtest_engine: [1/6] Loading data...
+2026-11-13 15:48:58 [INFO] src.data_loader: Selected 3 symbols from 178 candidates (top-3 by volume)
+2026-11-13 15:48:58 [INFO] src.data_loader: Already cached: 0, need download: 3
+2026-11-13 15:48:58 [ERROR] src.data_loader: No data loaded. Aborting.
+2026-11-13 15:48:58 [ERROR] src.backtest_engine: No data loaded. Aborting.
+2026-11-13 15:49:27 [INFO] __main__: Config loaded: timeframe=1h, coins=3, years=1, market=spot
+2026-11-13 15:49:27 [INFO] src.backtest_engine: ============================================================
+2026-11-13 15:49:27 [INFO] src.backtest_engine: BACKTEST START
+2026-11-13 15:49:27 [INFO] src.backtest_engine: ============================================================
+2026-11-13 15:49:27 [INFO] src.backtest_engine: [1/6] Loading data...
+2026-11-13 15:49:30 [INFO] src.data_loader: Selected 3 symbols from 178 candidates (top-3 by volume)
+2026-11-13 15:49:30 [INFO] src.data_loader: Already cached: 0, need download: 3
+2026-11-13 15:49:30 [INFO] src.data_loader: Downloading 3 datasets...
+2026-11-13 15:49:32 [INFO] src.data_loader: [1/3] Fetching SOL/USDT (1h)
+2026-11-13 15:49:32 [ERROR] src.data_loader: Failed to fetch SOL/USDT: name 'fetch_ohlcv_paginated' is not defined
+2026-11-13 15:49:32 [INFO] src.data_loader: [2/3] Fetching ZEC/USDT (1h)
+2026-11-13 15:49:32 [ERROR] src.data_loader: Failed to fetch ZEC/USDT: name 'fetch_ohlcv_paginated' is not defined
+2026-11-13 15:49:32 [INFO] src.data_loader: [3/3] Fetching NVDAB/USDT (1h)
+2026-11-13 15:49:32 [ERROR] src.data_loader: Failed to fetch NVDAB/USDT: name 'fetch_ohlcv_paginated' is not defined
+2026-11-13 15:49:33 [ERROR] src.data_loader: No data loaded. Aborting.
+2026-11-13 15:49:33 [ERROR] src.backtest_engine: No data loaded. Aborting.
+2026-11-13 15:51:10 [INFO] __main__: Config loaded: timeframe=1h, coins=3, years=1, market=spot
+2026-11-13 15:51:10 [INFO] src.backtest_engine: ============================================================
+2026-11-13 15:51:10 [INFO] src.backtest_engine: BACKTEST START
+2026-11-13 15:51:10 [INFO] src.backtest_engine: ============================================================
+2026-11-13 15:51:10 [INFO] src.backtest_engine: [1/6] Loading data...
+2026-11-13 15:51:14 [INFO] src.data_loader: Selected 3 symbols from 178 candidates (top-3 by volume)
+2026-11-13 15:51:14 [INFO] src.data_loader: Already cached: 0, need download: 3
+2026-11-13 15:51:14 [INFO] src.data_loader: Downloading 3 datasets...
+2026-11-13 15:51:16 [INFO] src.data_loader: [1/3] Fetching SOL/USDT (1h)
+2026-11-13 15:51:16 [INFO] src.data_loader:   ✓ SOL/USDT: 24 candles (2026-11-12T13:00:00+00:00 → 2026-11-13T12:00:00+00:00)
+2026-11-13 15:51:16 [INFO] src.data_loader: [2/3] Fetching ZEC/USDT (1h)
+2026-11-13 15:51:17 [INFO] src.data_loader:   ✓ ZEC/USDT: 24 candles (2026-11-12T13:00:00+00:00 → 2026-11-13T12:00:00+00:00)
+2026-11-13 15:51:17 [INFO] src.data_loader: [3/3] Fetching NVDAB/USDT (1h)
+2026-11-13 15:51:17 [INFO] src.data_loader:   ✓ NVDAB/USDT: 24 candles (2026-11-12T13:00:00+00:00 → 2026-11-13T12:00:00+00:00)
+2026-11-13 15:51:17 [INFO] src.data_loader: Total loaded: 3 symbols
+2026-11-13 15:51:17 [INFO] src.backtest_engine: Loaded 3 symbols
+2026-11-13 15:51:17 [INFO] src.backtest_engine: [2/6] Computing indicators...
+2026-11-13 15:51:17 [INFO] src.backtest_engine: 0 symbols ready for backtest
+2026-11-13 15:51:17 [INFO] src.backtest_engine: [3/6] Generating signals...
+2026-11-13 15:51:17 [INFO] src.backtest_engine: Total entry signals: 0
+2026-11-13 15:51:17 [INFO] src.backtest_engine: [4/6] Running simulation...
+2026-11-13 15:51:17 [INFO] src.backtest_engine: Simulation complete: 0 trades, 0 unclosed
+2026-11-13 15:51:17 [INFO] src.backtest_engine: [5/6] Computing metrics...
+2026-11-13 15:51:17 [INFO] src.backtest_engine: [6/6] Generating visualizations...
+2026-11-13 15:51:17 [ERROR] __main__: FATAL: 'equity'
+Traceback (most recent call last):
+  File "/home/barsen/Python/torg-bot/src/main.py", line 176, in <module>
+    main()
+    ~~~~^^
+  File "/home/barsen/Python/torg-bot/src/main.py", line 171, in main
+    engine.run()
+    ~~~~~~~~~~^^
+  File "/home/barsen/Python/torg-bot/src/backtest_engine.py", line 151, in run
+    export_all_visualizations(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^
+        self.equity_curve,
+        ^^^^^^^^^^^^^^^^^^
+    ...<4 lines>...
+        save_png=True,
+        ^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/barsen/Python/torg-bot/src/visualization.py", line 303, in export_all_visualizations
+    plot_equity_curve(equity_curve, metrics, save_path=out / "equity_curve.png")
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/barsen/Python/torg-bot/src/visualization.py", line 56, in plot_equity_curve
+    eq = equity_curve["equity"]
+         ~~~~~~~~~~~~^^^^^^^^^^
+  File "/usr/lib64/python3.14/site-packages/pandas/core/frame.py", line 4113, in __getitem__
+    indexer = self.columns.get_loc(key)
+  File "/usr/lib64/python3.14/site-packages/pandas/core/indexes/range.py", line 417, in get_loc
+    raise KeyError(key)
+KeyError: 'equity'
+2026-11-13 16:15:24 [INFO] __main__: Config loaded: timeframe=1h, coins=3, years=1, market=spot
+2026-11-13 16:15:24 [INFO] src.backtest_engine: ============================================================
+2026-11-13 16:15:24 [INFO] src.backtest_engine: BACKTEST START
+2026-11-13 16:15:24 [INFO] src.backtest_engine: ============================================================
+2026-11-13 16:15:24 [INFO] src.backtest_engine: [1/6] Loading data...
+2026-11-13 16:15:29 [INFO] src.data_loader: Selected 3 symbols from 171 candidates (top-3 by volume)
+2026-11-13 16:15:29 [INFO] src.data_loader: Already cached: 0, need download: 3
+2026-11-13 16:15:29 [INFO] src.data_loader: Downloading 3 datasets...
+2026-11-13 16:15:31 [INFO] src.data_loader: [1/3] Fetching SOL/USDT (1h)
+2026-11-13 16:15:35 [INFO] src.data_loader:   ✓ SOL/USDT: 8760 candles (2025-11-13T14:00:00+00:00 → 2026-11-13T13:00:00+00:00)
+2026-11-13 16:15:35 [INFO] src.data_loader: [2/3] Fetching ZEC/USDT (1h)
+2026-11-13 16:15:39 [INFO] src.data_loader:   ✓ ZEC/USDT: 8760 candles (2025-11-13T14:00:00+00:00 → 2026-11-13T13:00:00+00:00)
+2026-11-13 16:15:39 [INFO] src.data_loader: [3/3] Fetching NVDAB/USDT (1h)
+2026-11-13 16:15:41 [INFO] src.data_loader:   ✓ NVDAB/USDT: 3716 candles (2026-06-11T18:00:00+00:00 → 2026-11-13T13:00:00+00:00)
+2026-11-13 16:15:41 [INFO] src.data_loader: Total loaded: 3 symbols
+2026-11-13 16:15:41 [INFO] src.backtest_engine: Loaded 3 symbols
+2026-11-13 16:15:41 [INFO] src.backtest_engine: [2/6] Computing indicators...
+2026-11-13 16:15:41 [INFO] src.backtest_engine: 3 symbols ready for backtest
+2026-11-13 16:15:41 [INFO] src.backtest_engine: [3/6] Generating signals...
+2026-11-13 16:15:44 [INFO] src.backtest_engine: Total entry signals: 12
+2026-11-13 16:15:44 [INFO] src.backtest_engine: [4/6] Running simulation...
+2026-11-13 16:15:45 [INFO] src.backtest_engine: Simulation complete: 9 trades, 0 unclosed
+2026-11-13 16:15:45 [INFO] src.backtest_engine: [5/6] Computing metrics...
+2026-11-13 16:15:45 [INFO] src.backtest_engine: [6/6] Generating visualizations...
+2026-11-13 16:15:46 [INFO] src.visualization: Equity curve saved to results/equity_curve.png
+2026-11-13 16:15:47 [INFO] src.visualization: PNG charts saved to results
+2026-11-13 16:15:47 [ERROR] src.visualization: Failed to create HTML report: module 'plotly.graph_objs.layout' has no attribute 'Table'
+2026-11-13 16:15:47 [INFO] src.backtest_engine: Trades CSV saved: 9 rows
+2026-11-13 16:15:47 [INFO] src.backtest_engine: Equity curve CSV saved
+2026-11-13 16:15:47 [ERROR] __main__: FATAL: Invalid format specifier '.2f if t.exit_price else 'N/A'' for object of type 'float'
+Traceback (most recent call last):
+  File "/home/barsen/Python/torg-bot/src/main.py", line 176, in <module>
+    main()
+    ~~~~^^
+  File "/home/barsen/Python/torg-bot/src/main.py", line 171, in main
+    engine.run()
+    ~~~~~~~~~~^^
+  File "/home/barsen/Python/torg-bot/src/backtest_engine.py", line 161, in run
+    self._export_results()
+    ~~~~~~~~~~~~~~~~~~~~^^
+  File "/home/barsen/Python/torg-bot/src/backtest_engine.py", line 226, in _export_results
+    f"entry={t.entry_price:.2f} → exit={t.exit_price:.2f if t.exit_price else 'N/A'} "
+                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: Invalid format specifier '.2f if t.exit_price else 'N/A'' for object of type 'float'
+2026-11-13 16:19:00 [INFO] __main__: Config loaded: timeframe=1h, coins=3, years=1, market=spot
+2026-11-13 16:19:00 [INFO] src.backtest_engine: ============================================================
+2026-11-13 16:19:00 [INFO] src.backtest_engine: BACKTEST START
+2026-11-13 16:19:00 [INFO] src.backtest_engine: ============================================================
+2026-11-13 16:19:00 [INFO] src.backtest_engine: [1/6] Loading data...
+2026-11-13 16:19:03 [INFO] src.data_loader: Selected 3 symbols from 169 candidates (top-3 by volume)
+2026-11-13 16:19:03 [INFO] src.data_loader: Already cached: 0, need download: 3
+2026-11-13 16:19:03 [ERROR] src.data_loader: No data loaded. Aborting.
+2026-11-13 16:19:03 [ERROR] src.backtest_engine: No data loaded. Aborting.
+2026-11-13 17:58:40 [INFO] __main__: Config loaded: timeframe=1h, coins=3, years=1, market=spot
+2026-11-13 17:58:40 [INFO] src.backtest_engine: ============================================================
+2026-11-13 17:58:40 [INFO] src.backtest_engine: BACKTEST START
+2026-11-13 17:58:40 [INFO] src.backtest_engine: ============================================================
+2026-11-13 17:58:40 [INFO] src.backtest_engine: [1/6] Loading data...
+2026-11-13 17:58:51 [ERROR] src.data_loader: Failed to load markets: binance GET https://api.binance.com/api/v3/exchangeInfo
+2026-11-13 17:58:51 [WARNING] src.data_loader: No symbols found
+2026-11-13 17:58:51 [INFO] src.data_loader: Cached 0 symbol datasets to data_cache/
+2026-11-13 17:58:51 [ERROR] src.backtest_engine: No data loaded. Aborting.
+2026-11-13 17:59:45 [INFO] __main__: Config loaded: timeframe=1h, coins=3, years=1, market=spot
+2026-11-13 17:59:45 [INFO] src.backtest_engine: ============================================================
+2026-11-13 17:59:45 [INFO] src.backtest_engine: BACKTEST START
+2026-11-13 17:59:45 [INFO] src.backtest_engine: ============================================================
+2026-11-13 17:59:45 [INFO] src.backtest_engine: [1/6] Loading data...
+2026-11-13 17:59:56 [WARNING] src.data_loader: Attempt 1/3 failed: binance GET https://api.binance.com/api/v3/exchangeInfo
+2026-11-13 17:59:57 [WARNING] src.data_loader: No symbols found
+2026-11-13 17:59:57 [INFO] src.data_loader: Cached 0 symbol datasets to data_cache/
+2026-11-13 17:59:57 [ERROR] src.backtest_engine: No data loaded. Aborting.
+2026-11-13 18:01:59 [INFO] __main__: Config loaded: timeframe=1h, coins=3, years=1, market=spot
+2026-11-13 18:01:59 [INFO] src.backtest_engine: ============================================================
+2026-11-13 18:01:59 [INFO] src.backtest_engine: BACKTEST START
+2026-11-13 18:01:59 [INFO] src.backtest_engine: ============================================================
+2026-11-13 18:01:59 [INFO] src.backtest_engine: [1/6] Loading data...
+2026-11-13 18:02:02 [INFO] src.data_loader: Selected 3 symbols from 165 candidates (top-3 by volume)
+2026-11-13 18:02:02 [WARNING] ccxt.base.exchange: binance requires to release all resources with an explicit call to the .close() coroutine. If you are using the exchange instance with async coroutines, add `await exchange.close()` to your code into a place when you're done with the exchange and don't need the exchange instance anymore (at the end of your async coroutine).
+2026-11-13 18:02:02 [ERROR] asyncio: Unclosed client session
+client_session: <aiohttp.client.ClientSession object at 0x7f674a4ccad0>
+2026-11-13 18:02:02 [ERROR] asyncio: Unclosed connector
+connections: ['deque([(<aiohttp.client_proto.ResponseHandler object at 0x7f674a348b40>, 17983.711887857)])', 'deque([(<aiohttp.client_proto.ResponseHandler object at 0x7f674a4b4650>, 17984.194531546)])', 'deque([(<aiohttp.client_proto.ResponseHandler object at 0x7f674a3481e0>, 17985.168163862)])']
+connector: <aiohttp.connector.TCPConnector object at 0x7f674a5b2f90>
+2026-11-13 18:02:02 [INFO] src.data_loader: Already cached: 0, need download: 3
+2026-11-13 18:02:02 [INFO] src.data_loader: Downloading 3 datasets...
+2026-11-13 18:02:04 [INFO] src.data_loader: [1/3] Fetching SOL/USDT (1h)
+2026-11-13 18:02:08 [INFO] src.data_loader:   ✓ SOL/USDT: 8760 candles (2025-11-13T16:00:00+00:00 → 2026-11-13T15:00:00+00:00)
+2026-11-13 18:02:08 [INFO] src.data_loader: [2/3] Fetching ZEC/USDT (1h)
+2026-11-13 18:02:13 [INFO] src.data_loader:   ✓ ZEC/USDT: 8760 candles (2025-11-13T16:00:00+00:00 → 2026-11-13T15:00:00+00:00)
+2026-11-13 18:02:13 [INFO] src.data_loader: [3/3] Fetching USD1/USDT (1h)
+2026-11-13 18:02:18 [INFO] src.data_loader:   ✓ USD1/USDT: 8760 candles (2025-11-13T16:00:00+00:00 → 2026-11-13T15:00:00+00:00)
+2026-11-13 18:02:18 [INFO] src.data_loader: Cached 3 symbol datasets to data_cache/
+2026-11-13 18:02:18 [INFO] src.data_loader: Total loaded: 3 symbols
+2026-11-13 18:02:18 [INFO] src.data_loader: Cached 3 symbol datasets to data_cache/
+2026-11-13 18:02:18 [INFO] src.backtest_engine: Loaded 3 symbols
+2026-11-13 18:02:18 [INFO] src.backtest_engine: [2/6] Computing indicators...
+2026-11-13 18:02:19 [INFO] src.backtest_engine: 3 symbols ready for backtest
+2026-11-13 18:02:19 [INFO] src.backtest_engine: [3/6] Generating signals...
+2026-11-13 18:02:20 [INFO] src.backtest_engine: Total entry signals: 0
+2026-11-13 18:02:20 [INFO] src.backtest_engine: [4/6] Running simulation...
+2026-11-13 18:02:21 [INFO] src.backtest_engine: Simulation complete: 0 trades, 0 unclosed
+2026-11-13 18:02:21 [INFO] src.backtest_engine: [5/6] Computing metrics...
+2026-11-13 18:02:21 [INFO] src.backtest_engine: [6/6] Generating visualizations...
+2026-11-13 18:02:22 [INFO] src.visualization: Equity curve saved to results/equity_curve.png
+2026-11-13 18:02:22 [INFO] src.visualization: PNG charts saved to results
+2026-11-13 18:02:22 [INFO] src.visualization: HTML report saved to results/backtest_report.html
+2026-11-13 18:02:22 [INFO] src.backtest_engine: Equity curve CSV saved
+2026-11-13 18:02:22 [INFO] src.backtest_engine: Text report saved to results/metrics_report.txt
+2026-11-13 18:02:22 [INFO] src.backtest_engine: ============================================================
+2026-11-13 18:02:22 [INFO] src.backtest_engine: BACKTEST COMPLETE — 22.66 seconds
+2026-11-13 18:02:22 [INFO] src.backtest_engine: ============================================================
+2026-11-13 18:02:38 [INFO] __main__: Config loaded: timeframe=1h, coins=3, years=1, market=spot
+2026-11-13 18:02:38 [INFO] src.backtest_engine: ============================================================
+2026-11-13 18:02:38 [INFO] src.backtest_engine: BACKTEST START
+2026-11-13 18:02:38 [INFO] src.backtest_engine: ============================================================
+2026-11-13 18:02:38 [INFO] src.backtest_engine: [1/6] Loading data...
+2026-11-13 18:02:38 [INFO] src.data_loader: 3 cached datasets found
+2026-11-13 18:02:38 [INFO] src.data_loader: Already cached: 0, need download: 3
+2026-11-13 18:02:38 [ERROR] src.data_loader: No data loaded. Aborting.
+2026-11-13 18:02:38 [INFO] src.data_loader: Cached 0 symbol datasets to data_cache/
+2026-11-13 18:02:38 [ERROR] src.backtest_engine: No data loaded. Aborting.
+2026-11-13 18:04:48 [INFO] __main__: Config loaded: timeframe=1h, coins=3, years=1, market=spot
+2026-11-13 18:04:48 [INFO] src.backtest_engine: ============================================================
+2026-11-13 18:04:48 [INFO] src.backtest_engine: BACKTEST START
+2026-11-13 18:04:48 [INFO] src.backtest_engine: ============================================================
+2026-11-13 18:04:48 [INFO] src.backtest_engine: [1/6] Loading data...
+2026-11-13 18:04:48 [INFO] src.data_loader: 3 cached datasets found
+2026-11-13 18:04:48 [INFO] src.data_loader: Already cached: 3, need download: 0
+2026-11-13 18:04:48 [INFO] src.data_loader: Loaded 3 datasets from cache
+2026-11-13 18:04:48 [INFO] src.data_loader: Cached 3 symbol datasets to data_cache/
+2026-11-13 18:04:48 [INFO] src.data_loader: Total loaded: 3 symbols
+2026-11-13 18:04:48 [INFO] src.data_loader: Cached 3 symbol datasets to data_cache/
+2026-11-13 18:04:48 [INFO] src.backtest_engine: Loaded 3 symbols
+2026-11-13 18:04:48 [INFO] src.backtest_engine: [2/6] Computing indicators...
+2026-11-13 18:04:49 [INFO] src.backtest_engine: 3 symbols ready for backtest
+2026-11-13 18:04:49 [INFO] src.backtest_engine: [3/6] Generating signals...
+2026-11-13 18:04:50 [INFO] src.backtest_engine: Total entry signals: 0
+2026-11-13 18:04:50 [INFO] src.backtest_engine: [4/6] Running simulation...
+2026-11-13 18:04:51 [INFO] src.backtest_engine: Simulation complete: 0 trades, 0 unclosed
+2026-11-13 18:04:51 [INFO] src.backtest_engine: [5/6] Computing metrics...
+2026-11-13 18:04:51 [INFO] src.backtest_engine: [6/6] Generating visualizations...
+2026-11-13 18:04:52 [INFO] src.visualization: Equity curve saved to results/equity_curve.png
+2026-11-13 18:04:52 [INFO] src.visualization: PNG charts saved to results
+2026-11-13 18:04:52 [INFO] src.visualization: HTML report saved to results/backtest_report.html
+2026-11-13 18:04:52 [INFO] src.backtest_engine: Equity curve CSV saved
+2026-11-13 18:04:52 [INFO] src.backtest_engine: Text report saved to results/metrics_report.txt
+2026-11-13 18:04:52 [INFO] src.backtest_engine: ============================================================
+2026-11-13 18:04:52 [INFO] src.backtest_engine: BACKTEST COMPLETE — 4.06 seconds
+2026-11-13 18:04:52 [INFO] src.backtest_engine: ============================================================
+2026-11-13 19:20:50 [INFO] __main__: Config loaded: timeframe=1h, coins=5, years=1, market=spot
+2026-11-13 19:20:50 [INFO] src.backtest_engine: ============================================================
+2026-11-13 19:20:50 [INFO] src.backtest_engine: BACKTEST START
+2026-11-13 19:20:50 [INFO] src.backtest_engine: ============================================================
+2026-11-13 19:20:50 [INFO] src.backtest_engine: [1/6] Loading data...
+2026-11-13 19:20:52 [INFO] src.data_loader: Selected 5 symbols from 168 candidates (top-5 by volume)
+2026-11-13 19:20:52 [WARNING] ccxt.base.exchange: binance requires to release all resources with an explicit call to the .close() coroutine. If you are using the exchange instance with async coroutines, add `await exchange.close()` to your code into a place when you're done with the exchange and don't need the exchange instance anymore (at the end of your async coroutine).
+2026-11-13 19:20:52 [ERROR] asyncio: Unclosed client session
+client_session: <aiohttp.client.ClientSession object at 0x7f7704f2cad0>
+2026-11-13 19:20:52 [ERROR] asyncio: Unclosed connector
+connections: ['deque([(<aiohttp.client_proto.ResponseHandler object at 0x7f7704fa4370>, 19727.330844519)])', 'deque([(<aiohttp.client_proto.ResponseHandler object at 0x7f770510c650>, 19728.091942176)])', 'deque([(<aiohttp.client_proto.ResponseHandler object at 0x7f7704fa4050>, 19729.218593488)])']
+connector: <aiohttp.connector.TCPConnector object at 0x7f7705202f90>
+2026-11-13 19:20:52 [INFO] src.data_loader: Already cached: 0, need download: 5
+2026-11-13 19:20:52 [INFO] src.data_loader: Downloading 5 datasets...
+2026-11-13 19:20:54 [INFO] src.data_loader: [1/5] Fetching SOL/USDT (1h)
+2026-11-13 19:20:57 [INFO] src.data_loader:   ✓ SOL/USDT: 8760 candles (2025-11-13T17:00:00+00:00 → 2026-11-13T16:00:00+00:00)
+2026-11-13 19:20:57 [INFO] src.data_loader: [2/5] Fetching ZEC/USDT (1h)
+2026-11-13 19:21:00 [INFO] src.data_loader:   ✓ ZEC/USDT: 8760 candles (2025-11-13T17:00:00+00:00 → 2026-11-13T16:00:00+00:00)
+2026-11-13 19:21:00 [INFO] src.data_loader: [3/5] Fetching USD1/USDT (1h)
+2026-11-13 19:21:04 [INFO] src.data_loader:   ✓ USD1/USDT: 8760 candles (2025-11-13T17:00:00+00:00 → 2026-11-13T16:00:00+00:00)
+2026-11-13 19:21:04 [INFO] src.data_loader: [4/5] Fetching NVDAB/USDT (1h)
+2026-11-13 19:21:05 [INFO] src.data_loader:   ✓ NVDAB/USDT: 3719 candles (2026-06-11T18:00:00+00:00 → 2026-11-13T16:00:00+00:00)
+2026-11-13 19:21:05 [INFO] src.data_loader: [5/5] Fetching XRP/USDT (1h)
+2026-11-13 19:21:09 [INFO] src.data_loader:   ✓ XRP/USDT: 8760 candles (2025-11-13T17:00:00+00:00 → 2026-11-13T16:00:00+00:00)
+2026-11-13 19:21:09 [INFO] src.data_loader: Cached 5 symbol datasets to data_cache/
+2026-11-13 19:21:09 [INFO] src.data_loader: Total loaded: 5 symbols
+2026-11-13 19:21:09 [INFO] src.data_loader: Cached 5 symbol datasets to data_cache/
+2026-11-13 19:21:09 [INFO] src.backtest_engine: Loaded 5 symbols
+2026-11-13 19:21:09 [INFO] src.backtest_engine: [2/6] Computing indicators...
+2026-11-13 19:21:09 [INFO] src.backtest_engine: 5 symbols ready for backtest
+2026-11-13 19:21:09 [INFO] src.backtest_engine: [3/6] Generating signals...
+2026-11-13 19:21:12 [INFO] src.backtest_engine: Total entry signals: 79
+2026-11-13 19:21:12 [INFO] src.backtest_engine: [4/6] Running simulation...
+2026-11-13 19:21:13 [INFO] src.backtest_engine: Simulation complete: 60 trades, 0 unclosed
+2026-11-13 19:21:13 [INFO] src.backtest_engine: [5/6] Computing metrics...
+2026-11-13 19:21:13 [INFO] src.backtest_engine: [6/6] Generating visualizations...
+2026-11-13 19:21:14 [INFO] src.visualization: Equity curve saved to results/equity_curve.png
+2026-11-13 19:21:14 [INFO] src.visualization: PNG charts saved to results
+2026-11-13 19:21:14 [ERROR] src.visualization: Failed to create HTML report: Trace type 'table' is not compatible with subplot type 'xy'
+at grid position (4, 1)
+
+See the docstring for the specs argument to plotly.subplots.make_subplots
+for more information on subplot types
+2026-11-13 19:21:14 [INFO] src.backtest_engine: Trades CSV saved: 60 rows
+2026-11-13 19:21:14 [INFO] src.backtest_engine: Equity curve CSV saved
+2026-11-13 19:21:14 [INFO] src.backtest_engine: Text report saved to results/metrics_report.txt
+2026-11-13 19:21:14 [INFO] src.backtest_engine: ============================================================
+2026-11-13 19:21:14 [INFO] src.backtest_engine: BACKTEST COMPLETE — 24.34 seconds
+2026-11-13 19:21:14 [INFO] src.backtest_engine: ============================================================
+2026-11-13 20:51:21 [INFO] __main__: Config loaded: timeframe=1h, coins=30, years=2, market=futures
+2026-11-13 20:51:21 [INFO] src.backtest_engine: ============================================================
+2026-11-13 20:51:21 [INFO] src.backtest_engine: BACKTEST START
+2026-11-13 20:51:21 [INFO] src.backtest_engine: ============================================================
+2026-11-13 20:51:21 [INFO] src.backtest_engine: [1/6] Loading data...
+2026-11-13 20:51:21 [INFO] src.data_loader: 5 cached datasets found
+2026-11-13 20:51:21 [INFO] src.data_loader: Already cached: 5, need download: 0
+2026-11-13 20:51:21 [INFO] src.data_loader: Loaded 5 datasets from cache
+2026-11-13 20:51:21 [INFO] src.data_loader: Cached 5 symbol datasets to data_cache/
+2026-11-13 20:51:21 [INFO] src.data_loader: Total loaded: 5 symbols
+2026-11-13 20:51:21 [INFO] src.data_loader: Cached 5 symbol datasets to data_cache/
+2026-11-13 20:51:21 [INFO] src.backtest_engine: Loaded 5 symbols
+2026-11-13 20:51:21 [INFO] src.backtest_engine: [2/6] Computing indicators...
+2026-11-13 20:51:21 [INFO] src.backtest_engine: 5 symbols ready for backtest
+2026-11-13 20:51:21 [INFO] src.backtest_engine: [3/6] Generating signals...
+2026-11-13 20:51:24 [INFO] src.backtest_engine: Total entry signals: 79
+2026-11-13 20:51:24 [INFO] src.backtest_engine: [4/6] Running simulation...
+2026-11-13 20:51:26 [INFO] src.backtest_engine: Simulation complete: 60 trades, 0 unclosed
+2026-11-13 20:51:26 [INFO] src.backtest_engine: [5/6] Computing metrics...
+2026-11-13 20:51:26 [INFO] src.backtest_engine: [6/6] Generating visualizations...
+2026-11-13 20:51:26 [INFO] src.visualization: Equity curve saved to results/equity_curve.png
+2026-11-13 20:51:26 [INFO] src.visualization: PNG charts saved to results
+2026-11-13 20:51:26 [ERROR] src.visualization: Failed to create HTML report: Trace type 'table' is not compatible with subplot type 'xy'
+at grid position (4, 1)
+
+See the docstring for the specs argument to plotly.subplots.make_subplots
+for more information on subplot types
+2026-11-13 20:51:26 [INFO] src.backtest_engine: Trades CSV saved: 60 rows
+2026-11-13 20:51:26 [INFO] src.backtest_engine: Equity curve CSV saved
+2026-11-13 20:51:26 [INFO] src.backtest_engine: Text report saved to results/metrics_report.txt
+2026-11-13 20:51:26 [INFO] src.backtest_engine: ============================================================
+2026-11-13 20:51:26 [INFO] src.backtest_engine: BACKTEST COMPLETE — 5.74 seconds
+2026-11-13 20:51:26 [INFO] src.backtest_engine: ============================================================
+2026-11-13 21:10:54 [INFO] __main__: Config loaded: timeframe=1h, coins=30, years=2, market=futures
+2026-11-13 21:10:54 [INFO] src.backtest_engine: ============================================================
+2026-11-13 21:10:54 [INFO] src.backtest_engine: BACKTEST START
+2026-11-13 21:10:54 [INFO] src.backtest_engine: ============================================================
+2026-11-13 21:10:54 [INFO] src.backtest_engine: [1/6] Loading data...
+2026-11-13 21:10:54 [INFO] src.data_loader: 5 cached datasets found
+2026-11-13 21:10:54 [INFO] src.data_loader: Already cached: 5, need download: 0
+2026-11-13 21:10:54 [INFO] src.data_loader: Loaded 5 datasets from cache
+2026-11-13 21:10:54 [INFO] src.data_loader: Cached 5 symbol datasets to data_cache/
+2026-11-13 21:10:54 [INFO] src.data_loader: Total loaded: 5 symbols
+2026-11-13 21:10:54 [INFO] src.data_loader: Cached 5 symbol datasets to data_cache/
+2026-11-13 21:10:54 [INFO] src.backtest_engine: Loaded 5 symbols
+2026-11-13 21:10:54 [INFO] src.backtest_engine: [2/6] Computing indicators...
+2026-11-13 21:10:55 [INFO] src.backtest_engine: 5 symbols ready for backtest
+2026-11-13 21:10:55 [INFO] src.backtest_engine: [3/6] Generating signals...
+2026-11-13 21:10:58 [INFO] src.backtest_engine: Total entry signals: 79
+2026-11-13 21:10:58 [INFO] src.backtest_engine: [4/6] Running simulation...
+2026-11-13 21:11:00 [INFO] src.backtest_engine: Simulation complete: 60 trades, 0 unclosed
+2026-11-13 21:11:00 [INFO] src.backtest_engine: [5/6] Computing metrics...
+2026-11-13 21:11:00 [INFO] src.backtest_engine: [6/6] Generating visualizations...
+2026-11-13 21:11:00 [INFO] src.visualization: Equity curve saved to results/equity_curve.png
+2026-11-13 21:11:00 [INFO] src.visualization: PNG charts saved to results
+2026-11-13 21:11:01 [ERROR] src.visualization: Failed to create HTML report: Trace type 'table' is not compatible with subplot type 'xy'
+at grid position (4, 1)
+
+See the docstring for the specs argument to plotly.subplots.make_subplots
+for more information on subplot types
+2026-11-13 21:11:01 [INFO] src.backtest_engine: Trades CSV saved: 60 rows
+2026-11-13 21:11:01 [INFO] src.backtest_engine: Equity curve CSV saved
+2026-11-13 21:11:01 [INFO] src.backtest_engine: Text report saved to results/metrics_report.txt
+2026-11-13 21:11:01 [INFO] src.backtest_engine: ============================================================
+2026-11-13 21:11:01 [INFO] src.backtest_engine: BACKTEST COMPLETE — 6.43 seconds
+2026-11-13 21:11:01 [INFO] src.backtest_engine: ============================================================

@@ -1,0 +1,62 @@
+============================================================
+  БЭКТЕСТ ОТЧЁТ — Range Trading with Trend Filter
+============================================================
+
+  ДОХОДНОСТЬ
+----------------------------------------
+  Начальный капитал:      $  100,000.00
+  Конечный капитал:       $  102,887.07
+  Общая доходность:             2.89%
+  CAGR:                         2.91%
+  Дней в данных:                   362
+
+  РИСК
+----------------------------------------
+  Sharpe Ratio:                 2.756
+  Sortino Ratio:                1.388
+  Calmar Ratio:                 0.042
+  Max Drawdown (abs):     $ 205,221.32
+  Max Drawdown (pct):          68.55%
+  Max DD Duration:                 310 days
+
+  ТОРГОВЛЯ
+----------------------------------------
+  Всего сделок:                     60
+  Побед:                            21
+  Поражений:                        39
+  Win Rate:                    35.00%
+  Profit Factor:                1.121
+  Avg Win:                $   2,230.17
+  Avg Loss:               $  -1,071.60
+  Avg Holding (bars):             15.4
+  Best Trade:             $   7,261.10
+  Worst Trade:            $  -2,279.18
+
+  ПРОЧЕЕ
+----------------------------------------
+  Exposure Time:                 10.3%
+  Комиссии (всего):       $   3,027.41
+
+============================================================
+
+Trade list:
+  SOL/USDT        2025-11-20 entry=132.81 → exit=132.74 pnl=$-64.82 [trailing_stop]
+  ZEC/USDT        2025-11-21 entry=618.50 → exit=595.44 pnl=$-928.70 [trailing_stop]
+  ZEC/USDT        2025-11-24 entry=538.25 → exit=556.53 pnl=$1,008.60 [trailing_stop]
+  SOL/USDT        2025-11-28 entry=137.18 → exit=136.83 pnl=$-276.13 [trailing_stop]
+  SOL/USDT        2025-12-04 entry=139.67 → exit=138.40 pnl=$-822.67 [trailing_stop]
+  ZEC/USDT        2025-12-13 entry=436.56 → exit=431.43 pnl=$-542.86 [trailing_stop]
+  USD1/USDT       2025-12-15 entry=1.00 → exit=1.00 pnl=$-102.87 [trailing_stop]
+  ZEC/USDT        2025-12-21 entry=435.35 → exit=445.64 pnl=$1,985.11 [trailing_stop]
+  ZEC/USDT        2025-12-22 entry=429.16 → exit=424.60 pnl=$-815.45 [trailing_stop]
+  XRP/USDT        2026-01-06 entry=2.21 → exit=2.26 pnl=$1,174.43 [trailing_stop]
+  XRP/USDT        2026-01-07 entry=2.23 → exit=2.18 pnl=$-2,058.48 [stop_loss]
+  SOL/USDT        2026-01-07 entry=135.70 → exit=135.76 pnl=$-27.30 [trailing_stop]
+  ZEC/USDT        2026-01-24 entry=361.58 → exit=358.17 pnl=$-1,025.35 [trailing_stop]
+  ZEC/USDT        2026-01-28 entry=378.00 → exit=371.19 pnl=$-1,180.46 [trailing_stop]
+  ZEC/USDT        2026-02-09 entry=232.60 → exit=237.70 pnl=$1,083.94 [trailing_stop]
+  SOL/USDT        2026-02-16 entry=85.77 → exit=84.35 pnl=$-1,452.99 [trailing_stop]
+  XRP/USDT        2026-02-26 entry=1.41 → exit=1.40 pnl=$-423.98 [trailing_stop]
+  SOL/USDT        2026-03-01 entry=81.98 → exit=83.13 pnl=$863.71 [trailing_stop]
+  SOL/USDT        2026-03-03 entry=83.24 → exit=89.71 pnl=$5,604.13 [take_profit]
+  ZEC/USDT        2026-03-05 entry=229.70 → exit=226.37 pnl=$-965.18 [trailing_stop]

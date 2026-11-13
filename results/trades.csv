@@ -1,2 +1,2 @@
 symbol,entry_time,entry_price,exit_time,exit_price,exit_reason,pnl,pnl_pct,holding_bars,commission,is_closed
-SOL/USDT,2025-11-20 17:00:00+00:00,132.81,2025-11-20 17:00:00+00:00,132.81,drawdown_halt,0.0,,0,0.0,True
+ETH/USDT,2024-11-17 02:00:00+00:00,3067.03,2024-11-17 02:00:00+00:00,3067.03,drawdown_halt,-47.32040638377605,-0.051250000000000004,0,0.0,True

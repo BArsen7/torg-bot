@@ -3,7 +3,7 @@
 
 Генерация сигналов входа и выхода на основе индикаторов.
 Все условия строго следуют спецификации:
-- M3: вход LONG (6 условий)
+- M3: вход LONG (7 условий)
 - M4: выход (тейк, стоп, трейлинг)
 
 Запись сигналов в DataFrame для прогона бэктеста.
@@ -19,6 +19,11 @@ import numpy as np
 import pandas as pd
 
 from src.indicators import add_all_indicators
+from src.risk_manager import (
+    calculate_position_size as risk_calculate_position_size,
+    estimate_liquidation_price,
+    validate_liquidation,
+)
 
 logger = logging.getLogger(__name__)
 
@@ -35,16 +40,16 @@ class Trade:
     symbol: str
     entry_time: pd.Timestamp
     entry_price: float
-    entry_size: float        # количество базового актива (контракты/монеты)
+    entry_size: float  # количество базового актива (контракты/монеты)
     stop_price: float
     take_profit_price: Optional[float]
     exit_time: Optional[pd.Timestamp] = None
     exit_price: Optional[float] = None
-    exit_reason: Optional[str] = None       # 'take_profit', 'stop_loss', 'trailing', 'unclosed'
-    pnl: Optional[float] = None              # абсолютный PnL
-    pnl_pct: Optional[float] = None          # процентный PnL
-    max_price: Optional[float] = None        # max price с момента входа (для трейлинга)
-    max_stop: Optional[float] = None         # максимальный уровень стопа (для трейлинга)
+    exit_reason: Optional[str] = None  # 'take_profit', 'stop_loss', 'trailing', 'halt', 'eod'
+    pnl: Optional[float] = None  # абсолютный PnL (после комиссий)
+    pnl_pct: Optional[float] = None  # процентный PnL
+    max_price: Optional[float] = None  # max price с момента входа (для трейлинга)
+    max_stop: Optional[float] = None  # максимальный уровень стопа (для трейлинга)
     holding_bars: int = 0
     commission: float = 0.0
     slippage: float = 0.0
@@ -92,7 +97,6 @@ def check_entry_conditions(
     conditions["trend_score_ge_0"] = row["trend_score"] >= 0
 
     # Условие 2: коснулись нижней полосы (текущая свеча ниже или равна нижней)
-    # ВАЖНО: проверяем, что low <= lower_band. Это значит цена пробивала канал.
     conditions["touch_lower"] = row["low"] <= row["lower_band"]
 
     # Условие 3: закрылась выше нижней полосы — отскок
@@ -193,7 +197,7 @@ def calculate_position_size(
     """
     Рассчитать размер позиции на основе риск-менеджмента (M5).
 
-    position_size = (equity * risk_per_trade) / (entry_price - stop_price)
+    position_size = (equity * risk_per_trade) / |entry - stop|
 
     Параметры
     ---------
@@ -341,10 +345,8 @@ def simulate_trading(
     """
     Прогнать симуляцию торговли по всем символам.
 
-    Это упрощённая event-driven симуляция (не full backtrader):
-    - Проходим по каждому символу
-    - При сигнале входа — открываем позицию
-    - При условиях выхода — закрываем
+    ВАЖНО: cash уменьшается при ВХОДЕ (position_cost) и увеличивается при ВЫХОДЕ.
+    equity = cash + unrealized_pnl.
 
     Параметры
     ---------
@@ -360,8 +362,8 @@ def simulate_trading(
     SimulationResult
     """
     result = SimulationResult()
-    equity = backtest_cfg.initial_cash
-    cash = equity  # Отдельно считаем свободные средства
+    initial_equity = backtest_cfg.initial_cash
+    cash = initial_equity
     result.cash = cash
 
     # Состояние
@@ -380,9 +382,9 @@ def simulate_trading(
         df["entry_price"] = np.nan
         df["stop_price"] = np.nan
 
-    # Проходим по каждому бнару (по всем символам одновременно)
+    # Проходим по каждому бару (по всем символам одновременно)
     for dt in all_dates:
-        # --- Обновляем открытые позиции (выходы) ---
+        # --- 1. Обновляем открытые позиции (выходы) ---
         symbols_to_close = []
         for symbol, trade in open_positions.items():
             df = symbols_data[symbol]
@@ -390,12 +392,14 @@ def simulate_trading(
                 continue
 
             row = df.loc[dt]
-            exit_needed, reason = check_exit_conditions(trade, df, df.index.get_loc(dt), strategy_cfg)
+            exit_needed, reason = check_exit_conditions(
+                trade, df, df.index.get_loc(dt), strategy_cfg
+            )
 
             if exit_needed:
                 symbols_to_close.append((symbol, trade, reason))
 
-        # --- Закрываем позиции ---
+        # --- 2. Закрываем позиции ---
         for symbol, trade, reason in symbols_to_close:
             df = symbols_data[symbol]
             row = df.loc[dt]
@@ -408,10 +412,10 @@ def simulate_trading(
             else:
                 exit_price = row["close"]
 
-            # PnL: (exit - entry) * size
-            pnl = (exit_price - trade.entry_price) * trade.entry_size
+            # PnL: (exit - entry) * size (для long)
+            gross_pnl = (exit_price - trade.entry_price) * trade.entry_size
 
-            # Комиссия
+            # Комиссия за закрытие
             holding_hours = max(1, int((dt - trade.entry_time).total_seconds() / 3600))
             commission, _ = apply_costs(
                 trade.entry_price, exit_price, trade.entry_size,
@@ -422,18 +426,21 @@ def simulate_trading(
                 funding_pct=funding_pct,
                 holding_hours=holding_hours,
             )
-            pnl -= commission
 
-            # Обновляем свободную кэш: прибавляем стоимость закрытия позиции
+            # Реализованный PnL = gross - комиссия
+            pnl = gross_pnl - commission
+
+            # --- Обновляем кэш: при закрытии_long возвращаем cost + PnL ---
+            # Раньше: cash += exit_price * size (это cost + PnL)
+            # Но cost уже был вычтен при входе → cash += exit_price * size верно
             cash += exit_price * trade.entry_size
-            # (стоимость открытия уже была вычтена при входе)
 
-            # Обновляем сделку
+            # --- Обновляем сделку ---
             trade.exit_time = dt
             trade.exit_price = exit_price
             trade.exit_reason = reason
             trade.pnl = pnl
-            trade.pnl_pct = (exit_price / trade.entry_price - 1.0) * 100.0
+            trade.pnl_pct = pnl / (trade.entry_price * trade.entry_size) * 100.0 if trade.entry_price * trade.entry_size > 0 else 0.0
             trade.holding_bars = max(1, int(holding_hours))
             trade.commission = commission
             trade.is_closed = True
@@ -441,7 +448,7 @@ def simulate_trading(
             result.trades.append(trade)
             del open_positions[symbol]
 
-        # --- Проверяем входы ---
+        # --- 3. Проверяем входы ---
         for symbol, df in symbols_data.items():
             if symbol in open_positions:
                 continue
@@ -472,9 +479,53 @@ def simulate_trading(
                 # --- ПРАВДИВЫЙ РАСЧЁТ РИСКА: проверяем что стоимость позиции <= cash ---
                 position_cost = entry_price * size
                 if position_cost > cash:
-                    logger.warning("Position cost %.2f > cash %.2f, skipping %s at %s",
-                                   position_cost, cash, symbol, dt)
+                    logger.warning(
+                        "Position cost %.2f > available cash %.2f, skipping %s at %s",
+                        position_cost, cash, symbol, dt
+                    )
                     continue
+
+                # Проверка: после открытия cash должен остаться >= 0
+                remaining_cash = cash - position_cost
+                if remaining_cash < 0:
+                    logger.warning(
+                        "After position cash would be negative (%.2f), skipping %s",
+                        remaining_cash, symbol
+                    )
+                    continue
+
+                # --- ДОП. ПРОВЕРКА: total risk не должен превышать X% от equity ---
+                single_risk = size * abs(entry_price - stop_price)
+                total_risk = single_risk + sum(
+                    t.entry_size * abs(t.entry_price - t.stop_price)
+                    for t in open_positions.values()
+                )
+                max_total_risk = cash * 0.10  # макс 10% общего риска
+
+                if total_risk > max_total_risk:
+                    logger.debug(
+                        "Total risk %.2f > max %.2f, skipping %s",
+                        total_risk, max_total_risk, symbol
+                    )
+                    continue
+
+                # --- ПРОВЕРКА ЛИКВИДАЦИИ (для futures с плечом) ---
+                if strategy_cfg.leverage > 1:
+                    estimated_liq = estimate_liquidation_price(
+                        entry_price, strategy_cfg.leverage, is_long=True
+                    )
+                    liq_safe = validate_liquidation(
+                        entry_price, stop_price, estimated_liq,
+                        buffer_multiplier=strategy_cfg.liquidation_buffer,
+                        leverage=strategy_cfg.leverage,
+                    )
+                    if not liq_safe:
+                        logger.warning(
+                            "Liquidation risk: entry=%.4f, stop=%.4f, liq=%.4f — "
+                            "skipping %s at %s",
+                            entry_price, stop_price, estimated_liq, symbol, dt
+                        )
+                        continue
 
                 trade = Trade(
                     symbol=symbol,
@@ -489,7 +540,7 @@ def simulate_trading(
                     fee_rate=fee_rate,
                 )
 
-                # Вычитаем стоимость позиции из кэша
+                # --- Вычитаем стоимость позиции из кэша (ВАЖНО!) ---
                 cash -= position_cost
 
                 open_positions[symbol] = trade
@@ -499,7 +550,7 @@ def simulate_trading(
                 df.at[dt, "entry_price"] = entry_price
                 df.at[dt, "stop_price"] = stop_price
 
-        # --- Обновляем equity (cash + unrealized PnL) ---
+        # --- 4. Обновляем equity (cash + unrealized PnL) ---
         unrealized_pnl = 0.0
         for symbol, trade in open_positions.items():
             df = symbols_data[symbol]
@@ -514,34 +565,67 @@ def simulate_trading(
         current_equity = cash + unrealized_pnl
         daily_equity[dt] = current_equity
 
-        # --- DRAWDOWN GUARD: если equity упал ниже 50% от начального, останавливаемся ---
-        if current_equity < backtest_cfg.initial_cash * 0.5:
-            logger.error("Halted due to max drawdown limit: equity=%.2f < initial=%.2f * 0.5",
-                         current_equity, backtest_cfg.initial_cash)
-            # Закрываем все позиции по текущей цене
+        # --- 5. DRAWDOWN GUARD: если equity упал ниже 50% от начального, останавливаемся ---
+        if current_equity < initial_equity * 0.5:
+            logger.error(
+                "Halted due to max drawdown limit: equity=%.2f < initial=%.2f * 0.5",
+                current_equity, initial_equity
+            )
+            # Закрываем все позиции по текущей цене с корректным PnL
             for symbol, trade in list(open_positions.items()):
                 df = symbols_data[symbol]
                 if dt in df.index:
                     row = df.loc[dt]
                     # Закрываем по текущей цене
-                    pnl = (row["close"] - trade.entry_price) * trade.entry_size
+                    gross_pnl = (row["close"] - trade.entry_price) * trade.entry_size
+                    # Commission
+                    holding_hours = max(1, int((dt - trade.entry_time).total_seconds() / 3600))
+                    commission, _ = apply_costs(
+                        trade.entry_price, row["close"], trade.entry_size,
+                        is_long=True,
+                        maker_fee=strategy_cfg.maker_fee,
+                        taker_fee=strategy_cfg.taker_fee,
+                        slippage_pct=slippage_pct,
+                        funding_pct=funding_pct,
+                        holding_hours=holding_hours,
+                    )
+                    pnl = gross_pnl - commission
+
                     trade.exit_time = dt
                     trade.exit_price = row["close"]
                     trade.exit_reason = "drawdown_halt"
                     trade.pnl = pnl
+                    trade.pnl_pct = pnl / (trade.entry_price * trade.entry_size) * 100.0 if trade.entry_price * trade.entry_size > 0 else 0.0
                     trade.is_closed = True
                     cash += row["close"] * trade.entry_size
                     result.trades.append(trade)
                     del open_positions[symbol]
             break  # Прерываем симуляцию
 
-    # --- Закрываем все оставшиеся позиции ---
+    # --- 6. Закрываем все оставшиеся позиции (end-of-data) ---
     for symbol, trade in open_positions.items():
-        trade.exit_reason = "unclosed"
-        trade.is_closed = False
+        df = symbols_data.get(symbol, pd.DataFrame())
+        if not df.empty:
+            last_known_price = df["close"].iloc[-1]
+            last_dt = df.index[-1]
+        else:
+            last_known_price = trade.entry_price
+            last_dt = trade.entry_time
+
+        # PnL = (last_price - entry) * size - exit commission
+        gross_pnl = (last_known_price - trade.entry_price) * trade.entry_size
+        exit_commission = last_known_price * trade.entry_size * trade.fee_rate
+        pnl = gross_pnl - exit_commission
+
+        trade.exit_time = last_dt
+        trade.exit_price = last_known_price
+        trade.exit_reason = "eod"
+        trade.pnl = pnl
+        trade.pnl_pct = pnl / (trade.entry_price * trade.entry_size) * 100.0 if trade.entry_price * trade.entry_size > 0 else 0.0
+        trade.is_closed = True
         result.trades.append(trade)
 
-    # --- Equity curve ---
+    # --- 7. Equity curve ---
     if daily_equity:
         eq_df = pd.DataFrame(
             list(daily_equity.items()),
@@ -550,6 +634,6 @@ def simulate_trading(
         eq_df.sort_index(inplace=True)
         result.equity_curve = eq_df
 
-    result.final_equity = cash if daily_equity else backtest_cfg.initial_cash
+    result.final_equity = cash if daily_equity else initial_equity
 
     return result

@@ -238,10 +238,14 @@ def create_plotly_report(
     if closed:
         trade_text = "Trade Table"
         for t in closed[:10]:  # первые 10 сделок
-            pnl_str = f"${t.pnl:,.2f}" if t.pnl else "N/A"
-            trade_text += f"<br><b>{t.symbol}</b> {t.entry_time.strftime('%Y-%m-%d')}: "
-            trade_text += f"entry=${t.entry_price:,.2f} → exit=${t.exit_price:,.2f} | "
-            trade_text += f"PnL={pnl_str} ({t.pnl_pct:.1f}%) [{t.exit_reason}]"
+            pnl_str = f"${t.pnl:,.2f}" if t.pnl is not None else "N/A"
+            pnl_pct_str = f"{t.pnl_pct:.1f}%" if t.pnl_pct is not None else "N/A"
+            exit_str = f"${t.exit_price:,.2f}" if t.exit_price is not None else "N/A"
+            entry_str = f"${t.entry_price:,.2f}" if t.entry_price is not None else "N/A"
+            date_str = t.entry_time.strftime('%Y-%m-%d') if t.entry_time else "N/A"
+            trade_text += f"<br><b>{t.symbol}</b> {date_str}: "
+            trade_text += f"entry={entry_str} → exit={exit_str} | "
+            trade_text += f"PnL={pnl_str} ({pnl_pct_str}) [{t.exit_reason or 'N/A'}]"
 
         fig.add_trace(
             go.Table(

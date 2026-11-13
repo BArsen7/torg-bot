@@ -19,6 +19,8 @@ data:
   cache_dir: "data_cache"
   # Пропуск загрузки, если есть кэш (дни)
   cache_max_age_days: 1
+  # Минимальное количество свечей для анализа символа
+  min_required_rows: 100
 
 strategy:
   # --- Trend detection (S1) ---

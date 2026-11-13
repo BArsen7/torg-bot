@@ -96,8 +96,54 @@ async def _get_top_symbols(
     try:
         tickers = await exchange.fetch_tickers()
     except Exception as e:
-        logger.warning("Failed to fetch tickers, volume filter disabled: %s", e)
+        logger.warning("Failed to fetch tickers: %s — using fallback symbols", e)
         tickers = {}
+
+    # Нормализуем ключи тикеров: futures формат 'BTC/USDT:USDT' → 'BTC/USDT'
+    normalized_tickers: Dict[str, dict] = {}
+    for sym, data in tickers.items():
+        # Убираем ':USDT' или ':BTC' и т.д. из конца символа
+        normalized = sym.split(":")[0] if ":" in sym else sym
+        normalized_tickers[normalized] = data
+    
+    # Для futures также добавляем оригинальные ключи (futures format)
+    # чтобы можно было сопоставить с markets
+    for sym in list(tickers.keys()):
+        if ":" not in sym:
+            # Это спотовый символ, добавляем как есть
+            normalized_tickers[sym] = tickers[sym]
+    
+    tickers = normalized_tickers
+
+    # Проверка: если tickers пустой для futures — используем fallback
+    if not tickers and market_type == "futures":
+        logger.warning("No tickers returned for futures — using fallback symbols")
+        fallback_symbols = _FALLBACK_SYMBOLS[:top_n]
+        logger.info("Using fallback: %d symbols", len(fallback_symbols))
+        return fallback_symbols
+
+    # Если tickers есть, но объёмы нулевые — это тоже плохо
+    if tickers and market_type == "futures":
+        non_zero_count = sum(1 for t in tickers.values() if (t.get("quoteVolume", 0) or 0) > 1_000_000)
+        if non_zero_count == 0:
+            logger.warning("All futures tickers have zero volume — using fallback")
+            fallback_symbols = _FALLBACK_SYMBOLS[:top_n]
+            logger.info("Using fallback: %d symbols", len(fallback_symbols))
+            return fallback_symbols
+
+    # Проверка: если market_type == futures, но в tickers нет swap-символов — fallback
+    if market_type == "futures" and tickers:
+        swap_tickers = 0
+        for sym, data in tickers.items():
+            # Проверяем формат символа — futures имеет ':USDT' или похожий суффикс
+            if ":" in sym or sym.endswith(":USDT"):
+                swap_tickers += 1
+        
+        if swap_tickers == 0:
+            logger.warning("No futures tickers found (all appear to be spot) — using fallback")
+            fallback_symbols = _FALLBACK_SYMBOLS[:top_n]
+            logger.info("Using fallback: %d symbols", len(fallback_symbols))
+            return fallback_symbols
 
     for sym, m in exchange.markets.items():
         # Фильтр по типу рынка
@@ -127,6 +173,9 @@ async def _get_top_symbols(
             continue
 
         candidates.append({"symbol": sym, "volume": volume_24h, "base": base})
+
+    logger.info("Found %d candidates from %d markets after filtering",
+                len(candidates), len(exchange.markets))
 
     # Сортировка по объёму и выбор топ-N
     candidates.sort(key=lambda x: x["volume"], reverse=True)
@@ -279,6 +328,7 @@ async def fetch_all_symbols(
     timeframe: str,
     since_days: int,
     market_type: str,
+    min_required_rows: int = 100,
 ) -> Dict[str, pd.DataFrame]:
     """
     Загрузить OHLCV для списка символов.
@@ -289,6 +339,7 @@ async def fetch_all_symbols(
     timeframe : str
     since_days : int — сколько дней назад загружать
     market_type : 'spot' или 'futures'
+    min_required_rows : int — минимальное количество свечей для анализа
 
     Возвращает
     ----------
@@ -320,15 +371,14 @@ async def fetch_all_symbols(
                 since_ms=since_ts,
             )
             if not ohlcv:
-                logger.warning("No data for %s", symbol)
+                logger.warning("Skipped %s: no data returned from API", symbol)
                 continue
 
             df = _ohlcv_to_df(ohlcv, symbol, timeframe)
             if df.empty:
-                logger.warning("Skipped %s: empty data after processing", symbol)
+                logger.warning("Skipped %s: empty DataFrame after processing", symbol)
                 continue
 
-            min_required_rows = 100  # Минимально требуемое кол-во свечей для анализа
             if len(df) < min_required_rows:
                 logger.warning("Skipped %s: insufficient data. Got %d rows, required min %d",
                                symbol, len(df), min_required_rows)
@@ -453,7 +503,12 @@ class DataLoader:
         """Async-версия получения топ-символов."""
         max_retries = 3
         for attempt in range(max_retries):
-            exchange = ccxt_async.binance({"enableRateLimit": True})
+            exchange = ccxt_async.binance({
+                "enableRateLimit": True,
+            })
+            # Для futures обязательно указываем тип рынка
+            if self.cfg.data.market_type == "futures":
+                exchange.options["defaultType"] = "swap"
             try:
                 await exchange.load_markets()
                 return await _get_top_symbols(
@@ -469,7 +524,7 @@ class DataLoader:
                 )
                 if attempt < max_retries - 1:
                     await asyncio.sleep(2 ** attempt)
-        
+
         # Fallback: если API не доступен — используем хардкод
         logger.warning("All attempts failed, using fallback symbols")
         top = self.cfg.data.top_coins
@@ -532,7 +587,8 @@ class DataLoader:
             logger.info("Downloading %d datasets...", len(to_download))
             fetched = self._run_sync(
                 fetch_all_symbols(to_download, self.cfg.data.timeframe,
-                                  self.cfg.data.data_years, self.cfg.data.market_type)
+                                  self.cfg.data.data_years, self.cfg.data.market_type,
+                                  min_required_rows=self.cfg.data.min_required_rows)
             )
             data.update(fetched)
 

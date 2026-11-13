@@ -402,3 +402,722 @@ for more information on subplot types
 2026-11-13 22:00:32 [INFO] src.backtest_engine: ============================================================
 2026-11-13 22:00:32 [INFO] src.backtest_engine: BACKTEST COMPLETE — 3.88 seconds
 2026-11-13 22:00:32 [INFO] src.backtest_engine: ============================================================
+2026-11-13 22:33:39 [INFO] __main__: Config loaded: timeframe=1h, coins=30, years=2, market=futures
+2026-11-13 22:33:39 [INFO] src.backtest_engine: ============================================================
+2026-11-13 22:33:39 [INFO] src.backtest_engine: BACKTEST START
+2026-11-13 22:33:39 [INFO] src.backtest_engine: ============================================================
+2026-11-13 22:33:39 [INFO] src.backtest_engine: [1/6] Loading data...
+2026-11-13 22:33:39 [INFO] src.data_loader: 5 cached datasets found
+2026-11-13 22:33:39 [INFO] src.data_loader: Already cached: 5, need download: 0
+2026-11-13 22:33:39 [INFO] src.data_loader: Loaded 5 datasets from cache
+2026-11-13 22:33:39 [INFO] src.data_loader: Cached 5 symbol datasets to data_cache/
+2026-11-13 22:33:39 [INFO] src.data_loader: Total loaded: 5 symbols
+2026-11-13 22:33:39 [INFO] src.data_loader: Cached 5 symbol datasets to data_cache/
+2026-11-13 22:33:39 [INFO] src.backtest_engine: Loaded 5 symbols
+2026-11-13 22:33:39 [INFO] src.backtest_engine: [2/6] Computing indicators...
+2026-11-13 22:33:39 [INFO] src.backtest_engine: 5 symbols ready for backtest
+2026-11-13 22:33:39 [INFO] src.backtest_engine: [3/6] Generating signals...
+2026-11-13 22:33:42 [INFO] src.backtest_engine: Total entry signals: 48
+2026-11-13 22:33:42 [INFO] src.backtest_engine: [4/6] Running simulation...
+2026-11-13 22:33:42 [ERROR] src.strategy: Halted due to max drawdown limit: equity=43655.21 < initial=100000.00 * 0.5
+2026-11-13 22:33:42 [INFO] src.backtest_engine: Simulation complete: 1 trades, 0 unclosed
+2026-11-13 22:33:42 [INFO] src.backtest_engine: [5/6] Computing metrics...
+2026-11-13 22:33:42 [INFO] src.backtest_engine: [6/6] Generating visualizations...
+2026-11-13 22:33:42 [INFO] src.visualization: Equity curve saved to results/equity_curve.png
+2026-11-13 22:33:43 [INFO] src.visualization: PNG charts saved to results
+2026-11-13 22:33:43 [INFO] src.visualization: HTML report saved to results/backtest_report.html
+2026-11-13 22:33:43 [INFO] src.backtest_engine: Trades CSV saved: 1 rows
+2026-11-13 22:33:43 [INFO] src.backtest_engine: Equity curve CSV saved
+2026-11-13 22:33:43 [INFO] src.backtest_engine: Text report saved to results/metrics_report.txt
+2026-11-13 22:33:43 [INFO] src.backtest_engine: ============================================================
+2026-11-13 22:33:43 [INFO] src.backtest_engine: BACKTEST COMPLETE — 4.13 seconds
+2026-11-13 22:33:43 [INFO] src.backtest_engine: ============================================================
+2026-11-13 22:34:38 [INFO] __main__: Config loaded: timeframe=1h, coins=30, years=2, market=futures
+2026-11-13 22:34:38 [INFO] src.backtest_engine: ============================================================
+2026-11-13 22:34:38 [INFO] src.backtest_engine: BACKTEST START
+2026-11-13 22:34:38 [INFO] src.backtest_engine: ============================================================
+2026-11-13 22:34:38 [INFO] src.backtest_engine: [1/6] Loading data...
+2026-11-13 22:34:40 [INFO] src.data_loader: Selected 0 symbols from 0 candidates (top-30 by volume)
+2026-11-13 22:34:40 [WARNING] ccxt.base.exchange: binance requires to release all resources with an explicit call to the .close() coroutine. If you are using the exchange instance with async coroutines, add `await exchange.close()` to your code into a place when you're done with the exchange and don't need the exchange instance anymore (at the end of your async coroutine).
+2026-11-13 22:34:40 [ERROR] asyncio: Unclosed client session
+client_session: <aiohttp.client.ClientSession object at 0x7faa0271cad0>
+2026-11-13 22:34:40 [ERROR] asyncio: Unclosed connector
+connections: ['deque([(<aiohttp.client_proto.ResponseHandler object at 0x7faa02594370>, 29054.134910111)])', 'deque([(<aiohttp.client_proto.ResponseHandler object at 0x7faa026fc650>, 29054.685430644)])', 'deque([(<aiohttp.client_proto.ResponseHandler object at 0x7faa02594050>, 29055.528865674)])']
+connector: <aiohttp.connector.TCPConnector object at 0x7faa027f6f90>
+2026-11-13 22:34:40 [WARNING] src.data_loader: No symbols found
+2026-11-13 22:34:40 [INFO] src.data_loader: Cached 0 symbol datasets to data_cache/
+2026-11-13 22:34:40 [ERROR] src.backtest_engine: No data loaded. Aborting.
+2026-11-13 22:34:52 [INFO] __main__: Config loaded: timeframe=1h, coins=30, years=2, market=futures
+2026-11-13 22:34:52 [INFO] src.backtest_engine: ============================================================
+2026-11-13 22:34:52 [INFO] src.backtest_engine: BACKTEST START
+2026-11-13 22:34:52 [INFO] src.backtest_engine: ============================================================
+2026-11-13 22:34:52 [INFO] src.backtest_engine: [1/6] Loading data...
+2026-11-13 22:34:55 [INFO] src.data_loader: Selected 0 symbols from 0 candidates (top-30 by volume)
+2026-11-13 22:34:55 [WARNING] ccxt.base.exchange: binance requires to release all resources with an explicit call to the .close() coroutine. If you are using the exchange instance with async coroutines, add `await exchange.close()` to your code into a place when you're done with the exchange and don't need the exchange instance anymore (at the end of your async coroutine).
+2026-11-13 22:34:55 [ERROR] asyncio: Unclosed client session
+client_session: <aiohttp.client.ClientSession object at 0x7fae5e61cad0>
+2026-11-13 22:34:55 [ERROR] asyncio: Unclosed connector
+connections: ['deque([(<aiohttp.client_proto.ResponseHandler object at 0x7fae5e690370>, 29068.328758983)])', 'deque([(<aiohttp.client_proto.ResponseHandler object at 0x7fae5e7f8650>, 29068.72669028)])', 'deque([(<aiohttp.client_proto.ResponseHandler object at 0x7fae5e690050>, 29070.305645495)])']
+connector: <aiohttp.connector.TCPConnector object at 0x7fae5e8f2f90>
+2026-11-13 22:34:55 [WARNING] src.data_loader: No symbols found
+2026-11-13 22:34:55 [INFO] src.data_loader: Cached 0 symbol datasets to data_cache/
+2026-11-13 22:34:55 [ERROR] src.backtest_engine: No data loaded. Aborting.
+2026-11-13 22:35:13 [INFO] __main__: Config loaded: timeframe=1h, coins=30, years=2, market=futures
+2026-11-13 22:35:13 [INFO] src.backtest_engine: ============================================================
+2026-11-13 22:35:13 [INFO] src.backtest_engine: BACKTEST START
+2026-11-13 22:35:13 [INFO] src.backtest_engine: ============================================================
+2026-11-13 22:35:13 [INFO] src.backtest_engine: [1/6] Loading data...
+2026-11-13 22:35:17 [INFO] src.data_loader: Selected 0 symbols from 0 candidates (top-30 by volume)
+2026-11-13 22:35:17 [WARNING] ccxt.base.exchange: binance requires to release all resources with an explicit call to the .close() coroutine. If you are using the exchange instance with async coroutines, add `await exchange.close()` to your code into a place when you're done with the exchange and don't need the exchange instance anymore (at the end of your async coroutine).
+2026-11-13 22:35:17 [ERROR] asyncio: Unclosed client session
+client_session: <aiohttp.client.ClientSession object at 0x7f2599b58ad0>
+2026-11-13 22:35:17 [ERROR] asyncio: Unclosed connector
+connections: ['deque([(<aiohttp.client_proto.ResponseHandler object at 0x7f25999cc370>, 29089.638475939)])', 'deque([(<aiohttp.client_proto.ResponseHandler object at 0x7f2599b34650>, 29090.062174919)])', 'deque([(<aiohttp.client_proto.ResponseHandler object at 0x7f25999cc050>, 29092.6043529)])']
+connector: <aiohttp.connector.TCPConnector object at 0x7f2599c2ef90>
+2026-11-13 22:35:17 [WARNING] src.data_loader: No symbols found
+2026-11-13 22:35:17 [INFO] src.data_loader: Cached 0 symbol datasets to data_cache/
+2026-11-13 22:35:17 [ERROR] src.backtest_engine: No data loaded. Aborting.
+2026-11-13 22:41:35 [INFO] __main__: Config loaded: timeframe=1h, coins=5, years=1, market=futures
+2026-11-13 22:41:35 [INFO] src.backtest_engine: ============================================================
+2026-11-13 22:41:35 [INFO] src.backtest_engine: BACKTEST START
+2026-11-13 22:41:35 [INFO] src.backtest_engine: ============================================================
+2026-11-13 22:41:35 [INFO] src.backtest_engine: [1/6] Loading data...
+2026-11-13 22:41:37 [INFO] src.data_loader: Found 0 candidates from 4718 markets after filtering
+2026-11-13 22:41:37 [INFO] src.data_loader: Selected 0 symbols from 0 candidates (top-5 by volume)
+2026-11-13 22:41:37 [WARNING] ccxt.base.exchange: binance requires to release all resources with an explicit call to the .close() coroutine. If you are using the exchange instance with async coroutines, add `await exchange.close()` to your code into a place when you're done with the exchange and don't need the exchange instance anymore (at the end of your async coroutine).
+2026-11-13 22:41:37 [ERROR] asyncio: Unclosed client session
+client_session: <aiohttp.client.ClientSession object at 0x7f9a028d0ad0>
+2026-11-13 22:41:37 [ERROR] asyncio: Unclosed connector
+connections: ['deque([(<aiohttp.client_proto.ResponseHandler object at 0x7f9a027481e0>, 29471.366957403)])', 'deque([(<aiohttp.client_proto.ResponseHandler object at 0x7f9a028b0650>, 29471.775600749)])', 'deque([(<aiohttp.client_proto.ResponseHandler object at 0x7f9a02748500>, 29472.638200178)])']
+connector: <aiohttp.connector.TCPConnector object at 0x7f9a029aaf90>
+2026-11-13 22:41:37 [WARNING] src.data_loader: No symbols found
+2026-11-13 22:41:37 [INFO] src.data_loader: Cached 0 symbol datasets to data_cache/
+2026-11-13 22:41:37 [ERROR] src.backtest_engine: No data loaded. Aborting.
+2026-11-13 22:45:27 [INFO] __main__: Config loaded: timeframe=1h, coins=5, years=1, market=futures
+2026-11-13 22:45:27 [INFO] src.backtest_engine: ============================================================
+2026-11-13 22:45:27 [INFO] src.backtest_engine: BACKTEST START
+2026-11-13 22:45:27 [INFO] src.backtest_engine: ============================================================
+2026-11-13 22:45:27 [INFO] src.backtest_engine: [1/6] Loading data...
+2026-11-13 22:45:29 [WARNING] src.data_loader: No futures tickers found (all appear to be spot) — using fallback
+2026-11-13 22:45:29 [INFO] src.data_loader: Using fallback: 5 symbols
+2026-11-13 22:45:29 [WARNING] ccxt.base.exchange: binance requires to release all resources with an explicit call to the .close() coroutine. If you are using the exchange instance with async coroutines, add `await exchange.close()` to your code into a place when you're done with the exchange and don't need the exchange instance anymore (at the end of your async coroutine).
+2026-11-13 22:45:29 [ERROR] asyncio: Unclosed client session
+client_session: <aiohttp.client.ClientSession object at 0x7f48218dcad0>
+2026-11-13 22:45:29 [ERROR] asyncio: Unclosed connector
+connections: ['deque([(<aiohttp.client_proto.ResponseHandler object at 0x7f48218b8650>, 29703.432712424)])', 'deque([(<aiohttp.client_proto.ResponseHandler object at 0x7f48217501e0>, 29703.468575977)])', 'deque([(<aiohttp.client_proto.ResponseHandler object at 0x7f4821750500>, 29704.444329755)])']
+connector: <aiohttp.connector.TCPConnector object at 0x7f48219b6f90>
+2026-11-13 22:45:29 [INFO] src.data_loader: Already cached: 0, need download: 5
+2026-11-13 22:45:29 [INFO] src.data_loader: Downloading 5 datasets...
+2026-11-13 22:45:30 [INFO] src.data_loader: [1/5] Fetching BTC/USDT (1h)
+2026-11-13 22:45:35 [INFO] src.data_loader:   ✓ BTC/USDT: 8760 candles (2025-11-13T20:00:00+00:00 → 2026-11-13T19:00:00+00:00)
+2026-11-13 22:45:35 [INFO] src.data_loader: [2/5] Fetching ETH/USDT (1h)
+2026-11-13 22:45:40 [INFO] src.data_loader:   ✓ ETH/USDT: 8760 candles (2025-11-13T20:00:00+00:00 → 2026-11-13T19:00:00+00:00)
+2026-11-13 22:45:40 [INFO] src.data_loader: [3/5] Fetching SOL/USDT (1h)
+2026-11-13 22:45:45 [INFO] src.data_loader:   ✓ SOL/USDT: 8760 candles (2025-11-13T20:00:00+00:00 → 2026-11-13T19:00:00+00:00)
+2026-11-13 22:45:45 [INFO] src.data_loader: [4/5] Fetching BNB/USDT (1h)
+2026-11-13 22:45:50 [INFO] src.data_loader:   ✓ BNB/USDT: 8760 candles (2025-11-13T20:00:00+00:00 → 2026-11-13T19:00:00+00:00)
+2026-11-13 22:45:50 [INFO] src.data_loader: [5/5] Fetching XRP/USDT (1h)
+2026-11-13 22:45:55 [INFO] src.data_loader:   ✓ XRP/USDT: 8760 candles (2025-11-13T20:00:00+00:00 → 2026-11-13T19:00:00+00:00)
+2026-11-13 22:45:56 [INFO] src.data_loader: Cached 5 symbol datasets to data_cache/
+2026-11-13 22:45:56 [INFO] src.data_loader: Total loaded: 5 symbols
+2026-11-13 22:45:56 [INFO] src.data_loader: Cached 5 symbol datasets to data_cache/
+2026-11-13 22:45:56 [INFO] src.backtest_engine: Loaded 5 symbols
+2026-11-13 22:45:56 [INFO] src.backtest_engine: [2/6] Computing indicators...
+2026-11-13 22:45:56 [INFO] src.backtest_engine: 5 symbols ready for backtest
+2026-11-13 22:45:56 [INFO] src.backtest_engine: [3/6] Generating signals...
+2026-11-13 22:45:59 [INFO] src.backtest_engine: Total entry signals: 40
+2026-11-13 22:45:59 [INFO] src.backtest_engine: [4/6] Running simulation...
+2026-11-13 22:45:59 [ERROR] src.strategy: Halted due to max drawdown limit: equity=0.00 < initial=100000.00 * 0.5
+2026-11-13 22:45:59 [INFO] src.backtest_engine: Simulation complete: 1 trades, 0 unclosed
+2026-11-13 22:45:59 [INFO] src.backtest_engine: [5/6] Computing metrics...
+2026-11-13 22:45:59 [INFO] src.backtest_engine: [6/6] Generating visualizations...
+2026-11-13 22:45:59 [INFO] src.visualization: Equity curve saved to results/equity_curve.png
+2026-11-13 22:46:00 [INFO] src.visualization: PNG charts saved to results
+2026-11-13 22:46:00 [INFO] src.visualization: HTML report saved to results/backtest_report.html
+2026-11-13 22:46:00 [INFO] src.backtest_engine: Trades CSV saved: 1 rows
+2026-11-13 22:46:00 [INFO] src.backtest_engine: Equity curve CSV saved
+2026-11-13 22:46:00 [INFO] src.backtest_engine: Text report saved to results/metrics_report.txt
+2026-11-13 22:46:00 [INFO] src.backtest_engine: ============================================================
+2026-11-13 22:46:00 [INFO] src.backtest_engine: BACKTEST COMPLETE — 33.06 seconds
+2026-11-13 22:46:00 [INFO] src.backtest_engine: ============================================================
+2026-11-13 22:54:17 [INFO] __main__: Config loaded: timeframe=1h, coins=3, years=1, market=spot
+2026-11-13 22:54:17 [INFO] src.backtest_engine: ============================================================
+2026-11-13 22:54:17 [INFO] src.backtest_engine: BACKTEST START
+2026-11-13 22:54:17 [INFO] src.backtest_engine: ============================================================
+2026-11-13 22:54:17 [INFO] src.backtest_engine: [1/6] Loading data...
+2026-11-13 22:54:20 [INFO] src.data_loader: Found 172 candidates from 4718 markets after filtering
+2026-11-13 22:54:20 [WARNING] src.data_loader: Excluded NVDAB/USDT from top-3: volume=160815835.78 (too low or not enough slots)
+2026-11-13 22:54:20 [WARNING] src.data_loader: Excluded XRP/USDT from top-3: volume=135847453.08 (too low or not enough slots)
+2026-11-13 22:54:20 [WARNING] src.data_loader: Excluded BNB/USDT from top-3: volume=128732609.71 (too low or not enough slots)
+2026-11-13 22:54:20 [WARNING] src.data_loader: Excluded NEAR/USDT from top-3: volume=90965488.12 (too low or not enough slots)
+2026-11-13 22:54:20 [WARNING] src.data_loader: Excluded SPCXB/USDT from top-3: volume=64695426.91 (too low or not enough slots)
+2026-11-13 22:54:20 [WARNING] src.data_loader: Excluded PEPE/USDT from top-3: volume=59572019.39 (too low or not enough slots)
+2026-11-13 22:54:20 [WARNING] src.data_loader: Excluded SOXLB/USDT from top-3: volume=52125870.03 (too low or not enough slots)
+2026-11-13 22:54:20 [WARNING] src.data_loader: Excluded UNI/USDT from top-3: volume=49432547.79 (too low or not enough slots)
+2026-11-13 22:54:20 [WARNING] src.data_loader: Excluded RLUSD/USDT from top-3: volume=40893032.23 (too low or not enough slots)
+2026-11-13 22:54:20 [WARNING] src.data_loader: Excluded HYPE/USDT from top-3: volume=39914505.41 (too low or not enough slots)
+2026-11-13 22:54:20 [WARNING] src.data_loader: Excluded ENA/USDT from top-3: volume=39300899.07 (too low or not enough slots)
+2026-11-13 22:54:20 [WARNING] src.data_loader: Excluded DOGE/USDT from top-3: volume=39104123.57 (too low or not enough slots)
+2026-11-13 22:54:20 [WARNING] src.data_loader: Excluded U/USDT from top-3: volume=35033314.26 (too low or not enough slots)
+2026-11-13 22:54:20 [WARNING] src.data_loader: Excluded SUI/USDT from top-3: volume=33734421.44 (too low or not enough slots)
+2026-11-13 22:54:20 [WARNING] src.data_loader: Excluded SNDKB/USDT from top-3: volume=31380761.72 (too low or not enough slots)
+2026-11-13 22:54:20 [WARNING] src.data_loader: Excluded TRX/USDT from top-3: volume=30847865.62 (too low or not enough slots)
+2026-11-13 22:54:20 [WARNING] src.data_loader: Excluded XAUT/USDT from top-3: volume=25912876.13 (too low or not enough slots)
+2026-11-13 22:54:20 [WARNING] src.data_loader: Excluded BARD/USDT from top-3: volume=23237455.11 (too low or not enough slots)
+2026-11-13 22:54:20 [WARNING] src.data_loader: Excluded LINK/USDT from top-3: volume=22313467.43 (too low or not enough slots)
+2026-11-13 22:54:20 [WARNING] src.data_loader: Excluded TAO/USDT from top-3: volume=21715696.71 (too low or not enough slots)
+2026-11-13 22:54:20 [WARNING] src.data_loader: Excluded AVAX/USDT from top-3: volume=21235101.44 (too low or not enough slots)
+2026-11-13 22:54:20 [WARNING] src.data_loader: Excluded ADA/USDT from top-3: volume=20164855.37 (too low or not enough slots)
+2026-11-13 22:54:20 [WARNING] src.data_loader: Excluded INJ/USDT from top-3: volume=17873522.39 (too low or not enough slots)
+2026-11-13 22:54:20 [WARNING] src.data_loader: Excluded GOOGLB/USDT from top-3: volume=17785491.52 (too low or not enough slots)
+2026-11-13 22:54:20 [WARNING] src.data_loader: Excluded LTC/USDT from top-3: volume=15748119.59 (too low or not enough slots)
+2026-11-13 22:54:20 [WARNING] src.data_loader: Excluded MUB/USDT from top-3: volume=14596217.17 (too low or not enough slots)
+2026-11-13 22:54:20 [WARNING] src.data_loader: Excluded ARB/USDT from top-3: volume=14521232.40 (too low or not enough slots)
+2026-11-13 22:54:20 [WARNING] src.data_loader: Excluded RWUSD/USDT from top-3: volume=14009877.41 (too low or not enough slots)
+2026-11-13 22:54:20 [WARNING] src.data_loader: Excluded WLD/USDT from top-3: volume=13701102.38 (too low or not enough slots)
+2026-11-13 22:54:20 [WARNING] src.data_loader: Excluded CRCLB/USDT from top-3: volume=13670807.90 (too low or not enough slots)
+2026-11-13 22:54:20 [WARNING] src.data_loader: Excluded AAVE/USDT from top-3: volume=13506075.76 (too low or not enough slots)
+2026-11-13 22:54:20 [WARNING] src.data_loader: Excluded PAXG/USDT from top-3: volume=12654252.73 (too low or not enough slots)
+2026-11-13 22:54:20 [WARNING] src.data_loader: Excluded MSTRB/USDT from top-3: volume=12612370.80 (too low or not enough slots)
+2026-11-13 22:54:20 [WARNING] src.data_loader: Excluded GRAM/USDT from top-3: volume=11452998.20 (too low or not enough slots)
+2026-11-13 22:54:20 [WARNING] src.data_loader: Excluded XLM/USDT from top-3: volume=11287215.90 (too low or not enough slots)
+2026-11-13 22:54:20 [WARNING] src.data_loader: Excluded SHELL/USDT from top-3: volume=11034466.54 (too low or not enough slots)
+2026-11-13 22:54:20 [WARNING] src.data_loader: Excluded SOXSB/USDT from top-3: volume=10894471.54 (too low or not enough slots)
+2026-11-13 22:54:20 [WARNING] src.data_loader: Excluded INIT/USDT from top-3: volume=10103573.96 (too low or not enough slots)
+2026-11-13 22:54:20 [WARNING] src.data_loader: Excluded PUMP/USDT from top-3: volume=10063176.54 (too low or not enough slots)
+2026-11-13 22:54:20 [WARNING] src.data_loader: Excluded QNT/USDT from top-3: volume=9931329.29 (too low or not enough slots)
+2026-11-13 22:54:20 [WARNING] src.data_loader: Excluded ONDO/USDT from top-3: volume=9819463.85 (too low or not enough slots)
+2026-11-13 22:54:20 [WARNING] src.data_loader: Excluded FET/USDT from top-3: volume=9793735.88 (too low or not enough slots)
+2026-11-13 22:54:20 [WARNING] src.data_loader: Excluded HBAR/USDT from top-3: volume=8859854.84 (too low or not enough slots)
+2026-11-13 22:54:20 [WARNING] src.data_loader: Excluded QQQB/USDT from top-3: volume=8848227.79 (too low or not enough slots)
+2026-11-13 22:54:20 [WARNING] src.data_loader: Excluded ZRO/USDT from top-3: volume=8292723.20 (too low or not enough slots)
+2026-11-13 22:54:20 [WARNING] src.data_loader: Excluded ERA/USDT from top-3: volume=7981499.17 (too low or not enough slots)
+2026-11-13 22:54:20 [WARNING] src.data_loader: Excluded BMT/USDT from top-3: volume=7959922.18 (too low or not enough slots)
+2026-11-13 22:54:20 [WARNING] src.data_loader: Excluded SOPH/USDT from top-3: volume=7937970.60 (too low or not enough slots)
+2026-11-13 22:54:20 [WARNING] src.data_loader: Excluded INTCB/USDT from top-3: volume=7725158.07 (too low or not enough slots)
+2026-11-13 22:54:20 [WARNING] src.data_loader: Excluded 牛来/USDT from top-3: volume=7542891.12 (too low or not enough slots)
+2026-11-13 22:54:20 [WARNING] src.data_loader: Excluded TIA/USDT from top-3: volume=7428727.38 (too low or not enough slots)
+2026-11-13 22:54:20 [WARNING] src.data_loader: Excluded ICP/USDT from top-3: volume=7364686.82 (too low or not enough slots)
+2026-11-13 22:54:20 [WARNING] src.data_loader: Excluded ASTER/USDT from top-3: volume=6765456.70 (too low or not enough slots)
+2026-11-13 22:54:20 [WARNING] src.data_loader: Excluded TRUMP/USDT from top-3: volume=6722189.61 (too low or not enough slots)
+2026-11-13 22:54:20 [WARNING] src.data_loader: Excluded XUSD/USDT from top-3: volume=6344050.83 (too low or not enough slots)
+2026-11-13 22:54:20 [WARNING] src.data_loader: Excluded WLFI/USDT from top-3: volume=6258385.50 (too low or not enough slots)
+2026-11-13 22:54:20 [WARNING] src.data_loader: Excluded SNXXB/USDT from top-3: volume=5967048.26 (too low or not enough slots)
+2026-11-13 22:54:20 [WARNING] src.data_loader: Excluded DODO/USDT from top-3: volume=5936058.27 (too low or not enough slots)
+2026-11-13 22:54:20 [WARNING] src.data_loader: Excluded SKHYB/USDT from top-3: volume=5904924.96 (too low or not enough slots)
+2026-11-13 22:54:20 [WARNING] src.data_loader: Excluded KORUB/USDT from top-3: volume=5730362.90 (too low or not enough slots)
+2026-11-13 22:54:20 [WARNING] src.data_loader: Excluded PENGU/USDT from top-3: volume=5056827.87 (too low or not enough slots)
+2026-11-13 22:54:20 [WARNING] src.data_loader: Excluded BFUSD/USDT from top-3: volume=4977489.85 (too low or not enough slots)
+2026-11-13 22:54:20 [WARNING] src.data_loader: Excluded NIGHT/USDT from top-3: volume=4820427.46 (too low or not enough slots)
+2026-11-13 22:54:20 [WARNING] src.data_loader: Excluded NBISB/USDT from top-3: volume=4472538.54 (too low or not enough slots)
+2026-11-13 22:54:20 [WARNING] src.data_loader: Excluded JUP/USDT from top-3: volume=4364545.70 (too low or not enough slots)
+2026-11-13 22:54:20 [WARNING] src.data_loader: Excluded IMX/USDT from top-3: volume=4316319.65 (too low or not enough slots)
+2026-11-13 22:54:20 [WARNING] src.data_loader: Excluded BCH/USDT from top-3: volume=4011194.77 (too low or not enough slots)
+2026-11-13 22:54:20 [WARNING] src.data_loader: Excluded PLUME/USDT from top-3: volume=3993249.27 (too low or not enough slots)
+2026-11-13 22:54:20 [WARNING] src.data_loader: Excluded POL/USDT from top-3: volume=3926423.81 (too low or not enough slots)
+2026-11-13 22:54:20 [WARNING] src.data_loader: Excluded FIL/USDT from top-3: volume=3914963.73 (too low or not enough slots)
+2026-11-13 22:54:20 [WARNING] src.data_loader: Excluded PENDLE/USDT from top-3: volume=3907992.07 (too low or not enough slots)
+2026-11-13 22:54:20 [WARNING] src.data_loader: Excluded TSLAB/USDT from top-3: volume=3902338.05 (too low or not enough slots)
+2026-11-13 22:54:20 [WARNING] src.data_loader: Excluded XPL/USDT from top-3: volume=3853486.13 (too low or not enough slots)
+2026-11-13 22:54:20 [WARNING] src.data_loader: Excluded STRK/USDT from top-3: volume=3794155.22 (too low or not enough slots)
+2026-11-13 22:54:20 [WARNING] src.data_loader: Excluded ONE/USDT from top-3: volume=3680047.98 (too low or not enough slots)
+2026-11-13 22:54:20 [WARNING] src.data_loader: Excluded PYTH/USDT from top-3: volume=3571482.69 (too low or not enough slots)
+2026-11-13 22:54:20 [WARNING] src.data_loader: Excluded DOT/USDT from top-3: volume=3450915.19 (too low or not enough slots)
+2026-11-13 22:54:20 [WARNING] src.data_loader: Excluded BNCB/USDT from top-3: volume=3402971.99 (too low or not enough slots)
+2026-11-13 22:54:20 [WARNING] src.data_loader: Excluded STO/USDT from top-3: volume=3389664.55 (too low or not enough slots)
+2026-11-13 22:54:20 [WARNING] src.data_loader: Excluded DASH/USDT from top-3: volume=3345336.09 (too low or not enough slots)
+2026-11-13 22:54:20 [WARNING] src.data_loader: Excluded MARSCOIN/USDT from top-3: volume=3233452.53 (too low or not enough slots)
+2026-11-13 22:54:20 [WARNING] src.data_loader: Excluded CBRSB/USDT from top-3: volume=3208173.48 (too low or not enough slots)
+2026-11-13 22:54:20 [WARNING] src.data_loader: Excluded HUMA/USDT from top-3: volume=3185570.64 (too low or not enough slots)
+2026-11-13 22:54:20 [WARNING] src.data_loader: Excluded ZAMA/USDT from top-3: volume=3072649.64 (too low or not enough slots)
+2026-11-13 22:54:20 [WARNING] src.data_loader: Excluded BERA/USDT from top-3: volume=3020896.14 (too low or not enough slots)
+2026-11-13 22:54:20 [WARNING] src.data_loader: Excluded TQQQB/USDT from top-3: volume=3016361.21 (too low or not enough slots)
+2026-11-13 22:54:20 [WARNING] src.data_loader: Excluded RENDER/USDT from top-3: volume=2997467.18 (too low or not enough slots)
+2026-11-13 22:54:20 [WARNING] src.data_loader: Excluded VIRTUAL/USDT from top-3: volume=2968931.35 (too low or not enough slots)
+2026-11-13 22:54:20 [WARNING] src.data_loader: Excluded STX/USDT from top-3: volume=2954849.95 (too low or not enough slots)
+2026-11-13 22:54:20 [WARNING] src.data_loader: Excluded OP/USDT from top-3: volume=2888230.50 (too low or not enough slots)
+2026-11-13 22:54:20 [WARNING] src.data_loader: Excluded APT/USDT from top-3: volume=2858629.75 (too low or not enough slots)
+2026-11-13 22:54:20 [WARNING] src.data_loader: Excluded BEB/USDT from top-3: volume=2836448.30 (too low or not enough slots)
+2026-11-13 22:54:20 [WARNING] src.data_loader: Excluded AERO/USDT from top-3: volume=2714749.09 (too low or not enough slots)
+2026-11-13 22:54:20 [WARNING] src.data_loader: Excluded ORCLB/USDT from top-3: volume=2691144.31 (too low or not enough slots)
+2026-11-13 22:54:20 [WARNING] src.data_loader: Excluded AR/USDT from top-3: volume=2546469.84 (too low or not enough slots)
+2026-11-13 22:54:20 [WARNING] src.data_loader: Excluded CAKE/USDT from top-3: volume=2489365.76 (too low or not enough slots)
+2026-11-13 22:54:20 [WARNING] src.data_loader: Excluded RAY/USDT from top-3: volume=2482682.55 (too low or not enough slots)
+2026-11-13 22:54:20 [WARNING] src.data_loader: Excluded AMDB/USDT from top-3: volume=2445055.75 (too low or not enough slots)
+2026-11-13 22:54:20 [WARNING] src.data_loader: Excluded BONK/USDT from top-3: volume=2396858.73 (too low or not enough slots)
+2026-11-13 22:54:20 [WARNING] src.data_loader: Excluded GUN/USDT from top-3: volume=2354305.70 (too low or not enough slots)
+2026-11-13 22:54:20 [WARNING] src.data_loader: Excluded SHIB/USDT from top-3: volume=2338060.73 (too low or not enough slots)
+2026-11-13 22:54:20 [WARNING] src.data_loader: Excluded S/USDT from top-3: volume=2329678.09 (too low or not enough slots)
+2026-11-13 22:54:20 [WARNING] src.data_loader: Excluded KITE/USDT from top-3: volume=2278921.83 (too low or not enough slots)
+2026-11-13 22:54:20 [WARNING] src.data_loader: Excluded DEXE/USDT from top-3: volume=2262432.90 (too low or not enough slots)
+2026-11-13 22:54:20 [WARNING] src.data_loader: Excluded OSMO/USDT from top-3: volume=2241560.82 (too low or not enough slots)
+2026-11-13 22:54:20 [WARNING] src.data_loader: Excluded ALT/USDT from top-3: volume=2221250.73 (too low or not enough slots)
+2026-11-13 22:54:20 [WARNING] src.data_loader: Excluded BMNRB/USDT from top-3: volume=2153165.68 (too low or not enough slots)
+2026-11-13 22:54:20 [WARNING] src.data_loader: Excluded MRVLB/USDT from top-3: volume=2145237.19 (too low or not enough slots)
+2026-11-13 22:54:20 [WARNING] src.data_loader: Excluded JST/USDT from top-3: volume=2116771.98 (too low or not enough slots)
+2026-11-13 22:54:20 [WARNING] src.data_loader: Excluded SEI/USDT from top-3: volume=2091674.29 (too low or not enough slots)
+2026-11-13 22:54:20 [WARNING] src.data_loader: Excluded AVGOB/USDT from top-3: volume=2008574.60 (too low or not enough slots)
+2026-11-13 22:54:20 [WARNING] src.data_loader: Excluded FF/USDT from top-3: volume=1992418.28 (too low or not enough slots)
+2026-11-13 22:54:20 [WARNING] src.data_loader: Excluded USDE/USDT from top-3: volume=1981339.36 (too low or not enough slots)
+2026-11-13 22:54:20 [WARNING] src.data_loader: Excluded MEGA/USDT from top-3: volume=1954837.92 (too low or not enough slots)
+2026-11-13 22:54:20 [WARNING] src.data_loader: Excluded BEAMX/USDT from top-3: volume=1907294.21 (too low or not enough slots)
+2026-11-13 22:54:20 [WARNING] src.data_loader: Excluded ZK/USDT from top-3: volume=1864785.02 (too low or not enough slots)
+2026-11-13 22:54:20 [WARNING] src.data_loader: Excluded BANANAS31/USDT from top-3: volume=1843130.97 (too low or not enough slots)
+2026-11-13 22:54:20 [WARNING] src.data_loader: Excluded MORPHO/USDT from top-3: volume=1689606.55 (too low or not enough slots)
+2026-11-13 22:54:20 [WARNING] src.data_loader: Excluded 0G/USDT from top-3: volume=1660623.18 (too low or not enough slots)
+2026-11-13 22:54:20 [WARNING] src.data_loader: Excluded SYRUP/USDT from top-3: volume=1654078.56 (too low or not enough slots)
+2026-11-13 22:54:20 [WARNING] src.data_loader: Excluded LDO/USDT from top-3: volume=1653138.21 (too low or not enough slots)
+2026-11-13 22:54:20 [WARNING] src.data_loader: Excluded GIGGLE/USDT from top-3: volume=1652342.89 (too low or not enough slots)
+2026-11-13 22:54:20 [WARNING] src.data_loader: Excluded OPG/USDT from top-3: volume=1651839.98 (too low or not enough slots)
+2026-11-13 22:54:20 [WARNING] src.data_loader: Excluded CRV/USDT from top-3: volume=1650197.19 (too low or not enough slots)
+2026-11-13 22:54:20 [WARNING] src.data_loader: Excluded ZEN/USDT from top-3: volume=1634563.31 (too low or not enough slots)
+2026-11-13 22:54:20 [WARNING] src.data_loader: Excluded ATOM/USDT from top-3: volume=1546282.34 (too low or not enough slots)
+2026-11-13 22:54:20 [WARNING] src.data_loader: Excluded ETC/USDT from top-3: volume=1528518.16 (too low or not enough slots)
+2026-11-13 22:54:20 [WARNING] src.data_loader: Excluded EIGEN/USDT from top-3: volume=1521410.18 (too low or not enough slots)
+2026-11-13 22:54:20 [WARNING] src.data_loader: Excluded COINB/USDT from top-3: volume=1491419.81 (too low or not enough slots)
+2026-11-13 22:54:20 [WARNING] src.data_loader: Excluded ORDI/USDT from top-3: volume=1480737.23 (too low or not enough slots)
+2026-11-13 22:54:20 [WARNING] src.data_loader: Excluded GTC/USDT from top-3: volume=1475013.80 (too low or not enough slots)
+2026-11-13 22:54:20 [WARNING] src.data_loader: Excluded ALGO/USDT from top-3: volume=1460985.86 (too low or not enough slots)
+2026-11-13 22:54:20 [WARNING] src.data_loader: Excluded MET/USDT from top-3: volume=1430722.30 (too low or not enough slots)
+2026-11-13 22:54:20 [WARNING] src.data_loader: Excluded BABAB/USDT from top-3: volume=1430031.33 (too low or not enough slots)
+2026-11-13 22:54:20 [WARNING] src.data_loader: Excluded DRAMB/USDT from top-3: volume=1410907.55 (too low or not enough slots)
+2026-11-13 22:54:20 [WARNING] src.data_loader: Excluded CHIP/USDT from top-3: volume=1372856.58 (too low or not enough slots)
+2026-11-13 22:54:20 [WARNING] src.data_loader: Excluded VANA/USDT from top-3: volume=1371855.22 (too low or not enough slots)
+2026-11-13 22:54:20 [WARNING] src.data_loader: Excluded SKY/USDT from top-3: volume=1366021.85 (too low or not enough slots)
+2026-11-13 22:54:20 [WARNING] src.data_loader: Excluded PROM/USDT from top-3: volume=1364801.65 (too low or not enough slots)
+2026-11-13 22:54:20 [WARNING] src.data_loader: Excluded BAT/USDT from top-3: volume=1349815.49 (too low or not enough slots)
+2026-11-13 22:54:20 [WARNING] src.data_loader: Excluded RUNE/USDT from top-3: volume=1349448.71 (too low or not enough slots)
+2026-11-13 22:54:20 [WARNING] src.data_loader: Excluded 币安人生/USDT from top-3: volume=1348725.10 (too low or not enough slots)
+2026-11-13 22:54:20 [WARNING] src.data_loader: Excluded FTM/USDT from top-3: volume=1301242.24 (too low or not enough slots)
+2026-11-13 22:54:20 [WARNING] src.data_loader: Excluded ARKM/USDT from top-3: volume=1288789.66 (too low or not enough slots)
+2026-11-13 22:54:20 [WARNING] src.data_loader: Excluded GRT/USDT from top-3: volume=1281843.55 (too low or not enough slots)
+2026-11-13 22:54:20 [WARNING] src.data_loader: Excluded NXPC/USDT from top-3: volume=1274081.57 (too low or not enough slots)
+2026-11-13 22:54:20 [WARNING] src.data_loader: Excluded JTO/USDT from top-3: volume=1273363.95 (too low or not enough slots)
+2026-11-13 22:54:20 [WARNING] src.data_loader: Excluded BABY/USDT from top-3: volume=1272764.98 (too low or not enough slots)
+2026-11-13 22:54:20 [WARNING] src.data_loader: Excluded HAEDAL/USDT from top-3: volume=1262225.55 (too low or not enough slots)
+2026-11-13 22:54:20 [WARNING] src.data_loader: Excluded MSFTB/USDT from top-3: volume=1260851.08 (too low or not enough slots)
+2026-11-13 22:54:20 [WARNING] src.data_loader: Excluded OPEN/USDT from top-3: volume=1207653.96 (too low or not enough slots)
+2026-11-13 22:54:20 [WARNING] src.data_loader: Excluded CFG/USDT from top-3: volume=1202166.42 (too low or not enough slots)
+2026-11-13 22:54:20 [WARNING] src.data_loader: Excluded NEXO/USDT from top-3: volume=1171800.00 (too low or not enough slots)
+2026-11-13 22:54:20 [WARNING] src.data_loader: Excluded MANTRA/USDT from top-3: volume=1156316.80 (too low or not enough slots)
+2026-11-13 22:54:20 [WARNING] src.data_loader: Excluded RE/USDT from top-3: volume=1131570.13 (too low or not enough slots)
+2026-11-13 22:54:20 [WARNING] src.data_loader: Excluded APE/USDT from top-3: volume=1122205.90 (too low or not enough slots)
+2026-11-13 22:54:20 [WARNING] src.data_loader: Excluded BOME/USDT from top-3: volume=1120480.83 (too low or not enough slots)
+2026-11-13 22:54:20 [WARNING] src.data_loader: Excluded OMNI/USDT from top-3: volume=1105809.60 (too low or not enough slots)
+2026-11-13 22:54:20 [WARNING] src.data_loader: Excluded PARTI/USDT from top-3: volume=1099091.51 (too low or not enough slots)
+2026-11-13 22:54:20 [WARNING] src.data_loader: Excluded CYBER/USDT from top-3: volume=1096517.77 (too low or not enough slots)
+2026-11-13 22:54:20 [WARNING] src.data_loader: Excluded MUBARAK/USDT from top-3: volume=1050678.90 (too low or not enough slots)
+2026-11-13 22:54:20 [WARNING] src.data_loader: Excluded METAB/USDT from top-3: volume=1041647.28 (too low or not enough slots)
+2026-11-13 22:54:20 [WARNING] src.data_loader: Excluded SPYB/USDT from top-3: volume=1039174.46 (too low or not enough slots)
+2026-11-13 22:54:20 [WARNING] src.data_loader: Excluded LUNC/USDT from top-3: volume=1037041.12 (too low or not enough slots)
+2026-11-13 22:54:20 [WARNING] src.data_loader: Excluded LITEB/USDT from top-3: volume=1031969.03 (too low or not enough slots)
+2026-11-13 22:54:20 [WARNING] src.data_loader: Excluded GMX/USDT from top-3: volume=1025998.04 (too low or not enough slots)
+2026-11-13 22:54:20 [WARNING] src.data_loader: Excluded SAND/USDT from top-3: volume=1004957.49 (too low or not enough slots)
+2026-11-13 22:54:20 [WARNING] src.data_loader: Excluded W/USDT from top-3: volume=1002591.10 (too low or not enough slots)
+2026-11-13 22:54:20 [WARNING] src.data_loader: Excluded VET/USDT from top-3: volume=1002305.28 (too low or not enough slots)
+2026-11-13 22:54:20 [INFO] src.data_loader: Selected 3 symbols from 172 candidates (top-3 by volume)
+2026-11-13 22:54:20 [WARNING] ccxt.base.exchange: binance requires to release all resources with an explicit call to the .close() coroutine. If you are using the exchange instance with async coroutines, add `await exchange.close()` to your code into a place when you're done with the exchange and don't need the exchange instance anymore (at the end of your async coroutine).
+2026-11-13 22:54:20 [ERROR] asyncio: Unclosed client session
+client_session: <aiohttp.client.ClientSession object at 0x7f9075b20ad0>
+2026-11-13 22:54:20 [ERROR] asyncio: Unclosed connector
+connections: ['deque([(<aiohttp.client_proto.ResponseHandler object at 0x7f907598c500>, 30233.627646363)])', 'deque([(<aiohttp.client_proto.ResponseHandler object at 0x7f9075b044d0>, 30234.149350806)])', 'deque([(<aiohttp.client_proto.ResponseHandler object at 0x7f907598c1e0>, 30235.527764865)])']
+connector: <aiohttp.connector.TCPConnector object at 0x7f9075beef90>
+2026-11-13 22:54:20 [INFO] src.data_loader: Already cached: 0, need download: 3
+2026-11-13 22:54:20 [INFO] src.data_loader: Downloading 3 datasets...
+2026-11-13 22:54:21 [INFO] src.data_loader: [1/3] Fetching SOL/USDT (1h)
+2026-11-13 22:54:25 [INFO] src.data_loader:   ✓ SOL/USDT: 8760 candles (2025-11-13T20:00:00+00:00 → 2026-11-13T19:00:00+00:00)
+2026-11-13 22:54:25 [INFO] src.data_loader: [2/3] Fetching ZEC/USDT (1h)
+2026-11-13 22:54:28 [INFO] src.data_loader:   ✓ ZEC/USDT: 8760 candles (2025-11-13T20:00:00+00:00 → 2026-11-13T19:00:00+00:00)
+2026-11-13 22:54:28 [INFO] src.data_loader: [3/3] Fetching USD1/USDT (1h)
+2026-11-13 22:54:31 [INFO] src.data_loader:   ✓ USD1/USDT: 8760 candles (2025-11-13T20:00:00+00:00 → 2026-11-13T19:00:00+00:00)
+2026-11-13 22:54:31 [INFO] src.data_loader: Cached 3 symbol datasets to data_cache/
+2026-11-13 22:54:31 [INFO] src.data_loader: Total loaded: 3 symbols
+2026-11-13 22:54:31 [INFO] src.data_loader: Cached 3 symbol datasets to data_cache/
+2026-11-13 22:54:31 [INFO] src.backtest_engine: Loaded 3 symbols
+2026-11-13 22:54:31 [INFO] src.backtest_engine: [2/6] Computing indicators...
+2026-11-13 22:54:32 [INFO] src.backtest_engine: 3 symbols ready for backtest
+2026-11-13 22:54:32 [INFO] src.backtest_engine: [3/6] Generating signals...
+2026-11-13 22:54:33 [INFO] src.backtest_engine: Total entry signals: 42
+2026-11-13 22:54:33 [INFO] src.backtest_engine: [4/6] Running simulation...
+2026-11-13 22:54:33 [ERROR] src.strategy: Halted due to max drawdown limit: equity=43655.21 < initial=100000.00 * 0.5
+2026-11-13 22:54:33 [INFO] src.backtest_engine: Simulation complete: 1 trades, 0 unclosed
+2026-11-13 22:54:33 [INFO] src.backtest_engine: [5/6] Computing metrics...
+2026-11-13 22:54:33 [INFO] src.backtest_engine: [6/6] Generating visualizations...
+2026-11-13 22:54:33 [INFO] src.visualization: Equity curve saved to results/equity_curve.png
+2026-11-13 22:54:34 [INFO] src.visualization: PNG charts saved to results
+2026-11-13 22:54:34 [INFO] src.visualization: HTML report saved to results/backtest_report.html
+2026-11-13 22:54:34 [INFO] src.backtest_engine: Trades CSV saved: 1 rows
+2026-11-13 22:54:34 [INFO] src.backtest_engine: Equity curve CSV saved
+2026-11-13 22:54:34 [INFO] src.backtest_engine: Text report saved to results/metrics_report.txt
+2026-11-13 22:54:34 [INFO] src.backtest_engine: ============================================================
+2026-11-13 22:54:34 [INFO] src.backtest_engine: BACKTEST COMPLETE — 16.45 seconds
+2026-11-13 22:54:34 [INFO] src.backtest_engine: ============================================================
+2026-11-13 22:57:15 [INFO] __main__: Config loaded: timeframe=1h, coins=30, years=2, market=futures
+2026-11-13 22:57:15 [INFO] src.backtest_engine: ============================================================
+2026-11-13 22:57:15 [INFO] src.backtest_engine: BACKTEST START
+2026-11-13 22:57:15 [INFO] src.backtest_engine: ============================================================
+2026-11-13 22:57:15 [INFO] src.backtest_engine: [1/6] Loading data...
+2026-11-13 22:57:15 [INFO] src.data_loader: 3 cached datasets found
+2026-11-13 22:57:15 [INFO] src.data_loader: Already cached: 3, need download: 0
+2026-11-13 22:57:15 [INFO] src.data_loader: Loaded 3 datasets from cache
+2026-11-13 22:57:15 [INFO] src.data_loader: Cached 3 symbol datasets to data_cache/
+2026-11-13 22:57:15 [INFO] src.data_loader: Total loaded: 3 symbols
+2026-11-13 22:57:15 [INFO] src.data_loader: Cached 3 symbol datasets to data_cache/
+2026-11-13 22:57:15 [INFO] src.backtest_engine: Loaded 3 symbols
+2026-11-13 22:57:15 [INFO] src.backtest_engine: [2/6] Computing indicators...
+2026-11-13 22:57:15 [INFO] src.backtest_engine: 3 symbols ready for backtest
+2026-11-13 22:57:15 [INFO] src.backtest_engine: [3/6] Generating signals...
+2026-11-13 22:57:17 [INFO] src.backtest_engine: Total entry signals: 42
+2026-11-13 22:57:17 [INFO] src.backtest_engine: [4/6] Running simulation...
+2026-11-13 22:57:17 [ERROR] src.strategy: Halted due to max drawdown limit: equity=43655.21 < initial=100000.00 * 0.5
+2026-11-13 22:57:17 [INFO] src.backtest_engine: Simulation complete: 1 trades, 0 unclosed
+2026-11-13 22:57:17 [INFO] src.backtest_engine: [5/6] Computing metrics...
+2026-11-13 22:57:17 [INFO] src.backtest_engine: [6/6] Generating visualizations...
+2026-11-13 22:57:17 [INFO] src.visualization: Equity curve saved to results/equity_curve.png
+2026-11-13 22:57:17 [INFO] src.visualization: PNG charts saved to results
+2026-11-13 22:57:17 [INFO] src.visualization: HTML report saved to results/backtest_report.html
+2026-11-13 22:57:17 [INFO] src.backtest_engine: Trades CSV saved: 1 rows
+2026-11-13 22:57:17 [INFO] src.backtest_engine: Equity curve CSV saved
+2026-11-13 22:57:17 [INFO] src.backtest_engine: Text report saved to results/metrics_report.txt
+2026-11-13 22:57:17 [INFO] src.backtest_engine: ============================================================
+2026-11-13 22:57:17 [INFO] src.backtest_engine: BACKTEST COMPLETE — 2.64 seconds
+2026-11-13 22:57:17 [INFO] src.backtest_engine: ============================================================
+2026-11-13 23:01:07 [INFO] __main__: Config loaded: timeframe=1h, coins=3, years=1, market=spot
+2026-11-13 23:01:07 [INFO] src.backtest_engine: ============================================================
+2026-11-13 23:01:07 [INFO] src.backtest_engine: BACKTEST START
+2026-11-13 23:01:07 [INFO] src.backtest_engine: ============================================================
+2026-11-13 23:01:07 [INFO] src.backtest_engine: [1/6] Loading data...
+2026-11-13 23:01:09 [INFO] src.data_loader: Found 172 candidates from 4718 markets after filtering
+2026-11-13 23:01:09 [WARNING] src.data_loader: Excluded NVDAB/USDT from top-3: volume=160892037.40 (too low or not enough slots)
+2026-11-13 23:01:09 [WARNING] src.data_loader: Excluded XRP/USDT from top-3: volume=135637089.06 (too low or not enough slots)
+2026-11-13 23:01:09 [WARNING] src.data_loader: Excluded BNB/USDT from top-3: volume=128712493.09 (too low or not enough slots)
+2026-11-13 23:01:09 [WARNING] src.data_loader: Excluded NEAR/USDT from top-3: volume=90965424.65 (too low or not enough slots)
+2026-11-13 23:01:09 [WARNING] src.data_loader: Excluded SPCXB/USDT from top-3: volume=65404069.75 (too low or not enough slots)
+2026-11-13 23:01:09 [WARNING] src.data_loader: Excluded PEPE/USDT from top-3: volume=59329550.71 (too low or not enough slots)
+2026-11-13 23:01:09 [WARNING] src.data_loader: Excluded SOXLB/USDT from top-3: volume=52227583.23 (too low or not enough slots)
+2026-11-13 23:01:09 [WARNING] src.data_loader: Excluded UNI/USDT from top-3: volume=49309445.58 (too low or not enough slots)
+2026-11-13 23:01:09 [WARNING] src.data_loader: Excluded RLUSD/USDT from top-3: volume=40892057.14 (too low or not enough slots)
+2026-11-13 23:01:09 [WARNING] src.data_loader: Excluded HYPE/USDT from top-3: volume=39956373.34 (too low or not enough slots)
+2026-11-13 23:01:09 [WARNING] src.data_loader: Excluded ENA/USDT from top-3: volume=39239574.48 (too low or not enough slots)
+2026-11-13 23:01:09 [WARNING] src.data_loader: Excluded DOGE/USDT from top-3: volume=39105715.71 (too low or not enough slots)
+2026-11-13 23:01:09 [WARNING] src.data_loader: Excluded U/USDT from top-3: volume=35029835.01 (too low or not enough slots)
+2026-11-13 23:01:09 [WARNING] src.data_loader: Excluded SUI/USDT from top-3: volume=33691182.58 (too low or not enough slots)
+2026-11-13 23:01:09 [WARNING] src.data_loader: Excluded SNDKB/USDT from top-3: volume=31548731.06 (too low or not enough slots)
+2026-11-13 23:01:09 [WARNING] src.data_loader: Excluded TRX/USDT from top-3: volume=30854373.02 (too low or not enough slots)
+2026-11-13 23:01:09 [WARNING] src.data_loader: Excluded XAUT/USDT from top-3: volume=25693804.42 (too low or not enough slots)
+2026-11-13 23:01:09 [WARNING] src.data_loader: Excluded BARD/USDT from top-3: volume=23239279.09 (too low or not enough slots)
+2026-11-13 23:01:09 [WARNING] src.data_loader: Excluded LINK/USDT from top-3: volume=22319723.73 (too low or not enough slots)
+2026-11-13 23:01:09 [WARNING] src.data_loader: Excluded TAO/USDT from top-3: volume=21694181.99 (too low or not enough slots)
+2026-11-13 23:01:09 [WARNING] src.data_loader: Excluded AVAX/USDT from top-3: volume=21247887.97 (too low or not enough slots)
+2026-11-13 23:01:09 [WARNING] src.data_loader: Excluded ADA/USDT from top-3: volume=20098256.10 (too low or not enough slots)
+2026-11-13 23:01:09 [WARNING] src.data_loader: Excluded INJ/USDT from top-3: volume=17992821.54 (too low or not enough slots)
+2026-11-13 23:01:09 [WARNING] src.data_loader: Excluded GOOGLB/USDT from top-3: volume=17755083.48 (too low or not enough slots)
+2026-11-13 23:01:09 [WARNING] src.data_loader: Excluded LTC/USDT from top-3: volume=15735733.56 (too low or not enough slots)
+2026-11-13 23:01:09 [WARNING] src.data_loader: Excluded MUB/USDT from top-3: volume=14619635.89 (too low or not enough slots)
+2026-11-13 23:01:09 [WARNING] src.data_loader: Excluded ARB/USDT from top-3: volume=14515073.61 (too low or not enough slots)
+2026-11-13 23:01:09 [WARNING] src.data_loader: Excluded RWUSD/USDT from top-3: volume=14012351.36 (too low or not enough slots)
+2026-11-13 23:01:09 [WARNING] src.data_loader: Excluded WLD/USDT from top-3: volume=13702080.35 (too low or not enough slots)
+2026-11-13 23:01:09 [WARNING] src.data_loader: Excluded CRCLB/USDT from top-3: volume=13679249.12 (too low or not enough slots)
+2026-11-13 23:01:09 [WARNING] src.data_loader: Excluded AAVE/USDT from top-3: volume=13503506.88 (too low or not enough slots)
+2026-11-13 23:01:09 [WARNING] src.data_loader: Excluded MSTRB/USDT from top-3: volume=12604032.05 (too low or not enough slots)
+2026-11-13 23:01:09 [WARNING] src.data_loader: Excluded PAXG/USDT from top-3: volume=12516918.13 (too low or not enough slots)
+2026-11-13 23:01:09 [WARNING] src.data_loader: Excluded SHELL/USDT from top-3: volume=12212215.09 (too low or not enough slots)
+2026-11-13 23:01:09 [WARNING] src.data_loader: Excluded GRAM/USDT from top-3: volume=11341081.87 (too low or not enough slots)
+2026-11-13 23:01:09 [WARNING] src.data_loader: Excluded XLM/USDT from top-3: volume=11268053.95 (too low or not enough slots)
+2026-11-13 23:01:09 [WARNING] src.data_loader: Excluded SOXSB/USDT from top-3: volume=10971884.41 (too low or not enough slots)
+2026-11-13 23:01:09 [WARNING] src.data_loader: Excluded INIT/USDT from top-3: volume=10073505.80 (too low or not enough slots)
+2026-11-13 23:01:09 [WARNING] src.data_loader: Excluded PUMP/USDT from top-3: volume=10065696.51 (too low or not enough slots)
+2026-11-13 23:01:09 [WARNING] src.data_loader: Excluded QNT/USDT from top-3: volume=9925061.65 (too low or not enough slots)
+2026-11-13 23:01:09 [WARNING] src.data_loader: Excluded ONDO/USDT from top-3: volume=9819105.85 (too low or not enough slots)
+2026-11-13 23:01:09 [WARNING] src.data_loader: Excluded FET/USDT from top-3: volume=9789720.24 (too low or not enough slots)
+2026-11-13 23:01:09 [WARNING] src.data_loader: Excluded HBAR/USDT from top-3: volume=8860430.73 (too low or not enough slots)
+2026-11-13 23:01:09 [WARNING] src.data_loader: Excluded QQQB/USDT from top-3: volume=8855132.89 (too low or not enough slots)
+2026-11-13 23:01:09 [WARNING] src.data_loader: Excluded ZRO/USDT from top-3: volume=8306502.90 (too low or not enough slots)
+2026-11-13 23:01:09 [WARNING] src.data_loader: Excluded BMT/USDT from top-3: volume=8025210.51 (too low or not enough slots)
+2026-11-13 23:01:09 [WARNING] src.data_loader: Excluded INTCB/USDT from top-3: volume=7984045.27 (too low or not enough slots)
+2026-11-13 23:01:09 [WARNING] src.data_loader: Excluded SOPH/USDT from top-3: volume=7957907.43 (too low or not enough slots)
+2026-11-13 23:01:09 [WARNING] src.data_loader: Excluded ERA/USDT from top-3: volume=7927682.95 (too low or not enough slots)
+2026-11-13 23:01:09 [WARNING] src.data_loader: Excluded 牛来/USDT from top-3: volume=7599425.16 (too low or not enough slots)
+2026-11-13 23:01:09 [WARNING] src.data_loader: Excluded TIA/USDT from top-3: volume=7433162.35 (too low or not enough slots)
+2026-11-13 23:01:09 [WARNING] src.data_loader: Excluded ICP/USDT from top-3: volume=7365562.00 (too low or not enough slots)
+2026-11-13 23:01:09 [WARNING] src.data_loader: Excluded ASTER/USDT from top-3: volume=6758231.43 (too low or not enough slots)
+2026-11-13 23:01:09 [WARNING] src.data_loader: Excluded TRUMP/USDT from top-3: volume=6696064.17 (too low or not enough slots)
+2026-11-13 23:01:09 [WARNING] src.data_loader: Excluded XUSD/USDT from top-3: volume=6344074.85 (too low or not enough slots)
+2026-11-13 23:01:09 [WARNING] src.data_loader: Excluded WLFI/USDT from top-3: volume=6253071.39 (too low or not enough slots)
+2026-11-13 23:01:09 [WARNING] src.data_loader: Excluded SNXXB/USDT from top-3: volume=5997436.79 (too low or not enough slots)
+2026-11-13 23:01:09 [WARNING] src.data_loader: Excluded SKHYB/USDT from top-3: volume=5956346.66 (too low or not enough slots)
+2026-11-13 23:01:09 [WARNING] src.data_loader: Excluded DODO/USDT from top-3: volume=5918095.87 (too low or not enough slots)
+2026-11-13 23:01:09 [WARNING] src.data_loader: Excluded KORUB/USDT from top-3: volume=5769167.07 (too low or not enough slots)
+2026-11-13 23:01:09 [WARNING] src.data_loader: Excluded PENGU/USDT from top-3: volume=5060114.02 (too low or not enough slots)
+2026-11-13 23:01:09 [WARNING] src.data_loader: Excluded BFUSD/USDT from top-3: volume=4978188.71 (too low or not enough slots)
+2026-11-13 23:01:09 [WARNING] src.data_loader: Excluded NIGHT/USDT from top-3: volume=4820411.16 (too low or not enough slots)
+2026-11-13 23:01:09 [WARNING] src.data_loader: Excluded NBISB/USDT from top-3: volume=4477209.95 (too low or not enough slots)
+2026-11-13 23:01:09 [WARNING] src.data_loader: Excluded JUP/USDT from top-3: volume=4360570.31 (too low or not enough slots)
+2026-11-13 23:01:09 [WARNING] src.data_loader: Excluded IMX/USDT from top-3: volume=4316185.85 (too low or not enough slots)
+2026-11-13 23:01:09 [WARNING] src.data_loader: Excluded PLUME/USDT from top-3: volume=3994697.74 (too low or not enough slots)
+2026-11-13 23:01:09 [WARNING] src.data_loader: Excluded BCH/USDT from top-3: volume=3985648.20 (too low or not enough slots)
+2026-11-13 23:01:09 [WARNING] src.data_loader: Excluded POL/USDT from top-3: volume=3930729.38 (too low or not enough slots)
+2026-11-13 23:01:09 [WARNING] src.data_loader: Excluded PENDLE/USDT from top-3: volume=3908948.66 (too low or not enough slots)
+2026-11-13 23:01:09 [WARNING] src.data_loader: Excluded TSLAB/USDT from top-3: volume=3905708.85 (too low or not enough slots)
+2026-11-13 23:01:09 [WARNING] src.data_loader: Excluded FIL/USDT from top-3: volume=3889381.05 (too low or not enough slots)
+2026-11-13 23:01:09 [WARNING] src.data_loader: Excluded XPL/USDT from top-3: volume=3854799.90 (too low or not enough slots)
+2026-11-13 23:01:09 [WARNING] src.data_loader: Excluded STRK/USDT from top-3: volume=3795539.94 (too low or not enough slots)
+2026-11-13 23:01:09 [WARNING] src.data_loader: Excluded ONE/USDT from top-3: volume=3657547.66 (too low or not enough slots)
+2026-11-13 23:01:09 [WARNING] src.data_loader: Excluded PYTH/USDT from top-3: volume=3578816.54 (too low or not enough slots)
+2026-11-13 23:01:09 [WARNING] src.data_loader: Excluded DOT/USDT from top-3: volume=3448330.74 (too low or not enough slots)
+2026-11-13 23:01:09 [WARNING] src.data_loader: Excluded STO/USDT from top-3: volume=3407294.28 (too low or not enough slots)
+2026-11-13 23:01:09 [WARNING] src.data_loader: Excluded BNCB/USDT from top-3: volume=3395799.00 (too low or not enough slots)
+2026-11-13 23:01:09 [WARNING] src.data_loader: Excluded DASH/USDT from top-3: volume=3348850.88 (too low or not enough slots)
+2026-11-13 23:01:09 [WARNING] src.data_loader: Excluded MARSCOIN/USDT from top-3: volume=3230752.49 (too low or not enough slots)
+2026-11-13 23:01:09 [WARNING] src.data_loader: Excluded CBRSB/USDT from top-3: volume=3208216.34 (too low or not enough slots)
+2026-11-13 23:01:09 [WARNING] src.data_loader: Excluded HUMA/USDT from top-3: volume=3189081.06 (too low or not enough slots)
+2026-11-13 23:01:09 [WARNING] src.data_loader: Excluded ZAMA/USDT from top-3: volume=3068283.57 (too low or not enough slots)
+2026-11-13 23:01:09 [WARNING] src.data_loader: Excluded BERA/USDT from top-3: volume=3062495.09 (too low or not enough slots)
+2026-11-13 23:01:09 [WARNING] src.data_loader: Excluded TQQQB/USDT from top-3: volume=3014475.59 (too low or not enough slots)
+2026-11-13 23:01:09 [WARNING] src.data_loader: Excluded RENDER/USDT from top-3: volume=2981836.32 (too low or not enough slots)
+2026-11-13 23:01:09 [WARNING] src.data_loader: Excluded STX/USDT from top-3: volume=2956512.20 (too low or not enough slots)
+2026-11-13 23:01:09 [WARNING] src.data_loader: Excluded OP/USDT from top-3: volume=2885882.96 (too low or not enough slots)
+2026-11-13 23:01:09 [WARNING] src.data_loader: Excluded VIRTUAL/USDT from top-3: volume=2866375.92 (too low or not enough slots)
+2026-11-13 23:01:09 [WARNING] src.data_loader: Excluded APT/USDT from top-3: volume=2854139.90 (too low or not enough slots)
+2026-11-13 23:01:09 [WARNING] src.data_loader: Excluded BEB/USDT from top-3: volume=2849051.14 (too low or not enough slots)
+2026-11-13 23:01:09 [WARNING] src.data_loader: Excluded AERO/USDT from top-3: volume=2735337.13 (too low or not enough slots)
+2026-11-13 23:01:09 [WARNING] src.data_loader: Excluded ORCLB/USDT from top-3: volume=2690747.26 (too low or not enough slots)
+2026-11-13 23:01:09 [WARNING] src.data_loader: Excluded GUN/USDT from top-3: volume=2549300.34 (too low or not enough slots)
+2026-11-13 23:01:09 [WARNING] src.data_loader: Excluded AR/USDT from top-3: volume=2525397.27 (too low or not enough slots)
+2026-11-13 23:01:09 [WARNING] src.data_loader: Excluded CAKE/USDT from top-3: volume=2486469.73 (too low or not enough slots)
+2026-11-13 23:01:09 [WARNING] src.data_loader: Excluded RAY/USDT from top-3: volume=2477209.70 (too low or not enough slots)
+2026-11-13 23:01:09 [WARNING] src.data_loader: Excluded AMDB/USDT from top-3: volume=2445875.14 (too low or not enough slots)
+2026-11-13 23:01:09 [WARNING] src.data_loader: Excluded BONK/USDT from top-3: volume=2404524.42 (too low or not enough slots)
+2026-11-13 23:01:09 [WARNING] src.data_loader: Excluded SHIB/USDT from top-3: volume=2330787.78 (too low or not enough slots)
+2026-11-13 23:01:09 [WARNING] src.data_loader: Excluded S/USDT from top-3: volume=2309726.52 (too low or not enough slots)
+2026-11-13 23:01:09 [WARNING] src.data_loader: Excluded KITE/USDT from top-3: volume=2279748.20 (too low or not enough slots)
+2026-11-13 23:01:09 [WARNING] src.data_loader: Excluded OSMO/USDT from top-3: volume=2245349.92 (too low or not enough slots)
+2026-11-13 23:01:09 [WARNING] src.data_loader: Excluded DEXE/USDT from top-3: volume=2236387.12 (too low or not enough slots)
+2026-11-13 23:01:09 [WARNING] src.data_loader: Excluded ALT/USDT from top-3: volume=2227672.49 (too low or not enough slots)
+2026-11-13 23:01:09 [WARNING] src.data_loader: Excluded BMNRB/USDT from top-3: volume=2154813.59 (too low or not enough slots)
+2026-11-13 23:01:09 [WARNING] src.data_loader: Excluded MRVLB/USDT from top-3: volume=2144662.85 (too low or not enough slots)
+2026-11-13 23:01:09 [WARNING] src.data_loader: Excluded JST/USDT from top-3: volume=2103451.67 (too low or not enough slots)
+2026-11-13 23:01:09 [WARNING] src.data_loader: Excluded SEI/USDT from top-3: volume=2082310.40 (too low or not enough slots)
+2026-11-13 23:01:09 [WARNING] src.data_loader: Excluded AVGOB/USDT from top-3: volume=2001133.10 (too low or not enough slots)
+2026-11-13 23:01:09 [WARNING] src.data_loader: Excluded FF/USDT from top-3: volume=1994274.74 (too low or not enough slots)
+2026-11-13 23:01:09 [WARNING] src.data_loader: Excluded USDE/USDT from top-3: volume=1981592.47 (too low or not enough slots)
+2026-11-13 23:01:09 [WARNING] src.data_loader: Excluded MEGA/USDT from top-3: volume=1955343.55 (too low or not enough slots)
+2026-11-13 23:01:09 [WARNING] src.data_loader: Excluded BEAMX/USDT from top-3: volume=1901112.09 (too low or not enough slots)
+2026-11-13 23:01:09 [WARNING] src.data_loader: Excluded ZK/USDT from top-3: volume=1875554.74 (too low or not enough slots)
+2026-11-13 23:01:09 [WARNING] src.data_loader: Excluded BANANAS31/USDT from top-3: volume=1843269.89 (too low or not enough slots)
+2026-11-13 23:01:09 [WARNING] src.data_loader: Excluded MORPHO/USDT from top-3: volume=1689637.62 (too low or not enough slots)
+2026-11-13 23:01:09 [WARNING] src.data_loader: Excluded SYRUP/USDT from top-3: volume=1664044.63 (too low or not enough slots)
+2026-11-13 23:01:09 [WARNING] src.data_loader: Excluded 0G/USDT from top-3: volume=1658225.84 (too low or not enough slots)
+2026-11-13 23:01:09 [WARNING] src.data_loader: Excluded OPG/USDT from top-3: volume=1655717.46 (too low or not enough slots)
+2026-11-13 23:01:09 [WARNING] src.data_loader: Excluded GIGGLE/USDT from top-3: volume=1651403.52 (too low or not enough slots)
+2026-11-13 23:01:09 [WARNING] src.data_loader: Excluded LDO/USDT from top-3: volume=1650453.72 (too low or not enough slots)
+2026-11-13 23:01:09 [WARNING] src.data_loader: Excluded CRV/USDT from top-3: volume=1640287.04 (too low or not enough slots)
+2026-11-13 23:01:09 [WARNING] src.data_loader: Excluded ZEN/USDT from top-3: volume=1633397.79 (too low or not enough slots)
+2026-11-13 23:01:09 [WARNING] src.data_loader: Excluded ATOM/USDT from top-3: volume=1547338.77 (too low or not enough slots)
+2026-11-13 23:01:09 [WARNING] src.data_loader: Excluded ETC/USDT from top-3: volume=1526220.12 (too low or not enough slots)
+2026-11-13 23:01:09 [WARNING] src.data_loader: Excluded EIGEN/USDT from top-3: volume=1517401.75 (too low or not enough slots)
+2026-11-13 23:01:09 [WARNING] src.data_loader: Excluded COINB/USDT from top-3: volume=1494531.05 (too low or not enough slots)
+2026-11-13 23:01:09 [WARNING] src.data_loader: Excluded ORDI/USDT from top-3: volume=1480767.46 (too low or not enough slots)
+2026-11-13 23:01:09 [WARNING] src.data_loader: Excluded GTC/USDT from top-3: volume=1475118.41 (too low or not enough slots)
+2026-11-13 23:01:09 [WARNING] src.data_loader: Excluded ALGO/USDT from top-3: volume=1464149.41 (too low or not enough slots)
+2026-11-13 23:01:09 [WARNING] src.data_loader: Excluded MET/USDT from top-3: volume=1434942.40 (too low or not enough slots)
+2026-11-13 23:01:09 [WARNING] src.data_loader: Excluded BABAB/USDT from top-3: volume=1429265.68 (too low or not enough slots)
+2026-11-13 23:01:09 [WARNING] src.data_loader: Excluded DRAMB/USDT from top-3: volume=1410741.03 (too low or not enough slots)
+2026-11-13 23:01:09 [WARNING] src.data_loader: Excluded CHIP/USDT from top-3: volume=1373973.51 (too low or not enough slots)
+2026-11-13 23:01:09 [WARNING] src.data_loader: Excluded VANA/USDT from top-3: volume=1371843.39 (too low or not enough slots)
+2026-11-13 23:01:09 [WARNING] src.data_loader: Excluded SKY/USDT from top-3: volume=1366865.00 (too low or not enough slots)
+2026-11-13 23:01:09 [WARNING] src.data_loader: Excluded PROM/USDT from top-3: volume=1362605.28 (too low or not enough slots)
+2026-11-13 23:01:09 [WARNING] src.data_loader: Excluded BAT/USDT from top-3: volume=1348475.74 (too low or not enough slots)
+2026-11-13 23:01:09 [WARNING] src.data_loader: Excluded RUNE/USDT from top-3: volume=1348342.13 (too low or not enough slots)
+2026-11-13 23:01:09 [WARNING] src.data_loader: Excluded 币安人生/USDT from top-3: volume=1346619.58 (too low or not enough slots)
+2026-11-13 23:01:09 [WARNING] src.data_loader: Excluded FTM/USDT from top-3: volume=1301242.24 (too low or not enough slots)
+2026-11-13 23:01:09 [WARNING] src.data_loader: Excluded JTO/USDT from top-3: volume=1292591.87 (too low or not enough slots)
+2026-11-13 23:01:09 [WARNING] src.data_loader: Excluded ARKM/USDT from top-3: volume=1289134.89 (too low or not enough slots)
+2026-11-13 23:01:09 [WARNING] src.data_loader: Excluded GRT/USDT from top-3: volume=1279537.59 (too low or not enough slots)
+2026-11-13 23:01:09 [WARNING] src.data_loader: Excluded NXPC/USDT from top-3: volume=1273284.21 (too low or not enough slots)
+2026-11-13 23:01:09 [WARNING] src.data_loader: Excluded BABY/USDT from top-3: volume=1273039.65 (too low or not enough slots)
+2026-11-13 23:01:09 [WARNING] src.data_loader: Excluded MSFTB/USDT from top-3: volume=1266568.30 (too low or not enough slots)
+2026-11-13 23:01:09 [WARNING] src.data_loader: Excluded HAEDAL/USDT from top-3: volume=1264709.31 (too low or not enough slots)
+2026-11-13 23:01:09 [WARNING] src.data_loader: Excluded CFG/USDT from top-3: volume=1208904.56 (too low or not enough slots)
+2026-11-13 23:01:09 [WARNING] src.data_loader: Excluded OPEN/USDT from top-3: volume=1205576.43 (too low or not enough slots)
+2026-11-13 23:01:09 [WARNING] src.data_loader: Excluded NEXO/USDT from top-3: volume=1167057.29 (too low or not enough slots)
+2026-11-13 23:01:09 [WARNING] src.data_loader: Excluded MANTRA/USDT from top-3: volume=1157104.94 (too low or not enough slots)
+2026-11-13 23:01:09 [WARNING] src.data_loader: Excluded RE/USDT from top-3: volume=1132692.65 (too low or not enough slots)
+2026-11-13 23:01:09 [WARNING] src.data_loader: Excluded BOME/USDT from top-3: volume=1121875.20 (too low or not enough slots)
+2026-11-13 23:01:09 [WARNING] src.data_loader: Excluded APE/USDT from top-3: volume=1117989.51 (too low or not enough slots)
+2026-11-13 23:01:09 [WARNING] src.data_loader: Excluded OMNI/USDT from top-3: volume=1105809.60 (too low or not enough slots)
+2026-11-13 23:01:09 [WARNING] src.data_loader: Excluded CYBER/USDT from top-3: volume=1088790.23 (too low or not enough slots)
+2026-11-13 23:01:09 [WARNING] src.data_loader: Excluded PARTI/USDT from top-3: volume=1081217.83 (too low or not enough slots)
+2026-11-13 23:01:09 [WARNING] src.data_loader: Excluded MUBARAK/USDT from top-3: volume=1045543.04 (too low or not enough slots)
+2026-11-13 23:01:09 [WARNING] src.data_loader: Excluded METAB/USDT from top-3: volume=1041734.23 (too low or not enough slots)
+2026-11-13 23:01:09 [WARNING] src.data_loader: Excluded SPYB/USDT from top-3: volume=1040679.93 (too low or not enough slots)
+2026-11-13 23:01:09 [WARNING] src.data_loader: Excluded LUNC/USDT from top-3: volume=1037391.03 (too low or not enough slots)
+2026-11-13 23:01:09 [WARNING] src.data_loader: Excluded LITEB/USDT from top-3: volume=1028109.83 (too low or not enough slots)
+2026-11-13 23:01:09 [WARNING] src.data_loader: Excluded GMX/USDT from top-3: volume=1025947.00 (too low or not enough slots)
+2026-11-13 23:01:09 [WARNING] src.data_loader: Excluded W/USDT from top-3: volume=1003500.09 (too low or not enough slots)
+2026-11-13 23:01:09 [WARNING] src.data_loader: Excluded SAND/USDT from top-3: volume=1002999.74 (too low or not enough slots)
+2026-11-13 23:01:09 [WARNING] src.data_loader: Excluded VET/USDT from top-3: volume=1001435.28 (too low or not enough slots)
+2026-11-13 23:01:09 [INFO] src.data_loader: Selected 3 symbols from 172 candidates (top-3 by volume)
+2026-11-13 23:01:09 [WARNING] ccxt.base.exchange: binance requires to release all resources with an explicit call to the .close() coroutine. If you are using the exchange instance with async coroutines, add `await exchange.close()` to your code into a place when you're done with the exchange and don't need the exchange instance anymore (at the end of your async coroutine).
+2026-11-13 23:01:09 [ERROR] asyncio: Unclosed client session
+client_session: <aiohttp.client.ClientSession object at 0x7f23bcc78ad0>
+2026-11-13 23:01:09 [ERROR] asyncio: Unclosed connector
+connections: ['deque([(<aiohttp.client_proto.ResponseHandler object at 0x7f23bcae4500>, 30643.050771916)])', 'deque([(<aiohttp.client_proto.ResponseHandler object at 0x7f23bcc5c4d0>, 30643.481193395)])', 'deque([(<aiohttp.client_proto.ResponseHandler object at 0x7f23bcae41e0>, 30644.800682756)])']
+connector: <aiohttp.connector.TCPConnector object at 0x7f23bcd46f90>
+2026-11-13 23:01:09 [INFO] src.data_loader: Already cached: 0, need download: 3
+2026-11-13 23:01:09 [INFO] src.data_loader: Downloading 3 datasets...
+2026-11-13 23:01:12 [INFO] src.data_loader: [1/3] Fetching SOL/USDT (1h)
+2026-11-13 23:01:16 [INFO] src.data_loader:   ✓ SOL/USDT: 8760 candles (2025-11-13T21:00:00+00:00 → 2026-11-13T20:00:00+00:00)
+2026-11-13 23:01:16 [INFO] src.data_loader: [2/3] Fetching ZEC/USDT (1h)
+2026-11-13 23:01:20 [INFO] src.data_loader:   ✓ ZEC/USDT: 8760 candles (2025-11-13T21:00:00+00:00 → 2026-11-13T20:00:00+00:00)
+2026-11-13 23:01:20 [INFO] src.data_loader: [3/3] Fetching USD1/USDT (1h)
+2026-11-13 23:01:24 [INFO] src.data_loader:   ✓ USD1/USDT: 8760 candles (2025-11-13T21:00:00+00:00 → 2026-11-13T20:00:00+00:00)
+2026-11-13 23:01:24 [INFO] src.data_loader: Cached 3 symbol datasets to data_cache/
+2026-11-13 23:01:24 [INFO] src.data_loader: Total loaded: 3 symbols
+2026-11-13 23:01:24 [INFO] src.data_loader: Cached 3 symbol datasets to data_cache/
+2026-11-13 23:01:24 [INFO] src.backtest_engine: Loaded 3 symbols
+2026-11-13 23:01:24 [INFO] src.backtest_engine: [2/6] Computing indicators...
+2026-11-13 23:01:24 [INFO] src.backtest_engine: 3 symbols ready for backtest
+2026-11-13 23:01:24 [INFO] src.backtest_engine: [3/6] Generating signals...
+2026-11-13 23:01:26 [INFO] src.backtest_engine: Total entry signals: 42
+2026-11-13 23:01:26 [INFO] src.backtest_engine: [4/6] Running simulation...
+2026-11-13 23:01:26 [ERROR] src.strategy: Halted due to max drawdown limit: equity=43655.21 < initial=100000.00 * 0.5
+2026-11-13 23:01:26 [INFO] src.backtest_engine: Simulation complete: 1 trades, 0 unclosed
+2026-11-13 23:01:26 [INFO] src.backtest_engine: [5/6] Computing metrics...
+2026-11-13 23:01:26 [INFO] src.backtest_engine: [6/6] Generating visualizations...
+2026-11-13 23:01:26 [INFO] src.visualization: Equity curve saved to results/equity_curve.png
+2026-11-13 23:01:26 [INFO] src.visualization: PNG charts saved to results
+2026-11-13 23:01:27 [INFO] src.visualization: HTML report saved to results/backtest_report.html
+2026-11-13 23:01:27 [INFO] src.backtest_engine: Trades CSV saved: 1 rows
+2026-11-13 23:01:27 [INFO] src.backtest_engine: Equity curve CSV saved
+2026-11-13 23:01:27 [INFO] src.backtest_engine: Text report saved to results/metrics_report.txt
+2026-11-13 23:01:27 [INFO] src.backtest_engine: ============================================================
+2026-11-13 23:01:27 [INFO] src.backtest_engine: BACKTEST COMPLETE — 19.98 seconds
+2026-11-13 23:01:27 [INFO] src.backtest_engine: ============================================================
+2026-11-13 23:03:38 [INFO] __main__: Config loaded: timeframe=1h, coins=30, years=2, market=futures
+2026-11-13 23:03:38 [INFO] src.backtest_engine: ============================================================
+2026-11-13 23:03:38 [INFO] src.backtest_engine: BACKTEST START
+2026-11-13 23:03:38 [INFO] src.backtest_engine: ============================================================
+2026-11-13 23:03:38 [INFO] src.backtest_engine: [1/6] Loading data...
+2026-11-13 23:03:38 [INFO] src.data_loader: 3 cached datasets found
+2026-11-13 23:03:38 [INFO] src.data_loader: Already cached: 3, need download: 0
+2026-11-13 23:03:38 [INFO] src.data_loader: Loaded 3 datasets from cache
+2026-11-13 23:03:38 [INFO] src.data_loader: Cached 3 symbol datasets to data_cache/
+2026-11-13 23:03:38 [INFO] src.data_loader: Total loaded: 3 symbols
+2026-11-13 23:03:38 [INFO] src.data_loader: Cached 3 symbol datasets to data_cache/
+2026-11-13 23:03:38 [INFO] src.backtest_engine: Loaded 3 symbols
+2026-11-13 23:03:38 [INFO] src.backtest_engine: [2/6] Computing indicators...
+2026-11-13 23:03:39 [INFO] src.backtest_engine: 3 symbols ready for backtest
+2026-11-13 23:03:39 [INFO] src.backtest_engine: [3/6] Generating signals...
+2026-11-13 23:03:40 [INFO] src.backtest_engine: Total entry signals: 42
+2026-11-13 23:03:40 [INFO] src.backtest_engine: [4/6] Running simulation...
+2026-11-13 23:03:40 [ERROR] src.strategy: Halted due to max drawdown limit: equity=43655.21 < initial=100000.00 * 0.5
+2026-11-13 23:03:40 [INFO] src.backtest_engine: Simulation complete: 1 trades, 0 unclosed
+2026-11-13 23:03:40 [INFO] src.backtest_engine: [5/6] Computing metrics...
+2026-11-13 23:03:41 [INFO] src.backtest_engine: [6/6] Generating visualizations...
+2026-11-13 23:03:41 [INFO] src.visualization: Equity curve saved to results/equity_curve.png
+2026-11-13 23:03:41 [INFO] src.visualization: PNG charts saved to results
+2026-11-13 23:03:41 [INFO] src.visualization: HTML report saved to results/backtest_report.html
+2026-11-13 23:03:41 [INFO] src.backtest_engine: Trades CSV saved: 1 rows
+2026-11-13 23:03:41 [INFO] src.backtest_engine: Equity curve CSV saved
+2026-11-13 23:03:41 [INFO] src.backtest_engine: Text report saved to results/metrics_report.txt
+2026-11-13 23:03:41 [INFO] src.backtest_engine: ============================================================
+2026-11-13 23:03:41 [INFO] src.backtest_engine: BACKTEST COMPLETE — 2.73 seconds
+2026-11-13 23:03:41 [INFO] src.backtest_engine: ============================================================
+2026-11-13 23:03:58 [INFO] __main__: Config loaded: timeframe=1h, coins=30, years=2, market=futures
+2026-11-13 23:03:58 [INFO] src.backtest_engine: ============================================================
+2026-11-13 23:03:58 [INFO] src.backtest_engine: BACKTEST START
+2026-11-13 23:03:58 [INFO] src.backtest_engine: ============================================================
+2026-11-13 23:03:58 [INFO] src.backtest_engine: [1/6] Loading data...
+2026-11-13 23:04:00 [WARNING] src.data_loader: No futures tickers found (all appear to be spot) — using fallback
+2026-11-13 23:04:00 [INFO] src.data_loader: Using fallback: 30 symbols
+2026-11-13 23:04:00 [WARNING] ccxt.base.exchange: binance requires to release all resources with an explicit call to the .close() coroutine. If you are using the exchange instance with async coroutines, add `await exchange.close()` to your code into a place when you're done with the exchange and don't need the exchange instance anymore (at the end of your async coroutine).
+2026-11-13 23:04:00 [ERROR] asyncio: Unclosed client session
+client_session: <aiohttp.client.ClientSession object at 0x7f3fa97acad0>
+2026-11-13 23:04:00 [ERROR] asyncio: Unclosed connector
+connections: ['deque([(<aiohttp.client_proto.ResponseHandler object at 0x7f3fa96201e0>, 30814.799442191)])', 'deque([(<aiohttp.client_proto.ResponseHandler object at 0x7f3fa97984d0>, 30815.178763549)])', 'deque([(<aiohttp.client_proto.ResponseHandler object at 0x7f3fa9620500>, 30815.984132582)])']
+connector: <aiohttp.connector.TCPConnector object at 0x7f3fa9882f90>
+2026-11-13 23:04:00 [INFO] src.data_loader: Already cached: 0, need download: 30
+2026-11-13 23:04:00 [INFO] src.data_loader: Downloading 30 datasets...
+2026-11-13 23:04:04 [INFO] src.data_loader: [1/30] Fetching BTC/USDT (1h)
+2026-11-13 23:04:18 [INFO] src.data_loader:   ✓ BTC/USDT: 17520 candles (2024-11-13T21:00:00+00:00 → 2026-11-13T20:00:00+00:00)
+2026-11-13 23:04:18 [INFO] src.data_loader: [2/30] Fetching ETH/USDT (1h)
+2026-11-13 23:04:30 [INFO] src.data_loader:   ✓ ETH/USDT: 17520 candles (2024-11-13T21:00:00+00:00 → 2026-11-13T20:00:00+00:00)
+2026-11-13 23:04:30 [INFO] src.data_loader: [3/30] Fetching SOL/USDT (1h)
+2026-11-13 23:04:42 [INFO] src.data_loader:   ✓ SOL/USDT: 17520 candles (2024-11-13T21:00:00+00:00 → 2026-11-13T20:00:00+00:00)
+2026-11-13 23:04:42 [INFO] src.data_loader: [4/30] Fetching BNB/USDT (1h)
+2026-11-13 23:04:53 [INFO] src.data_loader:   ✓ BNB/USDT: 17520 candles (2024-11-13T21:00:00+00:00 → 2026-11-13T20:00:00+00:00)
+2026-11-13 23:04:53 [INFO] src.data_loader: [5/30] Fetching XRP/USDT (1h)
+2026-11-13 23:05:04 [INFO] src.data_loader:   ✓ XRP/USDT: 17520 candles (2024-11-13T21:00:00+00:00 → 2026-11-13T20:00:00+00:00)
+2026-11-13 23:05:04 [INFO] src.data_loader: [6/30] Fetching DOGE/USDT (1h)
+2026-11-13 23:05:15 [INFO] src.data_loader:   ✓ DOGE/USDT: 17520 candles (2024-11-13T21:00:00+00:00 → 2026-11-13T20:00:00+00:00)
+2026-11-13 23:05:15 [INFO] src.data_loader: [7/30] Fetching ADA/USDT (1h)
+2026-11-13 23:05:26 [INFO] src.data_loader:   ✓ ADA/USDT: 17520 candles (2024-11-13T21:00:00+00:00 → 2026-11-13T20:00:00+00:00)
+2026-11-13 23:05:26 [INFO] src.data_loader: [8/30] Fetching AVAX/USDT (1h)
+2026-11-13 23:05:38 [INFO] src.data_loader:   ✓ AVAX/USDT: 17520 candles (2024-11-13T21:00:00+00:00 → 2026-11-13T20:00:00+00:00)
+2026-11-13 23:05:38 [INFO] src.data_loader: [9/30] Fetching LINK/USDT (1h)
+2026-11-13 23:05:50 [INFO] src.data_loader:   ✓ LINK/USDT: 17520 candles (2024-11-13T21:00:00+00:00 → 2026-11-13T20:00:00+00:00)
+2026-11-13 23:05:50 [INFO] src.data_loader: [10/30] Fetching MATIC/USDT (1h)
+2026-11-13 23:05:50 [ERROR] src.data_loader: Failed to fetch MATIC/USDT: module 'ccxt.base.errors' has no attribute 'RateLimit'
+2026-11-13 23:05:50 [INFO] src.data_loader: [11/30] Fetching DOT/USDT (1h)
+2026-11-13 23:06:00 [INFO] src.data_loader:   ✓ DOT/USDT: 17520 candles (2024-11-13T21:00:00+00:00 → 2026-11-13T20:00:00+00:00)
+2026-11-13 23:06:00 [INFO] src.data_loader: [12/30] Fetching UNI/USDT (1h)
+2026-11-13 23:06:11 [INFO] src.data_loader:   ✓ UNI/USDT: 17520 candles (2024-11-13T21:00:00+00:00 → 2026-11-13T20:00:00+00:00)
+2026-11-13 23:06:11 [INFO] src.data_loader: [13/30] Fetching ATOM/USDT (1h)
+2026-11-13 23:06:23 [INFO] src.data_loader:   ✓ ATOM/USDT: 17520 candles (2024-11-13T21:00:00+00:00 → 2026-11-13T20:00:00+00:00)
+2026-11-13 23:06:23 [INFO] src.data_loader: [14/30] Fetching LTC/USDT (1h)
+2026-11-13 23:06:34 [INFO] src.data_loader:   ✓ LTC/USDT: 17520 candles (2024-11-13T21:00:00+00:00 → 2026-11-13T20:00:00+00:00)
+2026-11-13 23:06:34 [INFO] src.data_loader: [15/30] Fetching ETC/USDT (1h)
+2026-11-13 23:06:45 [INFO] src.data_loader:   ✓ ETC/USDT: 17520 candles (2024-11-13T21:00:00+00:00 → 2026-11-13T20:00:00+00:00)
+2026-11-13 23:06:45 [INFO] src.data_loader: [16/30] Fetching FIL/USDT (1h)
+2026-11-13 23:06:55 [INFO] src.data_loader:   ✓ FIL/USDT: 17520 candles (2024-11-13T21:00:00+00:00 → 2026-11-13T20:00:00+00:00)
+2026-11-13 23:06:55 [INFO] src.data_loader: [17/30] Fetching APT/USDT (1h)
+2026-11-13 23:07:06 [INFO] src.data_loader:   ✓ APT/USDT: 17520 candles (2024-11-13T21:00:00+00:00 → 2026-11-13T20:00:00+00:00)
+2026-11-13 23:07:06 [INFO] src.data_loader: [18/30] Fetching ARBN/USDT (1h)
+2026-11-13 23:07:06 [ERROR] src.data_loader: Failed to fetch ARBN/USDT: module 'ccxt.base.errors' has no attribute 'RateLimit'
+2026-11-13 23:07:06 [INFO] src.data_loader: [19/30] Fetching NEAR/USDT (1h)
+2026-11-13 23:07:18 [INFO] src.data_loader:   ✓ NEAR/USDT: 17520 candles (2024-11-13T21:00:00+00:00 → 2026-11-13T20:00:00+00:00)
+2026-11-13 23:07:18 [INFO] src.data_loader: [20/30] Fetching ALGO/USDT (1h)
+2026-11-13 23:07:29 [INFO] src.data_loader:   ✓ ALGO/USDT: 17520 candles (2024-11-13T21:00:00+00:00 → 2026-11-13T20:00:00+00:00)
+2026-11-13 23:07:29 [INFO] src.data_loader: [21/30] Fetching FTM/USDT (1h)
+2026-11-13 23:07:40 [INFO] src.data_loader:   ✓ FTM/USDT: 17520 candles (2024-11-13T21:00:00+00:00 → 2026-11-13T20:00:00+00:00)
+2026-11-13 23:07:40 [INFO] src.data_loader: [22/30] Fetching SAND/USDT (1h)
+2026-11-13 23:07:52 [INFO] src.data_loader:   ✓ SAND/USDT: 17520 candles (2024-11-13T21:00:00+00:00 → 2026-11-13T20:00:00+00:00)
+2026-11-13 23:07:52 [INFO] src.data_loader: [23/30] Fetching MANA/USDT (1h)
+2026-11-13 23:08:03 [INFO] src.data_loader:   ✓ MANA/USDT: 17520 candles (2024-11-13T21:00:00+00:00 → 2026-11-13T20:00:00+00:00)
+2026-11-13 23:08:03 [INFO] src.data_loader: [24/30] Fetching AXS/USDT (1h)
+2026-11-13 23:08:14 [INFO] src.data_loader:   ✓ AXS/USDT: 17520 candles (2024-11-13T21:00:00+00:00 → 2026-11-13T20:00:00+00:00)
+2026-11-13 23:08:14 [INFO] src.data_loader: [25/30] Fetching THETA/USDT (1h)
+2026-11-13 23:08:26 [INFO] src.data_loader:   ✓ THETA/USDT: 17520 candles (2024-11-13T21:00:00+00:00 → 2026-11-13T20:00:00+00:00)
+2026-11-13 23:08:26 [INFO] src.data_loader: [26/30] Fetching ICP/USDT (1h)
+2026-11-13 23:08:37 [INFO] src.data_loader:   ✓ ICP/USDT: 17520 candles (2024-11-13T21:00:00+00:00 → 2026-11-13T20:00:00+00:00)
+2026-11-13 23:08:37 [INFO] src.data_loader: [27/30] Fetching VET/USDT (1h)
+2026-11-13 23:08:48 [INFO] src.data_loader:   ✓ VET/USDT: 17520 candles (2024-11-13T21:00:00+00:00 → 2026-11-13T20:00:00+00:00)
+2026-11-13 23:08:48 [INFO] src.data_loader: [28/30] Fetching HBAR/USDT (1h)
+2026-11-13 23:08:59 [INFO] src.data_loader:   ✓ HBAR/USDT: 17520 candles (2024-11-13T21:00:00+00:00 → 2026-11-13T20:00:00+00:00)
+2026-11-13 23:08:59 [INFO] src.data_loader: [29/30] Fetching EGLD/USDT (1h)
+2026-11-13 23:09:11 [INFO] src.data_loader:   ✓ EGLD/USDT: 17520 candles (2024-11-13T21:00:00+00:00 → 2026-11-13T20:00:00+00:00)
+2026-11-13 23:09:11 [INFO] src.data_loader: [30/30] Fetching XTZ/USDT (1h)
+2026-11-13 23:09:23 [INFO] src.data_loader:   ✓ XTZ/USDT: 17520 candles (2024-11-13T21:00:00+00:00 → 2026-11-13T20:00:00+00:00)
+2026-11-13 23:09:23 [INFO] src.data_loader: Cached 28 symbol datasets to data_cache/
+2026-11-13 23:09:23 [INFO] src.data_loader: Total loaded: 28 symbols
+2026-11-13 23:09:23 [INFO] src.data_loader: Cached 28 symbol datasets to data_cache/
+2026-11-13 23:09:23 [INFO] src.backtest_engine: Loaded 28 symbols
+2026-11-13 23:09:23 [INFO] src.backtest_engine: [2/6] Computing indicators...
+2026-11-13 23:09:26 [INFO] src.backtest_engine: 28 symbols ready for backtest
+2026-11-13 23:09:26 [INFO] src.backtest_engine: [3/6] Generating signals...
+2026-11-13 23:09:55 [INFO] src.backtest_engine: Total entry signals: 969
+2026-11-13 23:09:55 [INFO] src.backtest_engine: [4/6] Running simulation...
+2026-11-13 23:09:56 [ERROR] src.strategy: Halted due to max drawdown limit: equity=7667.50 < initial=100000.00 * 0.5
+2026-11-13 23:09:56 [INFO] src.backtest_engine: Simulation complete: 1 trades, 0 unclosed
+2026-11-13 23:09:56 [INFO] src.backtest_engine: [5/6] Computing metrics...
+2026-11-13 23:09:56 [INFO] src.backtest_engine: [6/6] Generating visualizations...
+2026-11-13 23:09:56 [INFO] src.visualization: Equity curve saved to results/equity_curve.png
+2026-11-13 23:09:56 [INFO] src.visualization: PNG charts saved to results
+2026-11-13 23:09:56 [INFO] src.visualization: HTML report saved to results/backtest_report.html
+2026-11-13 23:09:56 [INFO] src.backtest_engine: Trades CSV saved: 1 rows
+2026-11-13 23:09:56 [INFO] src.backtest_engine: Equity curve CSV saved
+2026-11-13 23:09:56 [INFO] src.backtest_engine: Text report saved to results/metrics_report.txt
+2026-11-13 23:09:56 [INFO] src.backtest_engine: ============================================================
+2026-11-13 23:09:56 [INFO] src.backtest_engine: BACKTEST COMPLETE — 357.93 seconds
+2026-11-13 23:09:56 [INFO] src.backtest_engine: ============================================================

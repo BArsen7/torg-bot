@@ -90,10 +90,13 @@ def compute_sharpe_ratio(
 
     sharpe = (mean(r) - rf) / std(r) * sqrt(periods_per_year)
     """
-    excess = returns - risk_free_rate / periods_per_year
-    if excess.std() == 0:
+    if len(returns) < 2:
         return 0.0
-    return (excess.mean() / excess.std()) * np.sqrt(periods_per_year)
+    excess = returns - risk_free_rate / periods_per_year
+    std = excess.std()
+    if std == 0:
+        return 0.0
+    return (excess.mean() / std) * np.sqrt(periods_per_year)
 
 
 def compute_sortino_ratio(
@@ -107,8 +110,8 @@ def compute_sortino_ratio(
     """
     excess = returns - risk_free_rate / periods_per_year
     downside = excess[excess < 0]
-    if len(downside) == 0:
-        return float("inf")
+    if len(downside) < 2:
+        return 0.0
     downside_std = downside.std()
     if downside_std == 0:
         return 0.0
@@ -125,6 +128,11 @@ def compute_max_drawdown(
     ----------
     Dict: {peak, trough, drawdown, start, end, duration}
     """
+    # equity никогда не должна идти ниже 0
+    assert (equity_curve >= 0).all(), (
+        f"Equity curve has negative values: min={equity_curve.min():.2f}. "
+        "This indicates a bug in position sizing or risk management."
+    )
     rolling_max = equity_curve.cummax()
     drawdown = (equity_curve - rolling_max) / rolling_max
 
@@ -225,11 +233,15 @@ def compute_metrics(
     else:
         m.days_traded = 1
 
-    annualization_factor = m.days_traded / 365.0
-    if annualization_factor > 0:
-        m.cagr = (
-            (m.final_equity / initial_equity) ** (1 / annualization_factor) - 1
-        )
+    if m.days_traded < 30:
+        # Слишком короткий период для годовой нормировки — берём total_return
+        m.cagr = m.total_return
+    else:
+        annualization_factor = m.days_traded / 365.0
+        if annualization_factor > 0:
+            m.cagr = (
+                (m.final_equity / initial_equity) ** (1 / annualization_factor) - 1
+            )
 
     # --- Returns series ---
     if not equity_curve.empty:
@@ -291,7 +303,7 @@ def compute_metrics(
 
         gross_profit = sum(wins)
         gross_loss = abs(sum(losses))
-        m.profit_factor = gross_profit / gross_loss if gross_loss > 0 else float("inf")
+        m.profit_factor = gross_profit / gross_loss if gross_loss > 0 else 0.0
 
         m.avg_return = np.mean(pnl_pcts) if pnl_pcts else 0.0
         m.avg_holding_bars = np.mean([t.holding_bars for t in closed]) if closed else 0.0
@@ -322,6 +334,12 @@ def format_metrics_report(metrics: PerformanceMetrics) -> str:
     """
     Сформировать текстовый отчёт с метриками.
     """
+    import math
+
+    pf_str = "inf" if math.isinf(metrics.profit_factor) else f"{metrics.profit_factor:.3f}"
+    sharpe_str = "N/A" if pd.isna(metrics.sharpe_ratio) else f"{metrics.sharpe_ratio:.3f}"
+    sortino_str = "N/A" if pd.isna(metrics.sortino_ratio) else f"{metrics.sortino_ratio:.3f}"
+
     lines = [
         "=" * 60,
         "  БЭКТЕСТ ОТЧЁТ — Range Trading with Trend Filter",
@@ -337,8 +355,8 @@ def format_metrics_report(metrics: PerformanceMetrics) -> str:
         "",
         "  РИСК",
         "-" * 40,
-        f"  Sharpe Ratio:           {metrics.sharpe_ratio:>11.3f}",
-        f"  Sortino Ratio:          {metrics.sortino_ratio:>11.3f}",
+        f"  Sharpe Ratio:           {sharpe_str:>11s}",
+        f"  Sortino Ratio:          {sortino_str:>11s}",
         f"  Calmar Ratio:           {metrics.calmar_ratio:>11.3f}",
         f"  Max Drawdown (abs):     ${metrics.max_drawdown_abs:>11,.2f}",
         f"  Max Drawdown (pct):     {metrics.max_drawdown_pct:>11.2%}",
@@ -350,7 +368,7 @@ def format_metrics_report(metrics: PerformanceMetrics) -> str:
         f"  Побед:                  {metrics.win_trades:>12}",
         f"  Поражений:              {metrics.loss_trades:>12}",
         f"  Win Rate:               {metrics.win_rate:>11.2%}",
-        f"  Profit Factor:          {metrics.profit_factor:>11.3f}",
+        f"  Profit Factor:          {pf_str:>11s}",
         f"  Avg Win:                ${metrics.avg_win:>11,.2f}",
         f"  Avg Loss:               ${metrics.avg_loss:>11,.2f}",
         f"  Avg Holding (bars):     {metrics.avg_holding_bars:>12.1f}",

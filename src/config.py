@@ -36,6 +36,7 @@ class DataConfig:
     ])
     cache_dir: str = "data_cache"
     cache_max_age_days: int = 1
+    min_required_rows: int = 100  # Минимальное количество свечей для анализа
 
 
 @dataclass

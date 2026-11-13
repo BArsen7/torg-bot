@@ -38,8 +38,12 @@ def calculate_position_size(
 
     position_size = (free_equity * risk_per_trade) / |entry - stop|
 
-    ВАЖНО: используем free_equity, а не общий equity, чтобы избежать
-    оверрага. Плечо применяется только если остаток маржи достаточен.
+    ВАЖНО: PnL при достижении стопа = size * |entry - stop| = free_equity * risk_per_trade
+    Это гарантирует, что максимальный риск на сделку = risk_per_trade * equity.
+
+    ПРИМЕЧАНИЕ: Раньше формула была (free_equity * risk * entry_price) / distance —
+    это был критический баг! Он умножал позицию на entry_price, что увеличивало риск
+    в |entry_price| раз. Например при entry=80 риск был 80x больше целевого.
 
     Параметры
     ---------
@@ -58,25 +62,55 @@ def calculate_position_size(
                        free_equity, entry_price, stop_price)
         return 0.0
 
-    # Стоимость маржи, требуемой для позиции
-    # Для long: маржа = position_size * entry_price / leverage
-    # Мы хотим: position_size * |entry - stop| / entry_price = free_equity * risk
-    # => position_size = free_equity * risk * entry_price / |entry - stop|
-
     price_distance = abs(entry_price - stop_price)
 
     if price_distance <= 0 or np.isnan(price_distance):
         logger.warning("Invalid price distance: %.6f", price_distance)
         return 0.0
 
-    # Размер позиции с учётом риска
-    position_size = (free_equity * risk_per_trade * entry_price) / price_distance
+    # ---------------------------------------------------------------
+    # ФИКС БАГА -56% — убран лишний множитель entry_price из формулы
+    # ---------------------------------------------------------------
+    # Правильная формула:
+    #   risk_amount = free_equity * risk_per_trade
+    #   position_size = risk_amount / |entry - stop|
+    #
+    # Пример (вход=80, стоп=75.68, risk=2%, equity=100k):
+    #   risk_amount = 100000 * 0.02 = 2000
+    #   price_distance = 4.32
+    #   position_size = 2000 / 4.32 = 463 контракта
+    #   PnL при стопе = 463 * 4.32 = $2000 = 2% ✓
+    #
+    # БАГ (старая версия):
+    #   position_size = (100000 * 0.02 * 80) / 4.32 = 370 370
+    #   max_notional = 100000 * 10 / 80 = 12500
+    #   PnL при стопе = 12500 * 4.32 = $54000 = 54% УБИТЕЛЬСКИЙ БАГ!
+    # ---------------------------------------------------------------
+    position_size = (free_equity * risk_per_trade) / price_distance
 
-    # Ограничиваем: стоимость позиции не может превышать equity * leverage
+    # Ограничиваем: стоимость позиции не может exceed equity * leverage
     max_notional = free_equity * leverage
     max_position_size = max_notional / entry_price
-
     position_size = min(position_size, max_position_size)
+
+    # ---------------------------------------------------------------
+    # ПРОВЕРКА МАРЖИ: требуемая маржа не должна превышать equity
+    # required_margin = position_size * entry_price / leverage
+    # ---------------------------------------------------------------
+    required_margin = position_size * entry_price / leverage if leverage > 0 else position_size * entry_price
+
+    if required_margin > free_equity:
+        # Уменьшаем позицию до максимально возможной с данной маржой
+        position_size = (free_equity * leverage) / entry_price
+        adjusted_margin = position_size * entry_price / leverage if leverage > 0 else position_size * entry_price
+
+        if position_size <= 0:
+            logger.warning("Cannot open position: insufficient margin. free_equity=%.2f, entry=%.4f, leverage=%d",
+                           free_equity, entry_price, leverage)
+            return 0.0
+
+        logger.debug("Position size adjusted for margin: %.4f (adjusted_margin=%.2f / free_equity=%.2f)",
+                     position_size, adjusted_margin, free_equity)
 
     return max(0.0, position_size)
 

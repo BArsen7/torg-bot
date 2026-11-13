@@ -359,6 +359,8 @@ def add_all_indicators(
     # --- Объём ---
     df["volume_sma"] = compute_sma(df["volume"], strategy_cfg.volume_sma_period)
     df["volume_above"] = volume_filter(df["volume"], strategy_cfg.volume_sma_period)
+    # Новый SMA(20) для фильтра объёма на входе
+    df["volume_sma_20"] = compute_sma(df["volume"], 20)
 
     # --- Свинг-пивоты ---
     df["pivot_high"] = find_pivots(df["high"], strategy_cfg.pivot_order, high=True)

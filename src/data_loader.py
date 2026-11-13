@@ -130,6 +130,13 @@ async def _get_top_symbols(
 
     # Сортировка по объёму и выбор топ-N
     candidates.sort(key=lambda x: x["volume"], reverse=True)
+    
+    # Логгируем отброшенные символы
+    excluded_count = 0
+    for c in candidates[top_n:]:
+        logger.warning("Excluded %s from top-%d: volume=%.2f (too low or not enough slots)",
+                       c["symbol"], top_n, c["volume"])
+    
     selected = candidates[:top_n]
 
     symbols = [c["symbol"] for c in selected]
@@ -318,6 +325,13 @@ async def fetch_all_symbols(
 
             df = _ohlcv_to_df(ohlcv, symbol, timeframe)
             if df.empty:
+                logger.warning("Skipped %s: empty data after processing", symbol)
+                continue
+
+            min_required_rows = 100  # Минимально требуемое кол-во свечей для анализа
+            if len(df) < min_required_rows:
+                logger.warning("Skipped %s: insufficient data. Got %d rows, required min %d",
+                               symbol, len(df), min_required_rows)
                 continue
 
             data[symbol] = df

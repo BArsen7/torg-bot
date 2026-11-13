@@ -156,6 +156,8 @@ def create_plotly_report(
     save_path.parent.mkdir(parents=True, exist_ok=True)
 
     # --- Subplots ---
+    # Явно указываем типы сабплотов: xy, xy, xy, table
+    # Это предотвращает ошибку "Trace type 'table' is not compatible with subplot type 'xy'"
     fig = make_subplots(
         rows=4, cols=1,
         subplot_titles=(
@@ -166,6 +168,12 @@ def create_plotly_report(
         ),
         vertical_spacing=0.08,
         row_heights=[0.35, 0.2, 0.2, 0.25],
+        specs=[
+            [{"type": "xy"}],       # Row 1: Equity + heatmap
+            [{"type": "xy"}],       # Row 2: Drawdown
+            [{"type": "xy"}],       # Row 3: Distribution (histogram)
+            [{"type": "table"}],    # Row 4: Trade table
+        ],
     )
 
     eq = equity_curve["equity"]

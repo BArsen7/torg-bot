@@ -27,7 +27,7 @@ logger = logging.getLogger(__name__)
 
 
 def calculate_position_size(
-    equity: float,
+    free_equity: float,
     entry_price: float,
     stop_price: float,
     risk_per_trade: float,
@@ -36,13 +36,14 @@ def calculate_position_size(
     """
     Рассчитать размер позиции (M5).
 
-    position_size = (equity * risk_per_trade) / |entry - stop|
+    position_size = (free_equity * risk_per_trade) / |entry - stop|
 
-    Учитывает плечо для futures.
+    ВАЖНО: используем free_equity, а не общий equity, чтобы избежать
+    оверрага. Плечо применяется только если остаток маржи достаточен.
 
     Параметры
     ---------
-    equity : float — текущий капитал
+    free_equity : float — доступная маржа (не общий капитал!)
     entry_price : float — цена входа
     stop_price : float — цена стопа
     risk_per_trade : float — доля риска (0.02 = 2%)
@@ -50,19 +51,32 @@ def calculate_position_size(
 
     Возвращает
     ----------
-    float — размер позиции в базовом активе
+    float — размер позиции в базовом активе (0 если риск слишком велик)
     """
-    risk_amount = equity * risk_per_trade
+    if free_equity <= 0 or entry_price <= 0 or stop_price <= 0:
+        logger.warning("Invalid parameters: free_equity=%.2f, entry=%.4f, stop=%.4f",
+                       free_equity, entry_price, stop_price)
+        return 0.0
+
+    # Стоимость маржи, требуемой для позиции
+    # Для long: маржа = position_size * entry_price / leverage
+    # Мы хотим: position_size * |entry - stop| / entry_price = free_equity * risk
+    # => position_size = free_equity * risk * entry_price / |entry - stop|
+
     price_distance = abs(entry_price - stop_price)
 
     if price_distance <= 0 or np.isnan(price_distance):
         logger.warning("Invalid price distance: %.6f", price_distance)
         return 0.0
 
-    raw_size = risk_amount / price_distance
+    # Размер позиции с учётом риска
+    position_size = (free_equity * risk_per_trade * entry_price) / price_distance
 
-    # Плечо увеличивает позицию
-    position_size = raw_size * leverage
+    # Ограничиваем: стоимость позиции не может превышать equity * leverage
+    max_notional = free_equity * leverage
+    max_position_size = max_notional / entry_price
+
+    position_size = min(position_size, max_position_size)
 
     return max(0.0, position_size)
 

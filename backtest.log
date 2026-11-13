@@ -372,3 +372,33 @@ for more information on subplot types
 2026-11-13 21:11:01 [INFO] src.backtest_engine: ============================================================
 2026-11-13 21:11:01 [INFO] src.backtest_engine: BACKTEST COMPLETE — 6.43 seconds
 2026-11-13 21:11:01 [INFO] src.backtest_engine: ============================================================
+2026-11-13 22:00:28 [INFO] __main__: Config loaded: timeframe=1h, coins=30, years=2, market=futures
+2026-11-13 22:00:28 [INFO] src.backtest_engine: ============================================================
+2026-11-13 22:00:28 [INFO] src.backtest_engine: BACKTEST START
+2026-11-13 22:00:28 [INFO] src.backtest_engine: ============================================================
+2026-11-13 22:00:28 [INFO] src.backtest_engine: [1/6] Loading data...
+2026-11-13 22:00:28 [INFO] src.data_loader: 5 cached datasets found
+2026-11-13 22:00:28 [INFO] src.data_loader: Already cached: 5, need download: 0
+2026-11-13 22:00:28 [INFO] src.data_loader: Loaded 5 datasets from cache
+2026-11-13 22:00:28 [INFO] src.data_loader: Cached 5 symbol datasets to data_cache/
+2026-11-13 22:00:28 [INFO] src.data_loader: Total loaded: 5 symbols
+2026-11-13 22:00:28 [INFO] src.data_loader: Cached 5 symbol datasets to data_cache/
+2026-11-13 22:00:28 [INFO] src.backtest_engine: Loaded 5 symbols
+2026-11-13 22:00:28 [INFO] src.backtest_engine: [2/6] Computing indicators...
+2026-11-13 22:00:28 [INFO] src.backtest_engine: 5 symbols ready for backtest
+2026-11-13 22:00:28 [INFO] src.backtest_engine: [3/6] Generating signals...
+2026-11-13 22:00:31 [INFO] src.backtest_engine: Total entry signals: 48
+2026-11-13 22:00:31 [INFO] src.backtest_engine: [4/6] Running simulation...
+2026-11-13 22:00:31 [ERROR] src.strategy: Halted due to max drawdown limit: equity=43655.21 < initial=100000.00 * 0.5
+2026-11-13 22:00:31 [INFO] src.backtest_engine: Simulation complete: 1 trades, 0 unclosed
+2026-11-13 22:00:31 [INFO] src.backtest_engine: [5/6] Computing metrics...
+2026-11-13 22:00:31 [INFO] src.backtest_engine: [6/6] Generating visualizations...
+2026-11-13 22:00:31 [INFO] src.visualization: Equity curve saved to results/equity_curve.png
+2026-11-13 22:00:32 [INFO] src.visualization: PNG charts saved to results
+2026-11-13 22:00:32 [ERROR] src.visualization: Failed to create HTML report: unsupported format string passed to NoneType.__format__
+2026-11-13 22:00:32 [INFO] src.backtest_engine: Trades CSV saved: 1 rows
+2026-11-13 22:00:32 [INFO] src.backtest_engine: Equity curve CSV saved
+2026-11-13 22:00:32 [INFO] src.backtest_engine: Text report saved to results/metrics_report.txt
+2026-11-13 22:00:32 [INFO] src.backtest_engine: ============================================================
+2026-11-13 22:00:32 [INFO] src.backtest_engine: BACKTEST COMPLETE — 3.88 seconds
+2026-11-13 22:00:32 [INFO] src.backtest_engine: ============================================================

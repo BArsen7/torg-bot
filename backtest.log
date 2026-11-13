@@ -1121,3 +1121,130 @@ connector: <aiohttp.connector.TCPConnector object at 0x7f3fa9882f90>
 2026-11-13 23:09:56 [INFO] src.backtest_engine: ============================================================
 2026-11-13 23:09:56 [INFO] src.backtest_engine: BACKTEST COMPLETE — 357.93 seconds
 2026-11-13 23:09:56 [INFO] src.backtest_engine: ============================================================
+2026-11-13 23:19:14 [INFO] __main__: Config loaded: timeframe=1h, coins=30, years=2, market=futures
+2026-11-13 23:19:14 [INFO] src.backtest_engine: ============================================================
+2026-11-13 23:19:14 [INFO] src.backtest_engine: BACKTEST START
+2026-11-13 23:19:14 [INFO] src.backtest_engine: ============================================================
+2026-11-13 23:19:14 [INFO] src.backtest_engine: [1/6] Loading data...
+2026-11-13 23:19:14 [INFO] src.data_loader: 28 cached datasets found
+2026-11-13 23:19:14 [INFO] src.data_loader: Already cached: 28, need download: 0
+2026-11-13 23:19:14 [INFO] src.data_loader: Loaded 28 datasets from cache
+2026-11-13 23:19:14 [INFO] src.data_loader: Cached 28 symbol datasets to data_cache/
+2026-11-13 23:19:14 [INFO] src.data_loader: Total loaded: 28 symbols
+2026-11-13 23:19:14 [INFO] src.data_loader: Cached 28 symbol datasets to data_cache/
+2026-11-13 23:19:14 [INFO] src.backtest_engine: Loaded 28 symbols
+2026-11-13 23:19:14 [INFO] src.backtest_engine: [2/6] Computing indicators...
+2026-11-13 23:19:18 [INFO] src.backtest_engine: 28 symbols ready for backtest
+2026-11-13 23:19:18 [INFO] src.backtest_engine: [3/6] Generating signals...
+2026-11-13 23:19:51 [INFO] src.backtest_engine: Total entry signals: 969
+2026-11-13 23:19:51 [INFO] src.backtest_engine: [4/6] Running simulation...
+2026-11-13 23:19:51 [ERROR] src.strategy: Halted due to max drawdown limit: equity=7667.50 < initial=100000.00 * 0.5
+2026-11-13 23:19:51 [INFO] src.backtest_engine: Simulation complete: 1 trades, 0 unclosed
+2026-11-13 23:19:51 [INFO] src.backtest_engine: [5/6] Computing metrics...
+2026-11-13 23:19:51 [INFO] src.backtest_engine: [6/6] Generating visualizations...
+2026-11-13 23:19:51 [INFO] src.visualization: Equity curve saved to results/equity_curve.png
+2026-11-13 23:19:52 [INFO] src.visualization: PNG charts saved to results
+2026-11-13 23:19:52 [INFO] src.visualization: HTML report saved to results/backtest_report.html
+2026-11-13 23:19:52 [INFO] src.backtest_engine: Trades CSV saved: 1 rows
+2026-11-13 23:19:52 [INFO] src.backtest_engine: Equity curve CSV saved
+2026-11-13 23:19:52 [INFO] src.backtest_engine: Text report saved to results/metrics_report.txt
+2026-11-13 23:19:52 [INFO] src.backtest_engine: ============================================================
+2026-11-13 23:19:52 [INFO] src.backtest_engine: BACKTEST COMPLETE — 37.75 seconds
+2026-11-13 23:19:52 [INFO] src.backtest_engine: ============================================================
+2026-11-13 23:23:55 [INFO] __main__: Config loaded: timeframe=1h, coins=30, years=2, market=futures
+2026-11-13 23:23:55 [INFO] src.backtest_engine: ============================================================
+2026-11-13 23:23:55 [INFO] src.backtest_engine: BACKTEST START
+2026-11-13 23:23:55 [INFO] src.backtest_engine: ============================================================
+2026-11-13 23:23:55 [INFO] src.backtest_engine: [1/6] Loading data...
+2026-11-13 23:23:57 [WARNING] src.data_loader: No futures tickers found (all appear to be spot) — using fallback
+2026-11-13 23:23:57 [INFO] src.data_loader: Using fallback: 30 symbols
+2026-11-13 23:23:57 [WARNING] ccxt.base.exchange: binance requires to release all resources with an explicit call to the .close() coroutine. If you are using the exchange instance with async coroutines, add `await exchange.close()` to your code into a place when you're done with the exchange and don't need the exchange instance anymore (at the end of your async coroutine).
+2026-11-13 23:23:57 [ERROR] asyncio: Unclosed client session
+client_session: <aiohttp.client.ClientSession object at 0x7f2403f60ad0>
+2026-11-13 23:23:57 [ERROR] asyncio: Unclosed connector
+connections: ['deque([(<aiohttp.client_proto.ResponseHandler object at 0x7f2403dd01e0>, 32011.552222371)])', 'deque([(<aiohttp.client_proto.ResponseHandler object at 0x7f2403f4c4d0>, 32012.012438492)])', 'deque([(<aiohttp.client_proto.ResponseHandler object at 0x7f2403dd0500>, 32012.824786584)])']
+connector: <aiohttp.connector.TCPConnector object at 0x7f240403af90>
+2026-11-13 23:23:57 [INFO] src.data_loader: Already cached: 0, need download: 30
+2026-11-13 23:23:57 [INFO] src.data_loader: Downloading 30 datasets...
+2026-11-13 23:23:58 [INFO] src.data_loader: [1/30] Fetching BTC/USDT (1h)
+2026-11-13 23:24:09 [INFO] src.data_loader:   ✓ BTC/USDT: 17520 candles (2024-11-13T21:00:00+00:00 → 2026-11-13T20:00:00+00:00)
+2026-11-13 23:24:09 [INFO] src.data_loader: [2/30] Fetching ETH/USDT (1h)
+2026-11-13 23:24:20 [INFO] src.data_loader:   ✓ ETH/USDT: 17520 candles (2024-11-13T21:00:00+00:00 → 2026-11-13T20:00:00+00:00)
+2026-11-13 23:24:20 [INFO] src.data_loader: [3/30] Fetching SOL/USDT (1h)
+2026-11-13 23:24:31 [INFO] src.data_loader:   ✓ SOL/USDT: 17520 candles (2024-11-13T21:00:00+00:00 → 2026-11-13T20:00:00+00:00)
+2026-11-13 23:24:31 [INFO] src.data_loader: [4/30] Fetching BNB/USDT (1h)
+2026-11-13 23:24:41 [INFO] src.data_loader:   ✓ BNB/USDT: 17520 candles (2024-11-13T21:00:00+00:00 → 2026-11-13T20:00:00+00:00)
+2026-11-13 23:24:41 [INFO] src.data_loader: [5/30] Fetching XRP/USDT (1h)
+2026-11-13 23:24:52 [INFO] src.data_loader:   ✓ XRP/USDT: 17520 candles (2024-11-13T21:00:00+00:00 → 2026-11-13T20:00:00+00:00)
+2026-11-13 23:24:52 [INFO] src.data_loader: [6/30] Fetching DOGE/USDT (1h)
+2026-11-13 23:25:03 [INFO] src.data_loader:   ✓ DOGE/USDT: 17520 candles (2024-11-13T21:00:00+00:00 → 2026-11-13T20:00:00+00:00)
+2026-11-13 23:25:03 [INFO] src.data_loader: [7/30] Fetching ADA/USDT (1h)
+2026-11-13 23:25:14 [INFO] src.data_loader:   ✓ ADA/USDT: 17520 candles (2024-11-13T21:00:00+00:00 → 2026-11-13T20:00:00+00:00)
+2026-11-13 23:25:14 [INFO] src.data_loader: [8/30] Fetching AVAX/USDT (1h)
+2026-11-13 23:25:25 [INFO] src.data_loader:   ✓ AVAX/USDT: 17520 candles (2024-11-13T21:00:00+00:00 → 2026-11-13T20:00:00+00:00)
+2026-11-13 23:25:25 [INFO] src.data_loader: [9/30] Fetching LINK/USDT (1h)
+2026-11-13 23:25:35 [INFO] src.data_loader:   ✓ LINK/USDT: 17520 candles (2024-11-13T21:00:00+00:00 → 2026-11-13T20:00:00+00:00)
+2026-11-13 23:25:35 [INFO] src.data_loader: [10/30] Fetching MATIC/USDT (1h)
+2026-11-13 23:25:35 [ERROR] src.data_loader: Failed to fetch MATIC/USDT: module 'ccxt.base.errors' has no attribute 'RateLimit'
+2026-11-13 23:25:35 [INFO] src.data_loader: [11/30] Fetching DOT/USDT (1h)
+2026-11-13 23:25:48 [INFO] src.data_loader:   ✓ DOT/USDT: 17520 candles (2024-11-13T21:00:00+00:00 → 2026-11-13T20:00:00+00:00)
+2026-11-13 23:25:48 [INFO] src.data_loader: [12/30] Fetching UNI/USDT (1h)
+2026-11-13 23:25:59 [INFO] src.data_loader:   ✓ UNI/USDT: 17520 candles (2024-11-13T21:00:00+00:00 → 2026-11-13T20:00:00+00:00)
+2026-11-13 23:25:59 [INFO] src.data_loader: [13/30] Fetching ATOM/USDT (1h)
+2026-11-13 23:26:10 [INFO] src.data_loader:   ✓ ATOM/USDT: 17520 candles (2024-11-13T21:00:00+00:00 → 2026-11-13T20:00:00+00:00)
+2026-11-13 23:26:10 [INFO] src.data_loader: [14/30] Fetching LTC/USDT (1h)
+2026-11-13 23:26:21 [INFO] src.data_loader:   ✓ LTC/USDT: 17520 candles (2024-11-13T21:00:00+00:00 → 2026-11-13T20:00:00+00:00)
+2026-11-13 23:26:21 [INFO] src.data_loader: [15/30] Fetching ETC/USDT (1h)
+2026-11-13 23:26:31 [INFO] src.data_loader:   ✓ ETC/USDT: 17520 candles (2024-11-13T21:00:00+00:00 → 2026-11-13T20:00:00+00:00)
+2026-11-13 23:26:31 [INFO] src.data_loader: [16/30] Fetching FIL/USDT (1h)
+2026-11-13 23:26:43 [INFO] src.data_loader:   ✓ FIL/USDT: 17520 candles (2024-11-13T21:00:00+00:00 → 2026-11-13T20:00:00+00:00)
+2026-11-13 23:26:43 [INFO] src.data_loader: [17/30] Fetching APT/USDT (1h)
+2026-11-13 23:26:55 [INFO] src.data_loader:   ✓ APT/USDT: 17520 candles (2024-11-13T21:00:00+00:00 → 2026-11-13T20:00:00+00:00)
+2026-11-13 23:26:55 [INFO] src.data_loader: [18/30] Fetching ARBN/USDT (1h)
+2026-11-13 23:26:55 [ERROR] src.data_loader: Failed to fetch ARBN/USDT: module 'ccxt.base.errors' has no attribute 'RateLimit'
+2026-11-13 23:26:55 [INFO] src.data_loader: [19/30] Fetching NEAR/USDT (1h)
+2026-11-13 23:27:06 [INFO] src.data_loader:   ✓ NEAR/USDT: 17520 candles (2024-11-13T21:00:00+00:00 → 2026-11-13T20:00:00+00:00)
+2026-11-13 23:27:06 [INFO] src.data_loader: [20/30] Fetching ALGO/USDT (1h)
+2026-11-13 23:27:16 [INFO] src.data_loader:   ✓ ALGO/USDT: 17520 candles (2024-11-13T21:00:00+00:00 → 2026-11-13T20:00:00+00:00)
+2026-11-13 23:27:16 [INFO] src.data_loader: [21/30] Fetching FTM/USDT (1h)
+2026-11-13 23:27:27 [INFO] src.data_loader:   ✓ FTM/USDT: 17520 candles (2024-11-13T21:00:00+00:00 → 2026-11-13T20:00:00+00:00)
+2026-11-13 23:27:27 [INFO] src.data_loader: [22/30] Fetching SAND/USDT (1h)
+2026-11-13 23:27:39 [INFO] src.data_loader:   ✓ SAND/USDT: 17520 candles (2024-11-13T21:00:00+00:00 → 2026-11-13T20:00:00+00:00)
+2026-11-13 23:27:39 [INFO] src.data_loader: [23/30] Fetching MANA/USDT (1h)
+2026-11-13 23:27:50 [INFO] src.data_loader:   ✓ MANA/USDT: 17520 candles (2024-11-13T21:00:00+00:00 → 2026-11-13T20:00:00+00:00)
+2026-11-13 23:27:50 [INFO] src.data_loader: [24/30] Fetching AXS/USDT (1h)
+2026-11-13 23:28:01 [INFO] src.data_loader:   ✓ AXS/USDT: 17520 candles (2024-11-13T21:00:00+00:00 → 2026-11-13T20:00:00+00:00)
+2026-11-13 23:28:01 [INFO] src.data_loader: [25/30] Fetching THETA/USDT (1h)
+2026-11-13 23:28:12 [INFO] src.data_loader:   ✓ THETA/USDT: 17520 candles (2024-11-13T21:00:00+00:00 → 2026-11-13T20:00:00+00:00)
+2026-11-13 23:28:12 [INFO] src.data_loader: [26/30] Fetching ICP/USDT (1h)
+2026-11-13 23:28:22 [INFO] src.data_loader:   ✓ ICP/USDT: 17520 candles (2024-11-13T21:00:00+00:00 → 2026-11-13T20:00:00+00:00)
+2026-11-13 23:28:22 [INFO] src.data_loader: [27/30] Fetching VET/USDT (1h)
+2026-11-13 23:28:33 [INFO] src.data_loader:   ✓ VET/USDT: 17520 candles (2024-11-13T21:00:00+00:00 → 2026-11-13T20:00:00+00:00)
+2026-11-13 23:28:33 [INFO] src.data_loader: [28/30] Fetching HBAR/USDT (1h)
+2026-11-13 23:28:44 [INFO] src.data_loader:   ✓ HBAR/USDT: 17520 candles (2024-11-13T21:00:00+00:00 → 2026-11-13T20:00:00+00:00)
+2026-11-13 23:28:44 [INFO] src.data_loader: [29/30] Fetching EGLD/USDT (1h)
+2026-11-13 23:28:55 [INFO] src.data_loader:   ✓ EGLD/USDT: 17520 candles (2024-11-13T21:00:00+00:00 → 2026-11-13T20:00:00+00:00)
+2026-11-13 23:28:55 [INFO] src.data_loader: [30/30] Fetching XTZ/USDT (1h)
+2026-11-13 23:29:05 [INFO] src.data_loader:   ✓ XTZ/USDT: 17520 candles (2024-11-13T21:00:00+00:00 → 2026-11-13T20:00:00+00:00)
+2026-11-13 23:29:06 [INFO] src.data_loader: Cached 28 symbol datasets to data_cache/
+2026-11-13 23:29:06 [INFO] src.data_loader: Total loaded: 28 symbols
+2026-11-13 23:29:06 [INFO] src.data_loader: Cached 28 symbol datasets to data_cache/
+2026-11-13 23:29:06 [INFO] src.backtest_engine: Loaded 28 symbols
+2026-11-13 23:29:06 [INFO] src.backtest_engine: [2/6] Computing indicators...
+2026-11-13 23:29:09 [INFO] src.backtest_engine: 28 symbols ready for backtest
+2026-11-13 23:29:09 [INFO] src.backtest_engine: [3/6] Generating signals...
+2026-11-13 23:29:38 [INFO] src.backtest_engine: Total entry signals: 969
+2026-11-13 23:29:38 [INFO] src.backtest_engine: [4/6] Running simulation...
+2026-11-13 23:29:39 [ERROR] src.strategy: Halted due to max drawdown limit: equity=7667.50 < initial=100000.00 * 0.5
+2026-11-13 23:29:39 [INFO] src.backtest_engine: Simulation complete: 1 trades, 0 unclosed
+2026-11-13 23:29:39 [INFO] src.backtest_engine: [5/6] Computing metrics...
+2026-11-13 23:29:39 [INFO] src.backtest_engine: [6/6] Generating visualizations...
+2026-11-13 23:29:39 [INFO] src.visualization: Equity curve saved to results/equity_curve.png
+2026-11-13 23:29:39 [INFO] src.visualization: PNG charts saved to results
+2026-11-13 23:29:39 [INFO] src.visualization: HTML report saved to results/backtest_report.html
+2026-11-13 23:29:39 [INFO] src.backtest_engine: Trades CSV saved: 1 rows
+2026-11-13 23:29:39 [INFO] src.backtest_engine: Equity curve CSV saved
+2026-11-13 23:29:39 [INFO] src.backtest_engine: Text report saved to results/metrics_report.txt
+2026-11-13 23:29:39 [INFO] src.backtest_engine: ============================================================
+2026-11-13 23:29:39 [INFO] src.backtest_engine: BACKTEST COMPLETE — 344.12 seconds
+2026-11-13 23:29:39 [INFO] src.backtest_engine: ============================================================

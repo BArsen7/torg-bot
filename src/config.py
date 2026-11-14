@@ -83,6 +83,12 @@ class StrategyConfig:
     fixed_funding_pct: float = 0.0001
     funding_interval_hours: int = 8
 
+    adx_threshold: float = 25.0  # Минимальный ADX для входа (фильтр боковика)
+
+
+
+
+
 
 @dataclass
 class BacktestConfig:

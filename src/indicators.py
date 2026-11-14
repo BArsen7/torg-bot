@@ -295,6 +295,47 @@ def atr_pct(
     return atr / close * 100.0
 
 
+
+
+def add_sma(df: pd.DataFrame, period: int = 200, col: str = "close") -> pd.DataFrame:
+    """Добавляет Simple Moving Average для фильтра долгосрочного тренда."""
+    df[f"sma_{period}"] = df[col].rolling(window=period).mean()
+    return df
+
+def add_adx(df: pd.DataFrame, period: int = 14) -> pd.DataFrame:
+    """
+    Рассчитывает ADX (Average Directional Index).
+    ADX > 25 указывает на наличие тренда, < 20 — на боковик.
+    """
+    high = df["high"]
+    low = df["low"]
+    close = df["close"]
+
+    # +DM и -DM
+    plus_dm = high.diff()
+    minus_dm = -low.diff()
+    plus_dm = plus_dm.where((plus_dm > minus_dm) & (plus_dm > 0), 0.0)
+    minus_dm = minus_dm.where((minus_dm > plus_dm) & (minus_dm > 0), 0.0)
+
+    # True Range
+    tr1 = high - low
+    tr2 = (high - close.shift()).abs()
+    tr3 = (low - close.shift()).abs()
+    tr = pd.concat([tr1, tr2, tr3], axis=1).max(axis=1)
+
+    # Сглаживание (Wilder's smoothing аналогичен EMA с alpha=1/period)
+    atr = tr.ewm(alpha=1/period, min_periods=period).mean()
+    plus_di = 100 * (plus_dm.ewm(alpha=1/period, min_periods=period).mean() / atr)
+    minus_di = 100 * (minus_dm.ewm(alpha=1/period, min_periods=period).mean() / atr)
+
+    # DX и ADX
+    dx = 100 * (plus_di - minus_di).abs() / (plus_di + minus_di)
+    df["adx"] = dx.ewm(alpha=1/period, min_periods=period).mean()
+    return df
+
+
+
+
 # ---------------------------------------------------------------------------
 # Применить все индикаторы к DataFrame
 # ---------------------------------------------------------------------------
@@ -377,4 +418,6 @@ def add_all_indicators(
     if dropped > 0:
         logger.debug("Dropped %d rows due to NaN indicators", dropped)
 
+    df = add_sma(df, period=200, col="close")
+    df = add_adx(df, period=14)
     return df

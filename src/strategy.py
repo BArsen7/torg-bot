@@ -121,6 +121,18 @@ def check_entry_conditions(
     else:
         conditions["volume_confirmation"] = True  # Если нет данных, пропускаем этот фильтр
 
+    # Условие 8: Цена выше SMA200 (долгосрочный тренд вверх)
+    if pd.notna(row.get("sma_200", np.nan)):
+        conditions["above_sma200"] = row["close"] > row["sma_200"]
+    else:
+        conditions["above_sma200"] = False  # Не торгуем, пока индикатор не рассчитан
+
+    # Условие 9: ADX > threshold (есть тренд, избегаем "мертвых" боковиков)
+    if pd.notna(row.get("adx", np.nan)):
+        conditions["adx_trend"] = row["adx"] > strategy_cfg.adx_threshold
+    else:
+        conditions["adx_trend"] = False
+
     # Все должны выполниться
     all_met = all(conditions.values())
     conditions["all_met"] = all_met
@@ -195,21 +207,8 @@ def calculate_position_size(
     leverage: int = 1,
 ) -> float:
     """
-    Рассчитать размер позиции на основе риск-менеджмента (M5).
-
-    position_size = (equity * risk_per_trade) / |entry - stop|
-
-    Параметры
-    ---------
-    equity : float — текущий капитал
-    entry_price : float — цена входа
-    stop_price : float — цена стопа
-    risk_per_trade : float — доля риска (0.02 = 2%)
-    leverage : int — плечо
-
-    Возвращает
-    ----------
-    float — размер позиции в базовом активе
+    Рассчитать размер позиции так, чтобы убыток при срабатывании стопа 
+    был РАВЕН risk_per_trade от equity.
     """
     risk_amount = equity * risk_per_trade
     price_distance = abs(entry_price - stop_price)
@@ -217,16 +216,18 @@ def calculate_position_size(
     if price_distance <= 0:
         return 0.0
 
-    raw_size = risk_amount / price_distance
+    # Требуемый размер для соблюдения риска
+    required_size = risk_amount / price_distance
+    
+    # Максимальный размер, который позволяет маржа с учётом плеча
+    max_position_size = (equity * leverage) / entry_price
 
-    # Ограничиваем: стоимость позиции не может превышать equity * leverage
-    max_notional = equity * leverage
-    max_position_size = max_notional / entry_price
+    # КРИТИЧЕСКИ ВАЖНО: если требуемый размер превышает лимит плеча, 
+    # открытие сделки нарушит риск-менеджмент. Мы пропускаем её, а не открываем на максимум.
+    if required_size > max_position_size:
+        return 0.0
 
-    position_size = min(raw_size, max_position_size)
-
-    return position_size
-
+    return required_size
 
 # ---------------------------------------------------------------------------
 # Расчёт комиссии и проскальзывания
@@ -574,16 +575,17 @@ def simulate_trading(
         daily_equity[dt] = current_equity
 
         # --- 5. DRAWDOWN GUARD: если equity упал ниже 50% от начального, останавливаемся ---
+                # --- 5. DRAWDOWN GUARD: если equity упал ниже 50% от начального, останавливаемся ---
         if current_equity < initial_equity * 0.5:
             logger.error(
                 "HALT TRIGGERED: equity=%.2f < initial=%.2f * 0.5",
                 current_equity, initial_equity
             )
-            # Принудительно закрываем ВСЕ позиции по последней известной цене
+            # Принудительно закрываем ВСЕ позиции по корректной логике фьючерсов
             for symbol, trade in list(open_positions.items()):
                 df = symbols_data.get(symbol, pd.DataFrame())
                 
-                # Берём цену закрытия: либо текущую, либо последнюю доступную в DF, либо цену входа (безопасный фолбэк)
+                # Определяем цену выхода
                 if not df.empty and dt in df.index:
                     exit_price = df.loc[dt, "close"]
                 elif not df.empty:
@@ -613,13 +615,14 @@ def simulate_trading(
                 trade.pnl_pct = (pnl / (trade.entry_price * trade.entry_size) * 100.0) if (trade.entry_price * trade.entry_size) > 0 else 0.0
                 trade.is_closed = True
                 
-                # ВОЗВРАЩАЕМ ДЕНЬГИ В CASH
-                cash += exit_price * trade.entry_size
+                # ИСПРАВЛЕНО: Возвращаем МАРЖУ + PnL, а не полную стоимость позиции!
+                margin_returned = (trade.entry_price * trade.entry_size) / strategy_cfg.leverage
+                cash += margin_returned + pnl
                 
                 result.trades.append(trade)
                 del open_positions[symbol]
                 
-            logger.warning(f"Emergency closed {len(result.trades)} positions. Final cash: {cash:.2f}")
+            logger.warning(f"Emergency closed positions. Final cash: {cash:.2f}")
             break  # Прерываем симуляцию
 
     # --- 6. Закрываем все оставшиеся позиции (end-of-data) ---

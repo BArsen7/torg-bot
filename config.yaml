@@ -10,9 +10,9 @@ data:
   # Таймфреймы: 1h, 4h, 1d
   timeframe: "1h"
   # Период загрузки данных (дни)
-  data_years: 2
+  data_years: 1 #2
   # Топ-N монет по объёму
-  top_coins: 30
+  top_coins: 10 #30
   # Исключить из анализа
   exclude: ["USDT", "BUSD", "FDUSD", "TUSD", "USDC", "DAI", "BUSD", "EUR", "GBP", "AUD", "BTC", "ETH"]
   # Директория кэша

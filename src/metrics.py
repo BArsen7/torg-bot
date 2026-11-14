@@ -203,7 +203,7 @@ def compute_metrics(
     equity_curve: pd.DataFrame,
     initial_equity: float,
     timeframe: str = "1h",
-    final_equity_override: float = None,
+    final_equity_override: float | None = None,
 ) -> PerformanceMetrics:
     """
     Вычислить все метрики по списку сделок и equity curve.
@@ -247,17 +247,17 @@ def compute_metrics(
 
     # --- Returns series ---
     if not equity_curve.empty:
-        periods_per_hour = {"1h": 1, "4h": 0.25, "1d": 1/24}.get(timeframe.split("h")[0].replace("d", ""), 1)
-        # Определяем periods per year
-        tf_hours = 1
-        if "d" in timeframe:
+        # Определяем periods per year на основе таймфрейма
+        if timeframe.startswith("d"):
             tf_hours = int(timeframe.replace("d", "")) * 24
-        elif "h" in timeframe:
+        elif timeframe.startswith("h"):
             tf_hours = int(timeframe.replace("h", ""))
-        elif "m" in timeframe:
+        elif timeframe.startswith("m"):
             tf_hours = int(timeframe.replace("m", "")) / 60
-        elif "w" in timeframe:
+        elif timeframe.startswith("w"):
             tf_hours = 168
+        else:
+            tf_hours = 1
 
         periods_per_year = int(8760 / tf_hours)
 

@@ -57,14 +57,6 @@ def main():
         "stop_multiplier": [1.5, 1.8, 2.0],  # Оставляем как есть, это дает хороший R/R.
         "risk_per_trade": [0.01, 0.015, 0.02]# Оставляем. 1-2% это золотой стандарт.
     }
-    """
-    param_grid = {
-        "rsi_threshold": [30, 35, 40],
-        "adx_threshold": [20, 25, 30],
-        "stop_multiplier": [1.5, 1.8, 2.0],
-        "risk_per_trade": [0.01, 0.015, 0.02],
-    }
-    """
     combinations = list(itertools.product(*param_grid.values()))
     print(f"🔍 Grid Search: {len(combinations)} комбинаций параметров")
     

@@ -110,9 +110,9 @@ class BacktestEngine:
                 fee_rate=self.cfg.strategy.maker_fee,
             )
 
-        # Подсчёт сигналов
-        total_signals = sum(df["signal"].sum() for df in symbols_data.values())
-        logger.info("Total entry signals: %d", int(total_signals))
+        # Подсчёт сигналов (приведение к int для корректной агрегации)
+        total_signals = int(sum(int(df["signal"].sum()) for df in symbols_data.values()))
+        logger.info("Total entry signals: %d", total_signals)
 
         # === 4. Симуляция торговли ===
         logger.info("[%s/6] Running simulation...", 4)

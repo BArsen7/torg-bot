@@ -21,6 +21,7 @@ import pandas as pd
 from src.indicators import add_all_indicators
 from src.risk_manager import (
     calculate_position_size as risk_calculate_position_size,
+    check_correlation_filter,
     estimate_liquidation_price,
     validate_liquidation,
 )
@@ -43,6 +44,7 @@ class Trade:
     entry_size: float  # количество базового актива (контракты/монеты)
     stop_price: float
     take_profit_price: Optional[float]
+    entry_bar: int = 0  # индекс бара входа (для расчёта holding_bars)
     exit_time: Optional[pd.Timestamp] = None
     exit_price: Optional[float] = None
     exit_reason: Optional[str] = None  # 'take_profit', 'stop_loss', 'trailing', 'halt', 'eod'
@@ -244,9 +246,16 @@ def apply_costs(
     slippage_pct: float,
     funding_pct: float = 0.0,
     holding_hours: int = 0,
+    include_entry: bool = True,
+    include_exit: bool = True,
 ) -> Tuple[float, float]:
     """
     Рассчитать стоимость комиссии и проскальзывания.
+
+    Параметры
+    ----------
+    include_entry : bool — включать комиссию за вход (при открытии)
+    include_exit : bool — включать комиссию за выход (при закрытии)
 
     Возвращает
     ----------
@@ -254,9 +263,13 @@ def apply_costs(
     """
     # Комиссия (от стоимости позиции)
     notional = entry_price * size
-    commission = notional * (taker_fee + maker_fee) / 2  # усредняем
-    if not is_long:
-        commission += notional * (taker_fee + maker_fee) / 2
+    side_fee = notional * (taker_fee + maker_fee) / 2  # усредняем
+
+    commission = 0.0
+    if include_entry:
+        commission += side_fee
+    if include_exit:
+        commission += side_fee
 
     # Проскальзывание (случайная величина ~ N(0, slippage_pct))
     # Для детерминированного бэктеста берём 0 (мат. ожидание)
@@ -416,7 +429,7 @@ def simulate_trading(
             # PnL: (exit - entry) * size (для long)
             gross_pnl = (exit_price - trade.entry_price) * trade.entry_size
 
-            # Комиссия за закрытие
+            # Комиссия за закрытие (вход + выход)
             holding_hours = max(1, int((dt - trade.entry_time).total_seconds() / 3600))
             commission, _ = apply_costs(
                 trade.entry_price, exit_price, trade.entry_size,
@@ -426,6 +439,8 @@ def simulate_trading(
                 slippage_pct=slippage_pct,
                 funding_pct=funding_pct,
                 holding_hours=holding_hours,
+                include_entry=True,
+                include_exit=True,
             )
 
             # Реализованный PnL = gross - комиссия
@@ -441,7 +456,8 @@ def simulate_trading(
             trade.exit_reason = reason
             trade.pnl = pnl
             trade.pnl_pct = pnl / (trade.entry_price * trade.entry_size) * 100.0 if trade.entry_price * trade.entry_size > 0 else 0.0
-            trade.holding_bars = max(1, int(holding_hours))
+            # holding_bars = количество баров с момента входа
+            trade.holding_bars = max(1, idx - trade.entry_bar) if hasattr(trade, 'entry_bar') and idx >= trade.entry_bar else 1
             trade.commission = commission
             trade.is_closed = True
 
@@ -458,6 +474,15 @@ def simulate_trading(
             if dt not in df.index:
                 continue
 
+            # --- Корреляционный фильтр ---
+            if not check_correlation_filter(
+                symbol, set(open_positions.keys()),
+                None,
+                threshold=strategy_cfg.correlation_threshold,
+                btc_symbol=strategy_cfg.correlation_symbol,
+            ):
+                continue
+
             idx = df.index.get_loc(dt)
             met, conditions = check_entry_conditions(df, idx, strategy_cfg)
 
@@ -466,9 +491,9 @@ def simulate_trading(
                 entry_price = row["close"]
                 stop_price = entry_price - strategy_cfg.stop_multiplier * row["atr"]
 
-                # Размер позиции: risk * cash / |entry - stop|
+                # Размер позиции: risk * equity / |entry - stop|
                 size = calculate_position_size(
-                    cash, entry_price, stop_price,
+                    current_equity, entry_price, stop_price,
                     strategy_cfg.risk_per_trade,
                     strategy_cfg.leverage,
                 )
@@ -476,12 +501,12 @@ def simulate_trading(
                 if size <= 0:
                     continue
 
-                # --- ПРАВДИВЫЙ РАСЧЁТ РИСКА: проверяем что стоимость позиции <= cash ---
+                # --- ПРАВДИВЫЙ РАСЧЁТ РИСКА: проверяем что стоимость позиции <= equity ---
                 position_cost = entry_price * size
-                if position_cost > cash:
+                if position_cost > current_equity:
                     logger.warning(
-                        "Position cost %.2f > available cash %.2f, skipping %s at %s",
-                        position_cost, cash, symbol, dt
+                        "Position cost %.2f > available equity %.2f, skipping %s at %s",
+                        position_cost, current_equity, symbol, dt
                     )
                     continue
 
@@ -500,7 +525,7 @@ def simulate_trading(
                     t.entry_size * abs(t.entry_price - t.stop_price)
                     for t in open_positions.values()
                 )
-                max_total_risk = cash * 0.10  # макс 10% общего риска
+                max_total_risk = current_equity * 0.10  # макс 10% общего риска
 
                 if total_risk > max_total_risk:
                     logger.debug(
@@ -537,6 +562,7 @@ def simulate_trading(
                 trade = Trade(
                     symbol=symbol,
                     entry_time=dt,
+                    entry_bar=idx,
                     entry_price=entry_price,
                     entry_size=size,
                     stop_price=stop_price,
@@ -575,7 +601,6 @@ def simulate_trading(
         daily_equity[dt] = current_equity
 
         # --- 5. DRAWDOWN GUARD: если equity упал ниже 50% от начального, останавливаемся ---
-                # --- 5. DRAWDOWN GUARD: если equity упал ниже 50% от начального, останавливаемся ---
         if current_equity < initial_equity * 0.5:
             logger.error(
                 "HALT TRIGGERED: equity=%.2f < initial=%.2f * 0.5",
@@ -595,7 +620,7 @@ def simulate_trading(
 
                 gross_pnl = (exit_price - trade.entry_price) * trade.entry_size
                 holding_hours = max(1, int((dt - trade.entry_time).total_seconds() / 3600))
-                
+
                 commission, _ = apply_costs(
                     trade.entry_price, exit_price, trade.entry_size,
                     is_long=True,
@@ -604,6 +629,8 @@ def simulate_trading(
                     slippage_pct=slippage_pct,
                     funding_pct=funding_pct,
                     holding_hours=holding_hours,
+                    include_entry=True,
+                    include_exit=True,
                 )
                 
                 pnl = gross_pnl - commission
@@ -613,6 +640,7 @@ def simulate_trading(
                 trade.exit_reason = "drawdown_halt"
                 trade.pnl = pnl
                 trade.pnl_pct = (pnl / (trade.entry_price * trade.entry_size) * 100.0) if (trade.entry_price * trade.entry_size) > 0 else 0.0
+                trade.holding_bars = max(1, idx - trade.entry_bar) if hasattr(trade, 'entry_bar') and idx >= trade.entry_bar else 1
                 trade.is_closed = True
                 
                 # ИСПРАВЛЕНО: Возвращаем МАРЖУ + PnL, а не полную стоимость позиции!
@@ -635,16 +663,28 @@ def simulate_trading(
             last_known_price = trade.entry_price
             last_dt = trade.entry_time
 
-        # PnL = (last_price - entry) * size - exit commission
+        # PnL = (last_price - entry) * size - выходная комиссия
         gross_pnl = (last_known_price - trade.entry_price) * trade.entry_size
-        exit_commission = last_known_price * trade.entry_size * trade.fee_rate
+        # Входная + выходная комиссия через apply_costs
+        exit_commission, _ = apply_costs(
+            trade.entry_price, last_known_price, trade.entry_size,
+            is_long=True,
+            maker_fee=trade.fee_rate,
+            taker_fee=strategy_cfg.taker_fee,
+            slippage_pct=slippage_pct,
+            funding_pct=funding_pct,
+            include_entry=True,
+            include_exit=True,
+        )
         pnl = gross_pnl - exit_commission
 
         trade.exit_time = last_dt
         trade.exit_price = last_known_price
         trade.exit_reason = "eod"
         trade.pnl = pnl
-        trade.pnl_pct = pnl / (trade.entry_price * trade.entry_size) * 100.0 if trade.entry_price * trade.entry_size > 0 else 0.0
+        # holding_bars для EOD — используем entry_bar если доступен
+        all_dates_sorted = sorted(all_dates)
+        trade.holding_bars = max(1, len(all_dates_sorted) - all_dates_sorted.index(trade.entry_time)) if trade.entry_time in all_dates_sorted else 1
         trade.is_closed = True
         result.trades.append(trade)
 

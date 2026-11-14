@@ -329,7 +329,7 @@ async def _fetch_ohlcv_paginated(
 async def fetch_all_symbols(
     symbols: List[str],
     timeframe: str,
-    since_days: int,
+    since_years: int,
     market_type: str,
     min_required_rows: int = 100,
 ) -> Dict[str, pd.DataFrame]:
@@ -340,7 +340,7 @@ async def fetch_all_symbols(
     ---------
     symbols : List[str]
     timeframe : str
-    since_days : int — сколько дней назад загружать
+    since_years : int — сколько лет назад загружать
     market_type : 'spot' или 'futures'
     min_required_rows : int — минимальное количество свечей для анализа
 
@@ -348,7 +348,7 @@ async def fetch_all_symbols(
     ----------
     Dict[str, pd.DataFrame] — символ -> DataFrame
     """
-    since_ts = int((datetime.now(tz=timezone.utc) - timedelta(days=since_days * 365)).timestamp() * 1000)
+    since_ts = int((datetime.now(tz=timezone.utc) - timedelta(days=since_years * 365)).timestamp() * 1000)
     exchange_opts = {"enableRateLimit": True}
     if market_type == "futures":
         exchange_opts["options"] = {"defaultType": "swap"}

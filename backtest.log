@@ -1248,3 +1248,1339 @@ connector: <aiohttp.connector.TCPConnector object at 0x7f240403af90>
 2026-11-13 23:29:39 [INFO] src.backtest_engine: ============================================================
 2026-11-13 23:29:39 [INFO] src.backtest_engine: BACKTEST COMPLETE — 344.12 seconds
 2026-11-13 23:29:39 [INFO] src.backtest_engine: ============================================================
+2026-11-14 00:00:16 [INFO] __main__: Config loaded: timeframe=1h, coins=30, years=2, market=futures
+2026-11-14 00:00:16 [INFO] src.backtest_engine: ============================================================
+2026-11-14 00:00:16 [INFO] src.backtest_engine: BACKTEST START
+2026-11-14 00:00:16 [INFO] src.backtest_engine: ============================================================
+2026-11-14 00:00:16 [INFO] src.backtest_engine: [1/6] Loading data...
+2026-11-14 00:00:18 [WARNING] src.data_loader: No futures tickers found (all appear to be spot) — using fallback
+2026-11-14 00:00:18 [INFO] src.data_loader: Using fallback: 30 symbols
+2026-11-14 00:00:18 [WARNING] ccxt.base.exchange: binance requires to release all resources with an explicit call to the .close() coroutine. If you are using the exchange instance with async coroutines, add `await exchange.close()` to your code into a place when you're done with the exchange and don't need the exchange instance anymore (at the end of your async coroutine).
+2026-11-14 00:00:18 [ERROR] asyncio: Unclosed client session
+client_session: <aiohttp.client.ClientSession object at 0x7fb46d824c20>
+2026-11-14 00:00:18 [ERROR] asyncio: Unclosed connector
+connections: ['deque([(<aiohttp.client_proto.ResponseHandler object at 0x7fb46d8901e0>, 34063.784519719)])', 'deque([(<aiohttp.client_proto.ResponseHandler object at 0x7fb46d8084d0>, 34064.185305361)])', 'deque([(<aiohttp.client_proto.ResponseHandler object at 0x7fb46d890500>, 34065.151682018)])']
+connector: <aiohttp.connector.TCPConnector object at 0x7fb46d8fb0e0>
+2026-11-14 00:00:18 [INFO] src.data_loader: Already cached: 0, need download: 30
+2026-11-14 00:00:18 [INFO] src.data_loader: Downloading 30 datasets...
+2026-11-14 00:00:19 [INFO] src.data_loader: [1/30] Fetching BTC/USDT (1h)
+2026-11-14 00:00:29 [INFO] src.data_loader:   ✓ BTC/USDT: 17520 candles (2024-11-13T22:00:00+00:00 → 2026-11-13T21:00:00+00:00)
+2026-11-14 00:00:29 [INFO] src.data_loader: [2/30] Fetching ETH/USDT (1h)
+2026-11-14 00:00:39 [INFO] src.data_loader:   ✓ ETH/USDT: 17520 candles (2024-11-13T22:00:00+00:00 → 2026-11-13T21:00:00+00:00)
+2026-11-14 00:00:39 [INFO] src.data_loader: [3/30] Fetching SOL/USDT (1h)
+2026-11-14 00:00:49 [INFO] src.data_loader:   ✓ SOL/USDT: 17520 candles (2024-11-13T22:00:00+00:00 → 2026-11-13T21:00:00+00:00)
+2026-11-14 00:00:49 [INFO] src.data_loader: [4/30] Fetching BNB/USDT (1h)
+2026-11-14 00:01:02 [INFO] src.data_loader:   ✓ BNB/USDT: 17520 candles (2024-11-13T22:00:00+00:00 → 2026-11-13T21:00:00+00:00)
+2026-11-14 00:01:02 [INFO] src.data_loader: [5/30] Fetching XRP/USDT (1h)
+2026-11-14 00:01:13 [INFO] src.data_loader:   ✓ XRP/USDT: 17520 candles (2024-11-13T22:00:00+00:00 → 2026-11-13T21:00:00+00:00)
+2026-11-14 00:01:13 [INFO] src.data_loader: [6/30] Fetching DOGE/USDT (1h)
+2026-11-14 00:01:24 [INFO] src.data_loader:   ✓ DOGE/USDT: 17520 candles (2024-11-13T22:00:00+00:00 → 2026-11-13T21:00:00+00:00)
+2026-11-14 00:01:24 [INFO] src.data_loader: [7/30] Fetching ADA/USDT (1h)
+2026-11-14 00:01:34 [INFO] src.data_loader:   ✓ ADA/USDT: 17520 candles (2024-11-13T22:00:00+00:00 → 2026-11-13T21:00:00+00:00)
+2026-11-14 00:01:34 [INFO] src.data_loader: [8/30] Fetching AVAX/USDT (1h)
+2026-11-14 00:01:44 [INFO] src.data_loader:   ✓ AVAX/USDT: 17520 candles (2024-11-13T22:00:00+00:00 → 2026-11-13T21:00:00+00:00)
+2026-11-14 00:01:44 [INFO] src.data_loader: [9/30] Fetching LINK/USDT (1h)
+2026-11-14 00:01:55 [INFO] src.data_loader:   ✓ LINK/USDT: 17520 candles (2024-11-13T22:00:00+00:00 → 2026-11-13T21:00:00+00:00)
+2026-11-14 00:01:55 [INFO] src.data_loader: [10/30] Fetching MATIC/USDT (1h)
+2026-11-14 00:01:55 [ERROR] src.data_loader: Failed to fetch MATIC/USDT: module 'ccxt.base.errors' has no attribute 'RateLimit'
+2026-11-14 00:01:55 [INFO] src.data_loader: [11/30] Fetching DOT/USDT (1h)
+2026-11-14 00:02:06 [INFO] src.data_loader:   ✓ DOT/USDT: 17520 candles (2024-11-13T22:00:00+00:00 → 2026-11-13T21:00:00+00:00)
+2026-11-14 00:02:06 [INFO] src.data_loader: [12/30] Fetching UNI/USDT (1h)
+2026-11-14 00:02:17 [INFO] src.data_loader:   ✓ UNI/USDT: 17520 candles (2024-11-13T22:00:00+00:00 → 2026-11-13T21:00:00+00:00)
+2026-11-14 00:02:17 [INFO] src.data_loader: [13/30] Fetching ATOM/USDT (1h)
+2026-11-14 00:02:27 [INFO] src.data_loader:   ✓ ATOM/USDT: 17520 candles (2024-11-13T22:00:00+00:00 → 2026-11-13T21:00:00+00:00)
+2026-11-14 00:02:27 [INFO] src.data_loader: [14/30] Fetching LTC/USDT (1h)
+2026-11-14 00:02:39 [INFO] src.data_loader:   ✓ LTC/USDT: 17520 candles (2024-11-13T22:00:00+00:00 → 2026-11-13T21:00:00+00:00)
+2026-11-14 00:02:39 [INFO] src.data_loader: [15/30] Fetching ETC/USDT (1h)
+2026-11-14 00:02:50 [INFO] src.data_loader:   ✓ ETC/USDT: 17520 candles (2024-11-13T22:00:00+00:00 → 2026-11-13T21:00:00+00:00)
+2026-11-14 00:02:50 [INFO] src.data_loader: [16/30] Fetching FIL/USDT (1h)
+2026-11-14 00:03:00 [INFO] src.data_loader:   ✓ FIL/USDT: 17520 candles (2024-11-13T22:00:00+00:00 → 2026-11-13T21:00:00+00:00)
+2026-11-14 00:03:00 [INFO] src.data_loader: [17/30] Fetching APT/USDT (1h)
+2026-11-14 00:03:11 [INFO] src.data_loader:   ✓ APT/USDT: 17520 candles (2024-11-13T22:00:00+00:00 → 2026-11-13T21:00:00+00:00)
+2026-11-14 00:03:11 [INFO] src.data_loader: [18/30] Fetching ARBN/USDT (1h)
+2026-11-14 00:03:11 [ERROR] src.data_loader: Failed to fetch ARBN/USDT: module 'ccxt.base.errors' has no attribute 'RateLimit'
+2026-11-14 00:03:11 [INFO] src.data_loader: [19/30] Fetching NEAR/USDT (1h)
+2026-11-14 00:03:22 [INFO] src.data_loader:   ✓ NEAR/USDT: 17520 candles (2024-11-13T22:00:00+00:00 → 2026-11-13T21:00:00+00:00)
+2026-11-14 00:03:22 [INFO] src.data_loader: [20/30] Fetching ALGO/USDT (1h)
+2026-11-14 00:03:33 [INFO] src.data_loader:   ✓ ALGO/USDT: 17520 candles (2024-11-13T22:00:00+00:00 → 2026-11-13T21:00:00+00:00)
+2026-11-14 00:03:33 [INFO] src.data_loader: [21/30] Fetching FTM/USDT (1h)
+2026-11-14 00:03:44 [INFO] src.data_loader:   ✓ FTM/USDT: 17520 candles (2024-11-13T22:00:00+00:00 → 2026-11-13T21:00:00+00:00)
+2026-11-14 00:03:44 [INFO] src.data_loader: [22/30] Fetching SAND/USDT (1h)
+2026-11-14 00:03:54 [INFO] src.data_loader:   ✓ SAND/USDT: 17520 candles (2024-11-13T22:00:00+00:00 → 2026-11-13T21:00:00+00:00)
+2026-11-14 00:03:54 [INFO] src.data_loader: [23/30] Fetching MANA/USDT (1h)
+2026-11-14 00:04:06 [INFO] src.data_loader:   ✓ MANA/USDT: 17520 candles (2024-11-13T22:00:00+00:00 → 2026-11-13T21:00:00+00:00)
+2026-11-14 00:04:06 [INFO] src.data_loader: [24/30] Fetching AXS/USDT (1h)
+2026-11-14 00:04:16 [INFO] src.data_loader:   ✓ AXS/USDT: 17520 candles (2024-11-13T22:00:00+00:00 → 2026-11-13T21:00:00+00:00)
+2026-11-14 00:04:16 [INFO] src.data_loader: [25/30] Fetching THETA/USDT (1h)
+2026-11-14 00:04:27 [INFO] src.data_loader:   ✓ THETA/USDT: 17520 candles (2024-11-13T22:00:00+00:00 → 2026-11-13T21:00:00+00:00)
+2026-11-14 00:04:27 [INFO] src.data_loader: [26/30] Fetching ICP/USDT (1h)
+2026-11-14 00:04:37 [INFO] src.data_loader:   ✓ ICP/USDT: 17520 candles (2024-11-13T22:00:00+00:00 → 2026-11-13T21:00:00+00:00)
+2026-11-14 00:04:37 [INFO] src.data_loader: [27/30] Fetching VET/USDT (1h)
+2026-11-14 00:04:47 [INFO] src.data_loader:   ✓ VET/USDT: 17520 candles (2024-11-13T22:00:00+00:00 → 2026-11-13T21:00:00+00:00)
+2026-11-14 00:04:47 [INFO] src.data_loader: [28/30] Fetching HBAR/USDT (1h)
+2026-11-14 00:04:58 [INFO] src.data_loader:   ✓ HBAR/USDT: 17520 candles (2024-11-13T22:00:00+00:00 → 2026-11-13T21:00:00+00:00)
+2026-11-14 00:04:58 [INFO] src.data_loader: [29/30] Fetching EGLD/USDT (1h)
+2026-11-14 00:05:12 [INFO] src.data_loader:   ✓ EGLD/USDT: 17520 candles (2024-11-13T22:00:00+00:00 → 2026-11-13T21:00:00+00:00)
+2026-11-14 00:05:12 [INFO] src.data_loader: [30/30] Fetching XTZ/USDT (1h)
+2026-11-14 00:05:23 [INFO] src.data_loader:   ✓ XTZ/USDT: 17520 candles (2024-11-13T22:00:00+00:00 → 2026-11-13T21:00:00+00:00)
+2026-11-14 00:05:24 [INFO] src.data_loader: Cached 28 symbol datasets to data_cache/
+2026-11-14 00:05:24 [INFO] src.data_loader: Total loaded: 28 symbols
+2026-11-14 00:05:24 [INFO] src.data_loader: Cached 28 symbol datasets to data_cache/
+2026-11-14 00:05:24 [INFO] src.backtest_engine: Loaded 28 symbols
+2026-11-14 00:05:24 [INFO] src.backtest_engine: [2/6] Computing indicators...
+2026-11-14 00:05:27 [INFO] src.backtest_engine: 28 symbols ready for backtest
+2026-11-14 00:05:27 [INFO] src.backtest_engine: [3/6] Generating signals...
+2026-11-14 00:05:58 [INFO] src.backtest_engine: Total entry signals: 969
+2026-11-14 00:05:58 [INFO] src.backtest_engine: [4/6] Running simulation...
+2026-11-14 00:05:58 [ERROR] src.strategy: HALT TRIGGERED: equity=7667.20 < initial=100000.00 * 0.5
+2026-11-14 00:05:58 [WARNING] src.strategy: Emergency closed 1 positions. Final cash: 100000.00
+2026-11-14 00:05:58 [INFO] src.backtest_engine: Simulation complete: 1 trades, 0 unclosed
+2026-11-14 00:05:58 [INFO] src.backtest_engine: [5/6] Computing metrics...
+2026-11-14 00:05:58 [INFO] src.backtest_engine: [6/6] Generating visualizations...
+2026-11-14 00:05:58 [INFO] src.visualization: Equity curve saved to results/equity_curve.png
+2026-11-14 00:05:58 [INFO] src.visualization: PNG charts saved to results
+2026-11-14 00:05:59 [INFO] src.visualization: HTML report saved to results/backtest_report.html
+2026-11-14 00:05:59 [INFO] src.backtest_engine: Trades CSV saved: 1 rows
+2026-11-14 00:05:59 [INFO] src.backtest_engine: Equity curve CSV saved
+2026-11-14 00:05:59 [INFO] src.backtest_engine: Text report saved to results/metrics_report.txt
+2026-11-14 00:05:59 [INFO] src.backtest_engine: ============================================================
+2026-11-14 00:05:59 [INFO] src.backtest_engine: BACKTEST COMPLETE — 343.03 seconds
+2026-11-14 00:05:59 [INFO] src.backtest_engine: ============================================================
+2026-11-14 00:13:42 [INFO] __main__: Config loaded: timeframe=1h, coins=30, years=2, market=futures
+2026-11-14 00:13:42 [INFO] src.backtest_engine: ============================================================
+2026-11-14 00:13:42 [INFO] src.backtest_engine: BACKTEST START
+2026-11-14 00:13:42 [INFO] src.backtest_engine: ============================================================
+2026-11-14 00:13:42 [INFO] src.backtest_engine: [1/6] Loading data...
+2026-11-14 00:13:44 [WARNING] src.data_loader: No futures tickers found (all appear to be spot) — using fallback
+2026-11-14 00:13:44 [WARNING] src.data_loader: Attempt 1/3 failed: name '_FALLBACK_SYMBOLS' is not defined
+2026-11-14 00:13:45 [WARNING] ccxt.base.exchange: binance requires to release all resources with an explicit call to the .close() coroutine. If you are using the exchange instance with async coroutines, add `await exchange.close()` to your code into a place when you're done with the exchange and don't need the exchange instance anymore (at the end of your async coroutine).
+2026-11-14 00:13:45 [ERROR] asyncio: Unclosed client session
+client_session: <aiohttp.client.ClientSession object at 0x7fa46b57cad0>
+2026-11-14 00:13:45 [ERROR] asyncio: Unclosed connector
+connections: ['deque([(<aiohttp.client_proto.ResponseHandler object at 0x7fa46b3e0370>, 34870.498736304)])', 'deque([(<aiohttp.client_proto.ResponseHandler object at 0x7fa46b5604d0>, 34871.003117215)])', 'deque([(<aiohttp.client_proto.ResponseHandler object at 0x7fa46b3e0690>, 34871.800739497)])']
+connector: <aiohttp.connector.TCPConnector object at 0x7fa46b64ef90>
+2026-11-14 00:13:47 [WARNING] src.data_loader: No futures tickers found (all appear to be spot) — using fallback
+2026-11-14 00:13:47 [WARNING] src.data_loader: Attempt 2/3 failed: name '_FALLBACK_SYMBOLS' is not defined
+2026-11-14 00:13:49 [WARNING] ccxt.base.exchange: binance requires to release all resources with an explicit call to the .close() coroutine. If you are using the exchange instance with async coroutines, add `await exchange.close()` to your code into a place when you're done with the exchange and don't need the exchange instance anymore (at the end of your async coroutine).
+2026-11-14 00:13:49 [ERROR] asyncio: Unclosed client session
+client_session: <aiohttp.client.ClientSession object at 0x7fa46b64f0e0>
+2026-11-14 00:13:49 [ERROR] asyncio: Unclosed connector
+connections: ['deque([(<aiohttp.client_proto.ResponseHandler object at 0x7fa46b560650>, 34873.413940469)])', 'deque([(<aiohttp.client_proto.ResponseHandler object at 0x7fa46b62ee50>, 34873.909720472)])', 'deque([(<aiohttp.client_proto.ResponseHandler object at 0x7fa46b62f130>, 34874.548297874)])']
+connector: <aiohttp.connector.TCPConnector object at 0x7fa46b69b9d0>
+2026-11-14 00:13:51 [WARNING] src.data_loader: No futures tickers found (all appear to be spot) — using fallback
+2026-11-14 00:13:51 [WARNING] src.data_loader: Attempt 3/3 failed: name '_FALLBACK_SYMBOLS' is not defined
+2026-11-14 00:13:51 [WARNING] src.data_loader: All attempts failed, using fallback symbols
+2026-11-14 00:13:51 [INFO] src.data_loader: Using fallback: 30 symbols
+2026-11-14 00:13:51 [WARNING] ccxt.base.exchange: binance requires to release all resources with an explicit call to the .close() coroutine. If you are using the exchange instance with async coroutines, add `await exchange.close()` to your code into a place when you're done with the exchange and don't need the exchange instance anymore (at the end of your async coroutine).
+2026-11-14 00:13:51 [ERROR] asyncio: Unclosed client session
+client_session: <aiohttp.client.ClientSession object at 0x7fa46b64f0e0>
+2026-11-14 00:13:51 [ERROR] asyncio: Unclosed connector
+connections: ['deque([(<aiohttp.client_proto.ResponseHandler object at 0x7fa46b7bfa10>, 34877.241470687)])', 'deque([(<aiohttp.client_proto.ResponseHandler object at 0x7fa46b7bf330>, 34877.660219807)])', 'deque([(<aiohttp.client_proto.ResponseHandler object at 0x7fa46b7bf5f0>, 34878.421796611)])']
+connector: <aiohttp.connector.TCPConnector object at 0x7fa46b69bd90>
+2026-11-14 00:13:51 [INFO] src.data_loader: Already cached: 0, need download: 30
+2026-11-14 00:13:51 [INFO] src.data_loader: Downloading 30 datasets...
+2026-11-14 00:13:52 [INFO] src.data_loader: [1/30] Fetching BTC/USDT:USDT (1h)
+2026-11-14 00:14:04 [INFO] src.data_loader:   ✓ BTC/USDT:USDT: 17520 candles (2024-11-13T22:00:00+00:00 → 2026-11-13T21:00:00+00:00)
+2026-11-14 00:14:04 [INFO] src.data_loader: [2/30] Fetching ETH/USDT:USDT (1h)
+2026-11-14 00:14:15 [INFO] src.data_loader:   ✓ ETH/USDT:USDT: 17520 candles (2024-11-13T22:00:00+00:00 → 2026-11-13T21:00:00+00:00)
+2026-11-14 00:14:15 [INFO] src.data_loader: [3/30] Fetching SOL/USDT:USDT (1h)
+2026-11-14 00:14:26 [INFO] src.data_loader:   ✓ SOL/USDT:USDT: 17520 candles (2024-11-13T22:00:00+00:00 → 2026-11-13T21:00:00+00:00)
+2026-11-14 00:14:26 [INFO] src.data_loader: [4/30] Fetching BNB/USDT:USDT (1h)
+2026-11-14 00:14:37 [INFO] src.data_loader:   ✓ BNB/USDT:USDT: 17520 candles (2024-11-13T22:00:00+00:00 → 2026-11-13T21:00:00+00:00)
+2026-11-14 00:14:37 [INFO] src.data_loader: [5/30] Fetching XRP/USDT:USDT (1h)
+2026-11-14 00:14:48 [INFO] src.data_loader:   ✓ XRP/USDT:USDT: 17520 candles (2024-11-13T22:00:00+00:00 → 2026-11-13T21:00:00+00:00)
+2026-11-14 00:14:48 [INFO] src.data_loader: [6/30] Fetching DOGE/USDT:USDT (1h)
+2026-11-14 00:14:58 [INFO] src.data_loader:   ✓ DOGE/USDT:USDT: 17520 candles (2024-11-13T22:00:00+00:00 → 2026-11-13T21:00:00+00:00)
+2026-11-14 00:14:58 [INFO] src.data_loader: [7/30] Fetching ADA/USDT:USDT (1h)
+2026-11-14 00:15:09 [INFO] src.data_loader:   ✓ ADA/USDT:USDT: 17520 candles (2024-11-13T22:00:00+00:00 → 2026-11-13T21:00:00+00:00)
+2026-11-14 00:15:09 [INFO] src.data_loader: [8/30] Fetching AVAX/USDT:USDT (1h)
+2026-11-14 00:15:20 [INFO] src.data_loader:   ✓ AVAX/USDT:USDT: 17520 candles (2024-11-13T22:00:00+00:00 → 2026-11-13T21:00:00+00:00)
+2026-11-14 00:15:20 [INFO] src.data_loader: [9/30] Fetching LINK/USDT:USDT (1h)
+2026-11-14 00:15:31 [INFO] src.data_loader:   ✓ LINK/USDT:USDT: 17520 candles (2024-11-13T22:00:00+00:00 → 2026-11-13T21:00:00+00:00)
+2026-11-14 00:15:31 [INFO] src.data_loader: [10/30] Fetching MATIC/USDT:USDT (1h)
+2026-11-14 00:15:31 [ERROR] src.data_loader: Failed to fetch MATIC/USDT:USDT: module 'ccxt.base.errors' has no attribute 'RateLimit'
+2026-11-14 00:15:31 [INFO] src.data_loader: [11/30] Fetching DOT/USDT:USDT (1h)
+2026-11-14 00:15:41 [INFO] src.data_loader:   ✓ DOT/USDT:USDT: 17520 candles (2024-11-13T22:00:00+00:00 → 2026-11-13T21:00:00+00:00)
+2026-11-14 00:15:41 [INFO] src.data_loader: [12/30] Fetching UNI/USDT:USDT (1h)
+2026-11-14 00:15:51 [INFO] src.data_loader:   ✓ UNI/USDT:USDT: 17520 candles (2024-11-13T22:00:00+00:00 → 2026-11-13T21:00:00+00:00)
+2026-11-14 00:15:51 [INFO] src.data_loader: [13/30] Fetching ATOM/USDT:USDT (1h)
+2026-11-14 00:16:02 [INFO] src.data_loader:   ✓ ATOM/USDT:USDT: 17520 candles (2024-11-13T22:00:00+00:00 → 2026-11-13T21:00:00+00:00)
+2026-11-14 00:16:02 [INFO] src.data_loader: [14/30] Fetching LTC/USDT:USDT (1h)
+2026-11-14 00:16:13 [INFO] src.data_loader:   ✓ LTC/USDT:USDT: 17520 candles (2024-11-13T22:00:00+00:00 → 2026-11-13T21:00:00+00:00)
+2026-11-14 00:16:13 [INFO] src.data_loader: [15/30] Fetching ETC/USDT:USDT (1h)
+2026-11-14 00:16:24 [INFO] src.data_loader:   ✓ ETC/USDT:USDT: 17520 candles (2024-11-13T22:00:00+00:00 → 2026-11-13T21:00:00+00:00)
+2026-11-14 00:16:24 [INFO] src.data_loader: [16/30] Fetching FIL/USDT:USDT (1h)
+2026-11-14 00:16:35 [INFO] src.data_loader:   ✓ FIL/USDT:USDT: 17520 candles (2024-11-13T22:00:00+00:00 → 2026-11-13T21:00:00+00:00)
+2026-11-14 00:16:35 [INFO] src.data_loader: [17/30] Fetching APT/USDT:USDT (1h)
+2026-11-14 00:16:45 [INFO] src.data_loader:   ✓ APT/USDT:USDT: 17520 candles (2024-11-13T22:00:00+00:00 → 2026-11-13T21:00:00+00:00)
+2026-11-14 00:16:45 [INFO] src.data_loader: [18/30] Fetching ARBN/USDT:USDT (1h)
+2026-11-14 00:16:45 [ERROR] src.data_loader: Failed to fetch ARBN/USDT:USDT: module 'ccxt.base.errors' has no attribute 'RateLimit'
+2026-11-14 00:16:45 [INFO] src.data_loader: [19/30] Fetching NEAR/USDT:USDT (1h)
+2026-11-14 00:16:55 [INFO] src.data_loader:   ✓ NEAR/USDT:USDT: 17520 candles (2024-11-13T22:00:00+00:00 → 2026-11-13T21:00:00+00:00)
+2026-11-14 00:16:55 [INFO] src.data_loader: [20/30] Fetching ALGO/USDT:USDT (1h)
+2026-11-14 00:17:06 [INFO] src.data_loader:   ✓ ALGO/USDT:USDT: 17520 candles (2024-11-13T22:00:00+00:00 → 2026-11-13T21:00:00+00:00)
+2026-11-14 00:17:06 [INFO] src.data_loader: [21/30] Fetching FTM/USDT:USDT (1h)
+2026-11-14 00:17:17 [INFO] src.data_loader:   ✓ FTM/USDT:USDT: 17520 candles (2024-11-13T22:00:00+00:00 → 2026-11-13T21:00:00+00:00)
+2026-11-14 00:17:17 [INFO] src.data_loader: [22/30] Fetching SAND/USDT:USDT (1h)
+2026-11-14 00:17:28 [INFO] src.data_loader:   ✓ SAND/USDT:USDT: 17520 candles (2024-11-13T22:00:00+00:00 → 2026-11-13T21:00:00+00:00)
+2026-11-14 00:17:28 [INFO] src.data_loader: [23/30] Fetching MANA/USDT:USDT (1h)
+2026-11-14 00:17:39 [INFO] src.data_loader:   ✓ MANA/USDT:USDT: 17520 candles (2024-11-13T22:00:00+00:00 → 2026-11-13T21:00:00+00:00)
+2026-11-14 00:17:39 [INFO] src.data_loader: [24/30] Fetching AXS/USDT:USDT (1h)
+2026-11-14 00:17:49 [INFO] src.data_loader:   ✓ AXS/USDT:USDT: 17520 candles (2024-11-13T22:00:00+00:00 → 2026-11-13T21:00:00+00:00)
+2026-11-14 00:17:49 [INFO] src.data_loader: [25/30] Fetching THETA/USDT:USDT (1h)
+2026-11-14 00:18:00 [INFO] src.data_loader:   ✓ THETA/USDT:USDT: 17520 candles (2024-11-13T22:00:00+00:00 → 2026-11-13T21:00:00+00:00)
+2026-11-14 00:18:00 [INFO] src.data_loader: [26/30] Fetching ICP/USDT:USDT (1h)
+2026-11-14 00:18:10 [INFO] src.data_loader:   ✓ ICP/USDT:USDT: 17520 candles (2024-11-13T22:00:00+00:00 → 2026-11-13T21:00:00+00:00)
+2026-11-14 00:18:10 [INFO] src.data_loader: [27/30] Fetching VET/USDT:USDT (1h)
+2026-11-14 00:18:22 [INFO] src.data_loader:   ✓ VET/USDT:USDT: 17520 candles (2024-11-13T22:00:00+00:00 → 2026-11-13T21:00:00+00:00)
+2026-11-14 00:18:22 [INFO] src.data_loader: [28/30] Fetching HBAR/USDT:USDT (1h)
+2026-11-14 00:18:32 [INFO] src.data_loader:   ✓ HBAR/USDT:USDT: 17520 candles (2024-11-13T22:00:00+00:00 → 2026-11-13T21:00:00+00:00)
+2026-11-14 00:18:32 [INFO] src.data_loader: [29/30] Fetching EGLD/USDT:USDT (1h)
+2026-11-14 00:18:43 [INFO] src.data_loader:   ✓ EGLD/USDT:USDT: 17520 candles (2024-11-13T22:00:00+00:00 → 2026-11-13T21:00:00+00:00)
+2026-11-14 00:18:43 [INFO] src.data_loader: [30/30] Fetching XTZ/USDT:USDT (1h)
+2026-11-14 00:18:54 [INFO] src.data_loader:   ✓ XTZ/USDT:USDT: 17520 candles (2024-11-13T22:00:00+00:00 → 2026-11-13T21:00:00+00:00)
+2026-11-14 00:18:54 [INFO] src.data_loader: Cached 28 symbol datasets to data_cache/
+2026-11-14 00:18:54 [INFO] src.data_loader: Total loaded: 28 symbols
+2026-11-14 00:18:54 [INFO] src.data_loader: Cached 28 symbol datasets to data_cache/
+2026-11-14 00:18:54 [INFO] src.backtest_engine: Loaded 28 symbols
+2026-11-14 00:18:54 [INFO] src.backtest_engine: [2/6] Computing indicators...
+2026-11-14 00:18:58 [INFO] src.backtest_engine: 28 symbols ready for backtest
+2026-11-14 00:18:58 [INFO] src.backtest_engine: [3/6] Generating signals...
+2026-11-14 00:19:28 [INFO] src.backtest_engine: Total entry signals: 969
+2026-11-14 00:19:28 [INFO] src.backtest_engine: [4/6] Running simulation...
+2026-11-14 00:19:28 [INFO] src.strategy: OPEN ETH/USDT:USDT: entry=3067.0300, stop=3000.5958, dist=66.4342, size=30.1050, cost=92332.80, cash=100000.00, risk_amt=2000.00
+2026-11-14 00:19:28 [ERROR] src.strategy: HALT TRIGGERED: equity=7667.20 < initial=100000.00 * 0.5
+2026-11-14 00:19:28 [WARNING] src.strategy: Emergency closed 1 positions. Final cash: 100000.00
+2026-11-14 00:19:28 [INFO] src.backtest_engine: Simulation complete: 1 trades, 0 unclosed
+2026-11-14 00:19:28 [INFO] src.backtest_engine: [5/6] Computing metrics...
+2026-11-14 00:19:28 [INFO] src.backtest_engine: [6/6] Generating visualizations...
+2026-11-14 00:19:29 [INFO] src.visualization: Equity curve saved to results/equity_curve.png
+2026-11-14 00:19:29 [INFO] src.visualization: PNG charts saved to results
+2026-11-14 00:19:29 [INFO] src.visualization: HTML report saved to results/backtest_report.html
+2026-11-14 00:19:29 [INFO] src.backtest_engine: Trades CSV saved: 1 rows
+2026-11-14 00:19:29 [INFO] src.backtest_engine: Equity curve CSV saved
+2026-11-14 00:19:29 [INFO] src.backtest_engine: Text report saved to results/metrics_report.txt
+2026-11-14 00:19:29 [INFO] src.backtest_engine: ============================================================
+2026-11-14 00:19:29 [INFO] src.backtest_engine: BACKTEST COMPLETE — 346.46 seconds
+2026-11-14 00:19:29 [INFO] src.backtest_engine: ============================================================
+2026-11-14 08:14:55 [INFO] __main__: Config loaded: timeframe=1h, coins=30, years=2, market=futures
+2026-11-14 08:14:55 [INFO] src.backtest_engine: ============================================================
+2026-11-14 08:14:55 [INFO] src.backtest_engine: BACKTEST START
+2026-11-14 08:14:55 [INFO] src.backtest_engine: ============================================================
+2026-11-14 08:14:55 [INFO] src.backtest_engine: [1/6] Loading data...
+2026-11-14 08:14:58 [WARNING] src.data_loader: No futures tickers found (all appear to be spot) — using fallback
+2026-11-14 08:14:58 [WARNING] src.data_loader: Attempt 1/3 failed: name '_FALLBACK_SYMBOLS' is not defined
+2026-11-14 08:14:59 [WARNING] ccxt.base.exchange: binance requires to release all resources with an explicit call to the .close() coroutine. If you are using the exchange instance with async coroutines, add `await exchange.close()` to your code into a place when you're done with the exchange and don't need the exchange instance anymore (at the end of your async coroutine).
+2026-11-14 08:14:59 [ERROR] asyncio: Unclosed client session
+client_session: <aiohttp.client.ClientSession object at 0x7f3094c34ad0>
+2026-11-14 08:14:59 [ERROR] asyncio: Unclosed connector
+connections: ['deque([(<aiohttp.client_proto.ResponseHandler object at 0x7f3094a9c1e0>, 35408.568450712)])', 'deque([(<aiohttp.client_proto.ResponseHandler object at 0x7f3094c184d0>, 35408.966140036)])', 'deque([(<aiohttp.client_proto.ResponseHandler object at 0x7f3094a9c820>, 35410.015820961)])']
+connector: <aiohttp.connector.TCPConnector object at 0x7f3094d0af90>
+2026-11-14 08:15:02 [WARNING] src.data_loader: No futures tickers found (all appear to be spot) — using fallback
+2026-11-14 08:15:02 [WARNING] src.data_loader: Attempt 2/3 failed: name '_FALLBACK_SYMBOLS' is not defined
+2026-11-14 08:15:04 [WARNING] ccxt.base.exchange: binance requires to release all resources with an explicit call to the .close() coroutine. If you are using the exchange instance with async coroutines, add `await exchange.close()` to your code into a place when you're done with the exchange and don't need the exchange instance anymore (at the end of your async coroutine).
+2026-11-14 08:15:04 [ERROR] asyncio: Unclosed client session
+client_session: <aiohttp.client.ClientSession object at 0x7f3094d0ae40>
+2026-11-14 08:15:04 [ERROR] asyncio: Unclosed connector
+connections: ['deque([(<aiohttp.client_proto.ResponseHandler object at 0x7f3094c18350>, 35412.165354997)])', 'deque([(<aiohttp.client_proto.ResponseHandler object at 0x7f3094ce6b70>, 35413.250313699)])', 'deque([(<aiohttp.client_proto.ResponseHandler object at 0x7f3094ce6fc0>, 35414.220163015)])']
+connector: <aiohttp.connector.TCPConnector object at 0x7f3094d57c50>
+2026-11-14 08:15:08 [WARNING] src.data_loader: No futures tickers found (all appear to be spot) — using fallback
+2026-11-14 08:15:08 [WARNING] src.data_loader: Attempt 3/3 failed: name '_FALLBACK_SYMBOLS' is not defined
+2026-11-14 08:15:08 [WARNING] src.data_loader: All attempts failed, using fallback symbols
+2026-11-14 08:15:08 [INFO] src.data_loader: Using fallback: 30 symbols
+2026-11-14 08:15:08 [WARNING] ccxt.base.exchange: binance requires to release all resources with an explicit call to the .close() coroutine. If you are using the exchange instance with async coroutines, add `await exchange.close()` to your code into a place when you're done with the exchange and don't need the exchange instance anymore (at the end of your async coroutine).
+2026-11-14 08:15:08 [ERROR] asyncio: Unclosed client session
+client_session: <aiohttp.client.ClientSession object at 0x7f3094d0ae40>
+2026-11-14 08:15:08 [ERROR] asyncio: Unclosed connector
+connections: ['deque([(<aiohttp.client_proto.ResponseHandler object at 0x7f3094c7bb70>, 35417.870754885)])', 'deque([(<aiohttp.client_proto.ResponseHandler object at 0x7f3094c7ba10>, 35418.300819387)])', 'deque([(<aiohttp.client_proto.ResponseHandler object at 0x7f3094c7b5f0>, 35419.895286821)])']
+connector: <aiohttp.connector.TCPConnector object at 0x7f3094d57d90>
+2026-11-14 08:15:08 [INFO] src.data_loader: Already cached: 0, need download: 30
+2026-11-14 08:15:08 [INFO] src.data_loader: Downloading 30 datasets...
+2026-11-14 08:15:10 [INFO] src.data_loader: [1/30] Fetching BTC/USDT:USDT (1h)
+2026-11-14 08:15:25 [INFO] src.data_loader:   ✓ BTC/USDT:USDT: 17520 candles (2024-11-14T06:00:00+00:00 → 2026-11-14T05:00:00+00:00)
+2026-11-14 08:15:25 [INFO] src.data_loader: [2/30] Fetching ETH/USDT:USDT (1h)
+2026-11-14 08:15:38 [INFO] src.data_loader:   ✓ ETH/USDT:USDT: 17520 candles (2024-11-14T06:00:00+00:00 → 2026-11-14T05:00:00+00:00)
+2026-11-14 08:15:38 [INFO] src.data_loader: [3/30] Fetching SOL/USDT:USDT (1h)
+2026-11-14 08:15:50 [INFO] src.data_loader:   ✓ SOL/USDT:USDT: 17520 candles (2024-11-14T06:00:00+00:00 → 2026-11-14T05:00:00+00:00)
+2026-11-14 08:15:50 [INFO] src.data_loader: [4/30] Fetching BNB/USDT:USDT (1h)
+2026-11-14 08:16:05 [ERROR] src.data_loader: Failed to fetch BNB/USDT:USDT: module 'ccxt.base.errors' has no attribute 'RateLimit'
+2026-11-14 08:16:05 [INFO] src.data_loader: [5/30] Fetching XRP/USDT:USDT (1h)
+2026-11-14 08:16:18 [INFO] src.data_loader:   ✓ XRP/USDT:USDT: 17520 candles (2024-11-14T06:00:00+00:00 → 2026-11-14T05:00:00+00:00)
+2026-11-14 08:16:18 [INFO] src.data_loader: [6/30] Fetching DOGE/USDT:USDT (1h)
+2026-11-14 08:16:30 [INFO] src.data_loader:   ✓ DOGE/USDT:USDT: 17520 candles (2024-11-14T06:00:00+00:00 → 2026-11-14T05:00:00+00:00)
+2026-11-14 08:16:30 [INFO] src.data_loader: [7/30] Fetching ADA/USDT:USDT (1h)
+2026-11-14 08:16:44 [INFO] src.data_loader:   ✓ ADA/USDT:USDT: 17520 candles (2024-11-14T06:00:00+00:00 → 2026-11-14T05:00:00+00:00)
+2026-11-14 08:16:44 [INFO] src.data_loader: [8/30] Fetching AVAX/USDT:USDT (1h)
+2026-11-14 08:16:56 [INFO] src.data_loader:   ✓ AVAX/USDT:USDT: 17520 candles (2024-11-14T06:00:00+00:00 → 2026-11-14T05:00:00+00:00)
+2026-11-14 08:16:56 [INFO] src.data_loader: [9/30] Fetching LINK/USDT:USDT (1h)
+2026-11-14 08:17:09 [INFO] src.data_loader:   ✓ LINK/USDT:USDT: 17520 candles (2024-11-14T06:00:00+00:00 → 2026-11-14T05:00:00+00:00)
+2026-11-14 08:17:09 [INFO] src.data_loader: [10/30] Fetching MATIC/USDT:USDT (1h)
+2026-11-14 08:17:09 [ERROR] src.data_loader: Failed to fetch MATIC/USDT:USDT: module 'ccxt.base.errors' has no attribute 'RateLimit'
+2026-11-14 08:17:09 [INFO] src.data_loader: [11/30] Fetching DOT/USDT:USDT (1h)
+2026-11-14 08:17:21 [INFO] src.data_loader:   ✓ DOT/USDT:USDT: 17520 candles (2024-11-14T06:00:00+00:00 → 2026-11-14T05:00:00+00:00)
+2026-11-14 08:17:21 [INFO] src.data_loader: [12/30] Fetching UNI/USDT:USDT (1h)
+2026-11-14 08:17:34 [INFO] src.data_loader:   ✓ UNI/USDT:USDT: 17520 candles (2024-11-14T06:00:00+00:00 → 2026-11-14T05:00:00+00:00)
+2026-11-14 08:17:34 [INFO] src.data_loader: [13/30] Fetching ATOM/USDT:USDT (1h)
+2026-11-14 08:17:47 [INFO] src.data_loader:   ✓ ATOM/USDT:USDT: 17520 candles (2024-11-14T06:00:00+00:00 → 2026-11-14T05:00:00+00:00)
+2026-11-14 08:17:47 [INFO] src.data_loader: [14/30] Fetching LTC/USDT:USDT (1h)
+2026-11-14 08:18:00 [INFO] src.data_loader:   ✓ LTC/USDT:USDT: 17520 candles (2024-11-14T06:00:00+00:00 → 2026-11-14T05:00:00+00:00)
+2026-11-14 08:18:00 [INFO] src.data_loader: [15/30] Fetching ETC/USDT:USDT (1h)
+2026-11-14 08:18:14 [INFO] src.data_loader:   ✓ ETC/USDT:USDT: 17520 candles (2024-11-14T06:00:00+00:00 → 2026-11-14T05:00:00+00:00)
+2026-11-14 08:18:14 [INFO] src.data_loader: [16/30] Fetching FIL/USDT:USDT (1h)
+2026-11-14 08:18:33 [INFO] src.data_loader:   ✓ FIL/USDT:USDT: 17520 candles (2024-11-14T06:00:00+00:00 → 2026-11-14T05:00:00+00:00)
+2026-11-14 08:18:33 [INFO] src.data_loader: [17/30] Fetching APT/USDT:USDT (1h)
+2026-11-14 08:18:45 [INFO] src.data_loader:   ✓ APT/USDT:USDT: 17520 candles (2024-11-14T06:00:00+00:00 → 2026-11-14T05:00:00+00:00)
+2026-11-14 08:18:45 [INFO] src.data_loader: [18/30] Fetching ARBN/USDT:USDT (1h)
+2026-11-14 08:18:45 [ERROR] src.data_loader: Failed to fetch ARBN/USDT:USDT: module 'ccxt.base.errors' has no attribute 'RateLimit'
+2026-11-14 08:18:45 [INFO] src.data_loader: [19/30] Fetching NEAR/USDT:USDT (1h)
+2026-11-14 08:18:57 [INFO] src.data_loader:   ✓ NEAR/USDT:USDT: 17520 candles (2024-11-14T06:00:00+00:00 → 2026-11-14T05:00:00+00:00)
+2026-11-14 08:18:57 [INFO] src.data_loader: [20/30] Fetching ALGO/USDT:USDT (1h)
+2026-11-14 08:19:10 [INFO] src.data_loader:   ✓ ALGO/USDT:USDT: 17520 candles (2024-11-14T06:00:00+00:00 → 2026-11-14T05:00:00+00:00)
+2026-11-14 08:19:10 [INFO] src.data_loader: [21/30] Fetching FTM/USDT:USDT (1h)
+2026-11-14 08:19:22 [INFO] src.data_loader:   ✓ FTM/USDT:USDT: 17520 candles (2024-11-14T06:00:00+00:00 → 2026-11-14T05:00:00+00:00)
+2026-11-14 08:19:22 [INFO] src.data_loader: [22/30] Fetching SAND/USDT:USDT (1h)
+2026-11-14 08:19:33 [INFO] src.data_loader:   ✓ SAND/USDT:USDT: 17520 candles (2024-11-14T06:00:00+00:00 → 2026-11-14T05:00:00+00:00)
+2026-11-14 08:19:33 [INFO] src.data_loader: [23/30] Fetching MANA/USDT:USDT (1h)
+2026-11-14 08:19:46 [INFO] src.data_loader:   ✓ MANA/USDT:USDT: 17520 candles (2024-11-14T06:00:00+00:00 → 2026-11-14T05:00:00+00:00)
+2026-11-14 08:19:46 [INFO] src.data_loader: [24/30] Fetching AXS/USDT:USDT (1h)
+2026-11-14 08:19:58 [INFO] src.data_loader:   ✓ AXS/USDT:USDT: 17520 candles (2024-11-14T06:00:00+00:00 → 2026-11-14T05:00:00+00:00)
+2026-11-14 08:19:58 [INFO] src.data_loader: [25/30] Fetching THETA/USDT:USDT (1h)
+2026-11-14 08:20:12 [INFO] src.data_loader:   ✓ THETA/USDT:USDT: 17520 candles (2024-11-14T06:00:00+00:00 → 2026-11-14T05:00:00+00:00)
+2026-11-14 08:20:12 [INFO] src.data_loader: [26/30] Fetching ICP/USDT:USDT (1h)
+2026-11-14 08:20:25 [INFO] src.data_loader:   ✓ ICP/USDT:USDT: 17520 candles (2024-11-14T06:00:00+00:00 → 2026-11-14T05:00:00+00:00)
+2026-11-14 08:20:25 [INFO] src.data_loader: [27/30] Fetching VET/USDT:USDT (1h)
+2026-11-14 08:20:38 [INFO] src.data_loader:   ✓ VET/USDT:USDT: 17520 candles (2024-11-14T06:00:00+00:00 → 2026-11-14T05:00:00+00:00)
+2026-11-14 08:20:38 [INFO] src.data_loader: [28/30] Fetching HBAR/USDT:USDT (1h)
+2026-11-14 08:20:51 [INFO] src.data_loader:   ✓ HBAR/USDT:USDT: 17520 candles (2024-11-14T06:00:00+00:00 → 2026-11-14T05:00:00+00:00)
+2026-11-14 08:20:51 [INFO] src.data_loader: [29/30] Fetching EGLD/USDT:USDT (1h)
+2026-11-14 08:21:03 [INFO] src.data_loader:   ✓ EGLD/USDT:USDT: 17520 candles (2024-11-14T06:00:00+00:00 → 2026-11-14T05:00:00+00:00)
+2026-11-14 08:21:03 [INFO] src.data_loader: [30/30] Fetching XTZ/USDT:USDT (1h)
+2026-11-14 08:21:17 [INFO] src.data_loader:   ✓ XTZ/USDT:USDT: 17520 candles (2024-11-14T06:00:00+00:00 → 2026-11-14T05:00:00+00:00)
+2026-11-14 08:21:17 [INFO] src.data_loader: Cached 27 symbol datasets to data_cache/
+2026-11-14 08:21:17 [INFO] src.data_loader: Total loaded: 27 symbols
+2026-11-14 08:21:18 [INFO] src.data_loader: Cached 27 symbol datasets to data_cache/
+2026-11-14 08:21:18 [INFO] src.backtest_engine: Loaded 27 symbols
+2026-11-14 08:21:18 [INFO] src.backtest_engine: [2/6] Computing indicators...
+2026-11-14 08:21:22 [INFO] src.backtest_engine: 27 symbols ready for backtest
+2026-11-14 08:21:22 [INFO] src.backtest_engine: [3/6] Generating signals...
+2026-11-14 08:21:50 [INFO] src.backtest_engine: Total entry signals: 956
+2026-11-14 08:21:50 [INFO] src.backtest_engine: [4/6] Running simulation...
+2026-11-14 08:21:51 [INFO] src.strategy: OPEN ETH/USDT:USDT: entry=3067.0300, stop=3000.5944, dist=66.4356, size=30.1043, cost=92330.94, cash=100000.00, risk_amt=2000.00
+2026-11-14 08:21:51 [INFO] src.strategy: MARGIN DEDUCTED: 92330.94 (Lev: 1x). Remaining cash: 7669.06
+2026-11-14 08:21:51 [ERROR] src.strategy: HALT TRIGGERED: equity=7669.06 < initial=100000.00 * 0.5
+2026-11-14 08:21:51 [WARNING] src.strategy: Emergency closed 1 positions. Final cash: 100000.00
+2026-11-14 08:21:51 [INFO] src.backtest_engine: Simulation complete: 1 trades, 0 unclosed
+2026-11-14 08:21:51 [INFO] src.backtest_engine: [5/6] Computing metrics...
+2026-11-14 08:21:51 [INFO] src.backtest_engine: [6/6] Generating visualizations...
+2026-11-14 08:21:51 [INFO] src.visualization: Equity curve saved to results/equity_curve.png
+2026-11-14 08:21:51 [INFO] src.visualization: PNG charts saved to results
+2026-11-14 08:21:51 [INFO] src.visualization: HTML report saved to results/backtest_report.html
+2026-11-14 08:21:51 [INFO] src.backtest_engine: Trades CSV saved: 1 rows
+2026-11-14 08:21:51 [INFO] src.backtest_engine: Equity curve CSV saved
+2026-11-14 08:21:51 [INFO] src.backtest_engine: Text report saved to results/metrics_report.txt
+2026-11-14 08:21:51 [INFO] src.backtest_engine: ============================================================
+2026-11-14 08:21:51 [INFO] src.backtest_engine: BACKTEST COMPLETE — 415.75 seconds
+2026-11-14 08:21:51 [INFO] src.backtest_engine: ============================================================
+2026-11-14 08:28:44 [INFO] __main__: Config loaded: timeframe=1h, coins=30, years=2, market=futures
+2026-11-14 08:28:44 [INFO] src.backtest_engine: ============================================================
+2026-11-14 08:28:44 [INFO] src.backtest_engine: BACKTEST START
+2026-11-14 08:28:44 [INFO] src.backtest_engine: ============================================================
+2026-11-14 08:28:44 [INFO] src.backtest_engine: [1/6] Loading data...
+2026-11-14 08:28:46 [WARNING] src.data_loader: No futures tickers found (all appear to be spot) — using fallback
+2026-11-14 08:28:46 [INFO] src.data_loader: Using fallback: 30 symbols
+2026-11-14 08:28:46 [WARNING] ccxt.base.exchange: binance requires to release all resources with an explicit call to the .close() coroutine. If you are using the exchange instance with async coroutines, add `await exchange.close()` to your code into a place when you're done with the exchange and don't need the exchange instance anymore (at the end of your async coroutine).
+2026-11-14 08:28:46 [ERROR] asyncio: Unclosed client session
+client_session: <aiohttp.client.ClientSession object at 0x7f217f330ad0>
+2026-11-14 08:28:46 [ERROR] asyncio: Unclosed connector
+connections: ['deque([(<aiohttp.client_proto.ResponseHandler object at 0x7f217f1a01e0>, 36236.712391384)])', 'deque([(<aiohttp.client_proto.ResponseHandler object at 0x7f217f3184d0>, 36237.258209031)])', 'deque([(<aiohttp.client_proto.ResponseHandler object at 0x7f217f1a0b40>, 36238.308440399)])']
+connector: <aiohttp.connector.TCPConnector object at 0x7f217f406f90>
+2026-11-14 08:28:46 [INFO] src.data_loader: Already cached: 0, need download: 30
+2026-11-14 08:28:46 [INFO] src.data_loader: Downloading 30 datasets...
+2026-11-14 08:28:48 [INFO] src.data_loader: [1/30] Fetching BTC/USDT (1h)
+2026-11-14 08:29:00 [INFO] src.data_loader:   ✓ BTC/USDT: 17520 candles (2024-11-14T06:00:00+00:00 → 2026-11-14T05:00:00+00:00)
+2026-11-14 08:29:00 [INFO] src.data_loader: [2/30] Fetching ETH/USDT (1h)
+2026-11-14 08:29:12 [INFO] src.data_loader:   ✓ ETH/USDT: 17520 candles (2024-11-14T06:00:00+00:00 → 2026-11-14T05:00:00+00:00)
+2026-11-14 08:29:12 [INFO] src.data_loader: [3/30] Fetching SOL/USDT (1h)
+2026-11-14 08:29:25 [INFO] src.data_loader:   ✓ SOL/USDT: 17520 candles (2024-11-14T06:00:00+00:00 → 2026-11-14T05:00:00+00:00)
+2026-11-14 08:29:25 [INFO] src.data_loader: [4/30] Fetching BNB/USDT (1h)
+2026-11-14 08:29:37 [INFO] src.data_loader:   ✓ BNB/USDT: 17520 candles (2024-11-14T06:00:00+00:00 → 2026-11-14T05:00:00+00:00)
+2026-11-14 08:29:37 [INFO] src.data_loader: [5/30] Fetching XRP/USDT (1h)
+2026-11-14 08:29:49 [INFO] src.data_loader:   ✓ XRP/USDT: 17520 candles (2024-11-14T06:00:00+00:00 → 2026-11-14T05:00:00+00:00)
+2026-11-14 08:29:49 [INFO] src.data_loader: [6/30] Fetching DOGE/USDT (1h)
+2026-11-14 08:30:00 [INFO] src.data_loader:   ✓ DOGE/USDT: 17520 candles (2024-11-14T06:00:00+00:00 → 2026-11-14T05:00:00+00:00)
+2026-11-14 08:30:00 [INFO] src.data_loader: [7/30] Fetching ADA/USDT (1h)
+2026-11-14 08:30:13 [INFO] src.data_loader:   ✓ ADA/USDT: 17520 candles (2024-11-14T06:00:00+00:00 → 2026-11-14T05:00:00+00:00)
+2026-11-14 08:30:13 [INFO] src.data_loader: [8/30] Fetching AVAX/USDT (1h)
+2026-11-14 08:30:27 [INFO] src.data_loader:   ✓ AVAX/USDT: 17520 candles (2024-11-14T06:00:00+00:00 → 2026-11-14T05:00:00+00:00)
+2026-11-14 08:30:27 [INFO] src.data_loader: [9/30] Fetching LINK/USDT (1h)
+2026-11-14 08:30:40 [INFO] src.data_loader:   ✓ LINK/USDT: 17520 candles (2024-11-14T06:00:00+00:00 → 2026-11-14T05:00:00+00:00)
+2026-11-14 08:30:40 [INFO] src.data_loader: [10/30] Fetching MATIC/USDT (1h)
+2026-11-14 08:30:40 [ERROR] src.data_loader: Failed to fetch MATIC/USDT: module 'ccxt.base.errors' has no attribute 'RateLimit'
+2026-11-14 08:30:40 [INFO] src.data_loader: [11/30] Fetching DOT/USDT (1h)
+2026-11-14 08:30:52 [INFO] src.data_loader:   ✓ DOT/USDT: 17520 candles (2024-11-14T06:00:00+00:00 → 2026-11-14T05:00:00+00:00)
+2026-11-14 08:30:52 [INFO] src.data_loader: [12/30] Fetching UNI/USDT (1h)
+2026-11-14 08:31:04 [INFO] src.data_loader:   ✓ UNI/USDT: 17520 candles (2024-11-14T06:00:00+00:00 → 2026-11-14T05:00:00+00:00)
+2026-11-14 08:31:04 [INFO] src.data_loader: [13/30] Fetching ATOM/USDT (1h)
+2026-11-14 08:31:17 [INFO] src.data_loader:   ✓ ATOM/USDT: 17520 candles (2024-11-14T06:00:00+00:00 → 2026-11-14T05:00:00+00:00)
+2026-11-14 08:31:17 [INFO] src.data_loader: [14/30] Fetching LTC/USDT (1h)
+2026-11-14 08:31:29 [INFO] src.data_loader:   ✓ LTC/USDT: 17520 candles (2024-11-14T06:00:00+00:00 → 2026-11-14T05:00:00+00:00)
+2026-11-14 08:31:29 [INFO] src.data_loader: [15/30] Fetching ETC/USDT (1h)
+2026-11-14 08:31:42 [INFO] src.data_loader:   ✓ ETC/USDT: 17520 candles (2024-11-14T06:00:00+00:00 → 2026-11-14T05:00:00+00:00)
+2026-11-14 08:31:42 [INFO] src.data_loader: [16/30] Fetching FIL/USDT (1h)
+2026-11-14 08:31:54 [INFO] src.data_loader:   ✓ FIL/USDT: 17520 candles (2024-11-14T06:00:00+00:00 → 2026-11-14T05:00:00+00:00)
+2026-11-14 08:31:54 [INFO] src.data_loader: [17/30] Fetching APT/USDT (1h)
+2026-11-14 08:32:08 [INFO] src.data_loader:   ✓ APT/USDT: 17520 candles (2024-11-14T06:00:00+00:00 → 2026-11-14T05:00:00+00:00)
+2026-11-14 08:32:08 [INFO] src.data_loader: [18/30] Fetching ARBN/USDT (1h)
+2026-11-14 08:32:08 [ERROR] src.data_loader: Failed to fetch ARBN/USDT: module 'ccxt.base.errors' has no attribute 'RateLimit'
+2026-11-14 08:32:08 [INFO] src.data_loader: [19/30] Fetching NEAR/USDT (1h)
+2026-11-14 08:32:21 [INFO] src.data_loader:   ✓ NEAR/USDT: 17520 candles (2024-11-14T06:00:00+00:00 → 2026-11-14T05:00:00+00:00)
+2026-11-14 08:32:21 [INFO] src.data_loader: [20/30] Fetching ALGO/USDT (1h)
+2026-11-14 08:34:25 [ERROR] src.data_loader: Failed to fetch ALGO/USDT: module 'ccxt.base.errors' has no attribute 'RateLimit'
+2026-11-14 08:34:25 [INFO] src.data_loader: [21/30] Fetching FTM/USDT (1h)
+2026-11-14 08:34:25 [ERROR] src.data_loader: Failed to fetch FTM/USDT: module 'ccxt.base.errors' has no attribute 'RateLimit'
+2026-11-14 08:34:25 [INFO] src.data_loader: [22/30] Fetching SAND/USDT (1h)
+2026-11-14 08:34:26 [ERROR] src.data_loader: Failed to fetch SAND/USDT: module 'ccxt.base.errors' has no attribute 'RateLimit'
+2026-11-14 08:34:26 [INFO] src.data_loader: [23/30] Fetching MANA/USDT (1h)
+2026-11-14 08:34:26 [ERROR] src.data_loader: Failed to fetch MANA/USDT: module 'ccxt.base.errors' has no attribute 'RateLimit'
+2026-11-14 08:34:26 [INFO] src.data_loader: [24/30] Fetching AXS/USDT (1h)
+2026-11-14 08:34:26 [ERROR] src.data_loader: Failed to fetch AXS/USDT: module 'ccxt.base.errors' has no attribute 'RateLimit'
+2026-11-14 08:34:26 [INFO] src.data_loader: [25/30] Fetching THETA/USDT (1h)
+2026-11-14 08:34:27 [ERROR] src.data_loader: Failed to fetch THETA/USDT: module 'ccxt.base.errors' has no attribute 'RateLimit'
+2026-11-14 08:34:27 [INFO] src.data_loader: [26/30] Fetching ICP/USDT (1h)
+2026-11-14 08:34:27 [ERROR] src.data_loader: Failed to fetch ICP/USDT: module 'ccxt.base.errors' has no attribute 'RateLimit'
+2026-11-14 08:34:27 [INFO] src.data_loader: [27/30] Fetching VET/USDT (1h)
+2026-11-14 08:34:27 [ERROR] src.data_loader: Failed to fetch VET/USDT: module 'ccxt.base.errors' has no attribute 'RateLimit'
+2026-11-14 08:34:27 [INFO] src.data_loader: [28/30] Fetching HBAR/USDT (1h)
+2026-11-14 08:34:27 [ERROR] src.data_loader: Failed to fetch HBAR/USDT: module 'ccxt.base.errors' has no attribute 'RateLimit'
+2026-11-14 08:34:27 [INFO] src.data_loader: [29/30] Fetching EGLD/USDT (1h)
+2026-11-14 08:34:28 [ERROR] src.data_loader: Failed to fetch EGLD/USDT: module 'ccxt.base.errors' has no attribute 'RateLimit'
+2026-11-14 08:34:28 [INFO] src.data_loader: [30/30] Fetching XTZ/USDT (1h)
+2026-11-14 08:34:28 [ERROR] src.data_loader: Failed to fetch XTZ/USDT: module 'ccxt.base.errors' has no attribute 'RateLimit'
+2026-11-14 08:34:28 [INFO] src.data_loader: Cached 17 symbol datasets to data_cache/
+2026-11-14 08:34:28 [INFO] src.data_loader: Total loaded: 17 symbols
+2026-11-14 08:34:28 [INFO] src.data_loader: Cached 17 symbol datasets to data_cache/
+2026-11-14 08:34:28 [INFO] src.backtest_engine: Loaded 17 symbols
+2026-11-14 08:34:28 [INFO] src.backtest_engine: [2/6] Computing indicators...
+2026-11-14 08:34:30 [INFO] src.backtest_engine: 17 symbols ready for backtest
+2026-11-14 08:34:30 [INFO] src.backtest_engine: [3/6] Generating signals...
+2026-11-14 08:34:46 [INFO] src.backtest_engine: Total entry signals: 614
+2026-11-14 08:34:46 [INFO] src.backtest_engine: [4/6] Running simulation...
+2026-11-14 08:34:47 [INFO] src.strategy: OPEN ETH/USDT: entry=3067.0300, stop=3000.5944, dist=66.4356, size=30.1043, cost=92330.94, cash=100000.00, risk_amt=2000.00
+2026-11-14 08:34:47 [INFO] src.strategy: MARGIN DEDUCTED: 9233.09 (Lev: 10x). Remaining cash: 90766.91
+2026-11-14 08:34:47 [INFO] src.strategy: OPEN BNB/USDT: entry=612.4800, stop=599.6914, dist=12.7886, size=141.9502, cost=86941.67, cash=90766.91, risk_amt=1815.34
+2026-11-14 08:34:47 [INFO] src.strategy: MARGIN DEDUCTED: 8694.17 (Lev: 10x). Remaining cash: 82072.74
+2026-11-14 08:34:47 [INFO] src.strategy: OPEN ATOM/USDT: entry=5.7790, stop=5.5817, dist=0.1973, size=10450.5510, cost=60393.73, cash=103078.57, risk_amt=2061.57
+2026-11-14 08:34:47 [INFO] src.strategy: MARGIN DEDUCTED: 6039.37 (Lev: 10x). Remaining cash: 97039.19
+2026-11-14 08:39:18 [WARNING] src.risk_manager: Liquidation risk: entry=16.4970, stop=15.6399, liq=14.9298, stop_dist=0.8571, liq_dist=1.5672, buffer=2.0x
+2026-11-14 08:39:18 [WARNING] src.strategy: Liquidation risk: entry=16.4970, stop=15.6399, liq=14.9298 — skipping LINK/USDT at 2024-11-24 12:00:00+00:00
+2026-11-14 08:39:18 [INFO] src.strategy: OPEN ETH/USDT: entry=3327.1600, stop=3259.2259, dist=67.9341, size=31.7332, cost=105581.56, cash=107788.39, risk_amt=2155.77
+2026-11-14 08:39:18 [INFO] src.strategy: MARGIN DEDUCTED: 10558.16 (Lev: 10x). Remaining cash: 97230.24
+2026-11-14 08:39:18 [WARNING] src.risk_manager: Liquidation risk: entry=1.3739, stop=1.2824, liq=1.2434, stop_dist=0.0915, liq_dist=0.1305, buffer=2.0x
+2026-11-14 08:39:18 [WARNING] src.strategy: Liquidation risk: entry=1.3739, stop=1.2824, liq=1.2434 — skipping XRP/USDT at 2024-11-24 13:00:00+00:00
+2026-11-14 08:39:18 [WARNING] src.risk_manager: Liquidation risk: entry=0.4185, stop=0.3963, liq=0.3787, stop_dist=0.0222, liq_dist=0.0398, buffer=2.0x
+2026-11-14 08:39:18 [WARNING] src.strategy: Liquidation risk: entry=0.4185, stop=0.3963, liq=0.3787 — skipping DOGE/USDT at 2024-11-24 13:00:00+00:00
+2026-11-14 08:39:18 [WARNING] src.risk_manager: Liquidation risk: entry=0.9981, stop=0.9315, liq=0.9033, stop_dist=0.0666, liq_dist=0.0948, buffer=2.0x
+2026-11-14 08:39:18 [WARNING] src.strategy: Liquidation risk: entry=0.9981, stop=0.9315, liq=0.9033 — skipping ADA/USDT at 2024-11-24 13:00:00+00:00
+2026-11-14 08:39:18 [WARNING] src.risk_manager: Liquidation risk: entry=40.2970, stop=38.1732, liq=36.4688, stop_dist=2.1238, liq_dist=3.8282, buffer=2.0x
+2026-11-14 08:39:18 [WARNING] src.strategy: Liquidation risk: entry=40.2970, stop=38.1732, liq=36.4688 — skipping AVAX/USDT at 2024-11-24 13:00:00+00:00
+2026-11-14 08:39:18 [WARNING] src.risk_manager: Liquidation risk: entry=95.6000, stop=90.4656, liq=86.5180, stop_dist=5.1344, liq_dist=9.0820, buffer=2.0x
+2026-11-14 08:39:18 [WARNING] src.strategy: Liquidation risk: entry=95.6000, stop=90.4656, liq=86.5180 — skipping LTC/USDT at 2024-11-24 13:00:00+00:00
+2026-11-14 08:39:18 [WARNING] src.risk_manager: Liquidation risk: entry=1.3667, stop=1.2784, liq=1.2369, stop_dist=0.0883, liq_dist=0.1298, buffer=2.0x
+2026-11-14 08:39:18 [WARNING] src.strategy: Liquidation risk: entry=1.3667, stop=1.2784, liq=1.2369 — skipping XRP/USDT at 2024-11-24 14:00:00+00:00
+2026-11-14 08:39:18 [WARNING] src.risk_manager: Liquidation risk: entry=40.0040, stop=37.9215, liq=36.2036, stop_dist=2.0825, liq_dist=3.8004, buffer=2.0x
+2026-11-14 08:39:18 [WARNING] src.strategy: Liquidation risk: entry=40.0040, stop=37.9215, liq=36.2036 — skipping AVAX/USDT at 2024-11-24 14:00:00+00:00
+2026-11-14 08:39:18 [WARNING] src.risk_manager: Liquidation risk: entry=11.9938, stop=11.3658, liq=10.8544, stop_dist=0.6280, liq_dist=1.1394, buffer=2.0x
+2026-11-14 08:39:18 [WARNING] src.strategy: Liquidation risk: entry=11.9938, stop=11.3658, liq=10.8544 — skipping APT/USDT at 2024-11-24 14:00:00+00:00
+2026-11-14 08:39:18 [WARNING] src.risk_manager: Liquidation risk: entry=0.4149, stop=0.3906, liq=0.3754, stop_dist=0.0243, liq_dist=0.0394, buffer=2.0x
+2026-11-14 08:39:18 [WARNING] src.strategy: Liquidation risk: entry=0.4149, stop=0.3906, liq=0.3754 — skipping DOGE/USDT at 2024-11-24 16:00:00+00:00
+2026-11-14 08:39:18 [WARNING] src.risk_manager: Liquidation risk: entry=0.9744, stop=0.9055, liq=0.8818, stop_dist=0.0689, liq_dist=0.0926, buffer=2.0x
+2026-11-14 08:39:18 [WARNING] src.strategy: Liquidation risk: entry=0.9744, stop=0.9055, liq=0.8818 — skipping ADA/USDT at 2024-11-24 16:00:00+00:00
+2026-11-14 08:39:18 [WARNING] src.risk_manager: Liquidation risk: entry=8.0290, stop=7.6142, liq=7.2662, stop_dist=0.4148, liq_dist=0.7628, buffer=2.0x
+2026-11-14 08:39:18 [WARNING] src.strategy: Liquidation risk: entry=8.0290, stop=7.6142, liq=7.2662 — skipping ATOM/USDT at 2024-11-25 17:00:00+00:00
+2026-11-14 08:39:18 [WARNING] src.risk_manager: Liquidation risk: entry=5.3050, stop=4.9916, liq=4.8010, stop_dist=0.3134, liq_dist=0.5040, buffer=2.0x
+2026-11-14 08:39:18 [WARNING] src.strategy: Liquidation risk: entry=5.3050, stop=4.9916, liq=4.8010 — skipping FIL/USDT at 2024-11-26 11:00:00+00:00
+2026-11-14 08:39:18 [INFO] src.strategy: OPEN NEAR/USDT: entry=6.8610, stop=6.7076, dist=0.1534, size=14679.7393, cost=100717.69, cash=112569.47, risk_amt=2251.39
+2026-11-14 08:39:18 [INFO] src.strategy: MARGIN DEDUCTED: 10071.77 (Lev: 10x). Remaining cash: 102497.70
+2026-11-14 08:39:18 [INFO] src.strategy: OPEN APT/USDT: entry=12.9466, stop=12.4278, dist=0.5188, size=4288.2037, cost=55517.66, cash=111243.35, risk_amt=2224.87
+2026-11-14 08:39:18 [INFO] src.strategy: MARGIN DEDUCTED: 5551.77 (Lev: 10x). Remaining cash: 105691.58
+2026-11-14 08:39:18 [INFO] src.strategy: OPEN ETH/USDT: entry=3606.0200, stop=3525.9901, dist=80.0299, size=27.4707, cost=99059.96, cash=109923.98, risk_amt=2198.48
+2026-11-14 08:39:18 [INFO] src.strategy: MARGIN DEDUCTED: 9906.00 (Lev: 10x). Remaining cash: 100017.99
+2026-11-14 08:39:18 [WARNING] src.risk_manager: Liquidation risk: entry=0.4096, stop=0.3850, liq=0.3707, stop_dist=0.0246, liq_dist=0.0389, buffer=2.0x
+2026-11-14 08:39:18 [WARNING] src.strategy: Liquidation risk: entry=0.4096, stop=0.3850, liq=0.3707 — skipping DOGE/USDT at 2024-12-02 08:00:00+00:00
+2026-11-14 08:39:18 [WARNING] src.risk_manager: Liquidation risk: entry=2.3835, stop=2.2183, liq=2.1571, stop_dist=0.1652, liq_dist=0.2264, buffer=2.0x
+2026-11-14 08:39:18 [WARNING] src.strategy: Liquidation risk: entry=2.3835, stop=2.2183, liq=2.1571 — skipping XRP/USDT at 2024-12-04 16:00:00+00:00
+2026-11-14 08:39:18 [INFO] src.strategy: OPEN ADA/USDT: entry=1.1477, stop=1.0946, dist=0.0531, size=41299.1737, cost=47399.06, cash=109570.05, risk_amt=2191.40
+2026-11-14 08:39:18 [INFO] src.strategy: MARGIN DEDUCTED: 4739.91 (Lev: 10x). Remaining cash: 104830.15
+2026-11-14 08:39:18 [WARNING] src.risk_manager: Liquidation risk: entry=122.2400, stop=116.0885, liq=110.6272, stop_dist=6.1515, liq_dist=11.6128, buffer=2.0x
+2026-11-14 08:39:18 [WARNING] src.strategy: Liquidation risk: entry=122.2400, stop=116.0885, liq=110.6272 — skipping LTC/USDT at 2024-12-04 16:00:00+00:00
+2026-11-14 08:39:18 [WARNING] src.risk_manager: Liquidation risk: entry=2.4022, stop=2.2375, liq=2.1740, stop_dist=0.1647, liq_dist=0.2282, buffer=2.0x
+2026-11-14 08:39:18 [WARNING] src.strategy: Liquidation risk: entry=2.4022, stop=2.2375, liq=2.1740 — skipping XRP/USDT at 2024-12-04 17:00:00+00:00
+2026-11-14 08:39:18 [WARNING] src.risk_manager: Liquidation risk: entry=2.3939, stop=2.2381, liq=2.1665, stop_dist=0.1558, liq_dist=0.2274, buffer=2.0x
+2026-11-14 08:39:18 [WARNING] src.strategy: Liquidation risk: entry=2.3939, stop=2.2381, liq=2.1665 — skipping XRP/USDT at 2024-12-04 20:00:00+00:00
+2026-11-14 08:39:18 [INFO] src.strategy: OPEN BNB/USDT: entry=713.9900, stop=693.2136, dist=20.7764, size=105.4578, cost=75295.84, cash=109551.50, risk_amt=2191.03
+2026-11-14 08:39:18 [INFO] src.strategy: MARGIN DEDUCTED: 7529.58 (Lev: 10x). Remaining cash: 102021.92
+2026-11-14 08:39:18 [INFO] src.strategy: OPEN BTC/USDT: entry=96616.6000, stop=92441.9817, dist=4174.6183, size=0.4888, cost=47223.53, cash=102021.92, risk_amt=2040.44
+2026-11-14 08:39:18 [INFO] src.strategy: MARGIN DEDUCTED: 4722.35 (Lev: 10x). Remaining cash: 97299.56
+2026-11-14 08:39:18 [INFO] src.strategy: OPEN ETH/USDT: entry=3805.7600, stop=3668.1360, dist=137.6240, size=14.1399, cost=53813.13, cash=97299.56, risk_amt=1945.99
+2026-11-14 08:39:18 [INFO] src.strategy: MARGIN DEDUCTED: 5381.31 (Lev: 10x). Remaining cash: 91918.25
+2026-11-14 08:39:18 [WARNING] src.risk_manager: Liquidation risk: entry=50.8920, stop=48.4125, liq=46.0573, stop_dist=2.4795, liq_dist=4.8347, buffer=2.0x
+2026-11-14 08:39:18 [WARNING] src.strategy: Liquidation risk: entry=50.8920, stop=48.4125, liq=46.0573 — skipping AVAX/USDT at 2024-12-05 22:00:00+00:00
+2026-11-14 08:39:18 [WARNING] src.risk_manager: Liquidation risk: entry=23.4230, stop=22.1843, liq=21.1978, stop_dist=1.2387, liq_dist=2.2252, buffer=2.0x
+2026-11-14 08:39:18 [WARNING] src.strategy: Liquidation risk: entry=23.4230, stop=22.1843, liq=21.1978 — skipping LINK/USDT at 2024-12-05 22:00:00+00:00
+2026-11-14 08:39:18 [WARNING] src.risk_manager: Liquidation risk: entry=9.6600, stop=9.1985, liq=8.7423, stop_dist=0.4615, liq_dist=0.9177, buffer=2.0x
+2026-11-14 08:39:18 [WARNING] src.strategy: Liquidation risk: entry=9.6600, stop=9.1985, liq=8.7423 — skipping ATOM/USDT at 2024-12-05 22:00:00+00:00
+2026-11-14 08:39:18 [INFO] src.strategy: OPEN ETC/USDT: entry=35.9230, stop=34.2855, dist=1.6375, size=1122.6827, cost=40330.13, cash=91918.25, risk_amt=1838.36
+2026-11-14 08:39:18 [INFO] src.strategy: MARGIN DEDUCTED: 4033.01 (Lev: 10x). Remaining cash: 87885.24
+2026-11-14 08:39:18 [INFO] src.strategy: OPEN ETC/USDT: entry=35.1430, stop=33.8793, dist=1.2637, size=1580.6533, cost=55548.90, cash=99873.92, risk_amt=1997.48
+2026-11-14 08:39:18 [INFO] src.strategy: MARGIN DEDUCTED: 5554.89 (Lev: 10x). Remaining cash: 94319.03
+2026-11-14 08:39:18 [INFO] src.strategy: OPEN FIL/USDT: entry=7.7600, stop=7.5554, dist=0.2046, size=11595.7940, cost=89983.36, cash=118639.48, risk_amt=2372.79
+2026-11-14 08:39:18 [INFO] src.strategy: MARGIN DEDUCTED: 8998.34 (Lev: 10x). Remaining cash: 109641.14
+2026-11-14 08:39:18 [INFO] src.strategy: OPEN ATOM/USDT: entry=9.9480, stop=9.6933, dist=0.2547, size=9324.7498, cost=92762.61, cash=118765.53, risk_amt=2375.31
+2026-11-14 08:39:18 [INFO] src.strategy: MARGIN DEDUCTED: 9276.26 (Lev: 10x). Remaining cash: 109489.27
+2026-11-14 08:39:18 [WARNING] src.strategy: Position cost 117306.13 > available cash 109489.27, skipping SOL/USDT at 2024-12-08 09:00:00+00:00
+2026-11-14 08:39:18 [INFO] src.strategy: OPEN XRP/USDT: entry=2.4440, stop=2.3530, dist=0.0910, size=26373.3531, cost=64456.47, cash=119977.60, risk_amt=2399.55
+2026-11-14 08:39:18 [INFO] src.strategy: MARGIN DEDUCTED: 6445.65 (Lev: 10x). Remaining cash: 113531.95
+2026-11-14 08:39:18 [INFO] src.strategy: OPEN DOGE/USDT: entry=0.4461, stop=0.4318, dist=0.0144, size=158198.3941, cost=70577.05, cash=113531.95, risk_amt=2270.64
+2026-11-14 08:39:18 [INFO] src.strategy: MARGIN DEDUCTED: 7057.70 (Lev: 10x). Remaining cash: 106474.25
+2026-11-14 08:39:18 [WARNING] src.strategy: Position cost 123635.88 > available cash 115225.89, skipping SOL/USDT at 2024-12-13 13:00:00+00:00
+2026-11-14 08:39:18 [INFO] src.strategy: OPEN UNI/USDT: entry=17.1760, stop=16.5706, dist=0.6054, size=3806.2985, cost=65376.98, cash=115225.89, risk_amt=2304.52
+2026-11-14 08:39:18 [INFO] src.strategy: MARGIN DEDUCTED: 6537.70 (Lev: 10x). Remaining cash: 108688.19
+2026-11-14 08:39:18 [INFO] src.strategy: OPEN APT/USDT: entry=13.6918, stop=13.3115, dist=0.3803, size=6074.7485, cost=83174.24, cash=115513.47, risk_amt=2310.27
+2026-11-14 08:39:18 [INFO] src.strategy: MARGIN DEDUCTED: 8317.42 (Lev: 10x). Remaining cash: 107196.05
+2026-11-14 08:39:18 [INFO] src.strategy: OPEN ATOM/USDT: entry=8.7720, stop=8.5022, dist=0.2698, size=7946.6306, cost=69707.84, cash=107196.05, risk_amt=2143.92
+2026-11-14 08:39:18 [INFO] src.strategy: MARGIN DEDUCTED: 6970.78 (Lev: 10x). Remaining cash: 100225.26
+2026-11-14 08:39:18 [WARNING] src.strategy: Position cost 113812.49 > available cash 112475.82, skipping DOGE/USDT at 2024-12-16 11:00:00+00:00
+2026-11-14 08:39:18 [INFO] src.strategy: OPEN APT/USDT: entry=13.3245, stop=12.8639, dist=0.4606, size=4883.4827, cost=65069.97, cash=112475.82, risk_amt=2249.52
+2026-11-14 08:39:18 [INFO] src.strategy: MARGIN DEDUCTED: 6507.00 (Lev: 10x). Remaining cash: 105968.83
+2026-11-14 08:39:18 [INFO] src.strategy: OPEN ETH/USDT: entry=3890.8100, stop=3805.6314, dist=85.1786, size=24.8816, cost=96809.45, cash=105968.83, risk_amt=2119.38
+2026-11-14 08:39:18 [INFO] src.strategy: MARGIN DEDUCTED: 9680.95 (Lev: 10x). Remaining cash: 96287.88
+2026-11-14 08:39:18 [INFO] src.strategy: OPEN XRP/USDT: entry=2.4705, stop=2.3842, dist=0.0863, size=23283.2564, cost=57521.28, cash=100507.13, risk_amt=2010.14
+2026-11-14 08:39:18 [INFO] src.strategy: MARGIN DEDUCTED: 5752.13 (Lev: 10x). Remaining cash: 94755.00
+2026-11-14 08:39:18 [INFO] src.strategy: OPEN ETC/USDT: entry=27.1060, stop=26.5012, dist=0.6048, size=3535.8219, cost=95841.99, cash=106929.47, risk_amt=2138.59
+2026-11-14 08:39:18 [INFO] src.strategy: MARGIN DEDUCTED: 9584.20 (Lev: 10x). Remaining cash: 97345.27
+2026-11-14 08:39:19 [INFO] src.strategy: OPEN BNB/USDT: entry=691.4900, stop=676.0056, dist=15.4844, size=136.9187, cost=94677.93, cash=106005.24, risk_amt=2120.10
+2026-11-14 08:39:19 [INFO] src.strategy: MARGIN DEDUCTED: 9467.79 (Lev: 10x). Remaining cash: 96537.45
+2026-11-14 08:39:19 [WARNING] src.strategy: Position cost 114859.22 > available cash 106501.26, skipping DOGE/USDT at 2024-12-29 16:00:00+00:00
+2026-11-14 08:39:19 [INFO] src.strategy: OPEN FIL/USDT: entry=5.0280, stop=4.9258, dist=0.1022, size=20836.5388, cost=104766.12, cash=106501.26, risk_amt=2130.03
+2026-11-14 08:39:19 [INFO] src.strategy: MARGIN DEDUCTED: 10476.61 (Lev: 10x). Remaining cash: 96024.64
+2026-11-14 08:39:19 [WARNING] src.strategy: Position cost 96782.93 > available cash 96024.64, skipping APT/USDT at 2024-12-29 20:00:00+00:00
+2026-11-14 08:39:19 [WARNING] src.strategy: Position cost 113435.69 > available cash 105735.37, skipping ETH/USDT at 2024-12-30 14:00:00+00:00
+2026-11-14 08:39:19 [WARNING] src.strategy: Position cost 110718.31 > available cash 105735.37, skipping ETH/USDT at 2024-12-30 15:00:00+00:00
+2026-11-14 08:39:19 [WARNING] src.strategy: Position cost 116213.28 > available cash 105735.37, skipping NEAR/USDT at 2025-01-05 10:00:00+00:00
+2026-11-14 08:39:19 [INFO] src.strategy: OPEN DOGE/USDT: entry=0.3817, stop=0.3733, dist=0.0084, size=251704.1386, cost=96065.40, cash=105735.37, risk_amt=2114.71
+2026-11-14 08:39:19 [INFO] src.strategy: MARGIN DEDUCTED: 9606.54 (Lev: 10x). Remaining cash: 96128.83
+2026-11-14 08:39:19 [INFO] src.strategy: OPEN DOT/USDT: entry=7.5610, stop=7.4096, dist=0.1514, size=12698.9308, cost=96016.62, cash=96128.83, risk_amt=1922.58
+2026-11-14 08:39:19 [INFO] src.strategy: MARGIN DEDUCTED: 9601.66 (Lev: 10x). Remaining cash: 86527.17
+2026-11-14 08:39:19 [WARNING] src.strategy: Position cost 91231.41 > available cash 86527.17, skipping NEAR/USDT at 2025-01-05 14:00:00+00:00
+2026-11-14 08:39:19 [INFO] src.strategy: OPEN AVAX/USDT: entry=43.1250, stop=42.2321, dist=0.8929, size=2436.9432, cost=105093.18, cash=108799.78, risk_amt=2176.00
+2026-11-14 08:39:19 [INFO] src.strategy: MARGIN DEDUCTED: 10509.32 (Lev: 10x). Remaining cash: 98290.47
+2026-11-14 08:39:19 [INFO] src.strategy: OPEN LINK/USDT: entry=23.1840, stop=22.7084, dist=0.4756, size=4133.1195, cost=95822.24, cash=98290.47, risk_amt=1965.81
+2026-11-14 08:39:19 [INFO] src.strategy: MARGIN DEDUCTED: 9582.22 (Lev: 10x). Remaining cash: 88708.24
+2026-11-14 08:39:19 [WARNING] src.strategy: Position cost 92349.60 > available cash 88708.24, skipping LTC/USDT at 2025-01-07 11:00:00+00:00
+2026-11-14 08:39:19 [INFO] src.strategy: OPEN DOGE/USDT: entry=0.3801, stop=0.3698, dist=0.0103, size=188236.4756, cost=71544.92, cash=97189.49, risk_amt=1943.79
+2026-11-14 08:39:19 [INFO] src.strategy: MARGIN DEDUCTED: 7154.49 (Lev: 10x). Remaining cash: 90035.00
+2026-11-14 08:39:19 [INFO] src.strategy: OPEN NEAR/USDT: entry=5.8040, stop=5.6592, dist=0.1448, size=12439.8024, cost=72200.61, cash=90035.00, risk_amt=1800.70
+2026-11-14 08:39:19 [INFO] src.strategy: MARGIN DEDUCTED: 7220.06 (Lev: 10x). Remaining cash: 82814.94
+2026-11-14 08:39:19 [WARNING] src.risk_manager: Liquidation risk: entry=1.0447, stop=0.9939, liq=0.9455, stop_dist=0.0508, liq_dist=0.0992, buffer=2.0x
+2026-11-14 08:39:19 [WARNING] src.strategy: Liquidation risk: entry=1.0447, stop=0.9939, liq=0.9455 — skipping ADA/USDT at 2025-01-07 15:00:00+00:00
+2026-11-14 08:39:19 [INFO] src.strategy: OPEN ATOM/USDT: entry=7.1070, stop=6.7908, dist=0.3162, size=6384.9588, cost=45377.90, cash=100935.05, risk_amt=2018.70
+2026-11-14 08:39:19 [INFO] src.strategy: MARGIN DEDUCTED: 4537.79 (Lev: 10x). Remaining cash: 96397.26
+2026-11-14 08:39:19 [WARNING] src.risk_manager: Liquidation risk: entry=1.0424, stop=0.9909, liq=0.9434, stop_dist=0.0515, liq_dist=0.0990, buffer=2.0x
+2026-11-14 08:39:19 [WARNING] src.strategy: Liquidation risk: entry=1.0424, stop=0.9909, liq=0.9434 — skipping ADA/USDT at 2025-01-07 16:00:00+00:00
+2026-11-14 08:39:19 [INFO] src.strategy: OPEN UNI/USDT: entry=13.2880, stop=12.9219, dist=0.3661, size=5432.2412, cost=72183.62, cash=99442.75, risk_amt=1988.85
+2026-11-14 08:39:19 [INFO] src.strategy: MARGIN DEDUCTED: 7218.36 (Lev: 10x). Remaining cash: 92224.39
+2026-11-14 08:39:19 [INFO] src.strategy: OPEN XRP/USDT: entry=2.4561, stop=2.3775, dist=0.0786, size=23454.0319, cost=57605.45, cash=92224.39, risk_amt=1844.49
+2026-11-14 08:39:19 [INFO] src.strategy: MARGIN DEDUCTED: 5760.54 (Lev: 10x). Remaining cash: 86463.84
+2026-11-14 08:39:19 [INFO] src.strategy: OPEN FIL/USDT: entry=5.6150, stop=5.4569, dist=0.1581, size=12087.6832, cost=67872.34, cash=95534.60, risk_amt=1910.69
+2026-11-14 08:39:19 [INFO] src.strategy: MARGIN DEDUCTED: 6787.23 (Lev: 10x). Remaining cash: 88747.36
+2026-11-14 08:39:19 [INFO] src.strategy: OPEN UNI/USDT: entry=14.2610, stop=13.8099, dist=0.4511, size=4148.9859, cost=59168.69, cash=93588.27, risk_amt=1871.77
+2026-11-14 08:39:19 [INFO] src.strategy: MARGIN DEDUCTED: 5916.87 (Lev: 10x). Remaining cash: 87671.40
+2026-11-14 08:39:19 [INFO] src.strategy: OPEN ETC/USDT: entry=26.9440, stop=26.1046, dist=0.8394, size=2088.9157, cost=56283.74, cash=87671.40, risk_amt=1753.43
+2026-11-14 08:39:19 [INFO] src.strategy: MARGIN DEDUCTED: 5628.37 (Lev: 10x). Remaining cash: 82043.03
+2026-11-14 08:39:19 [INFO] src.strategy: OPEN AVAX/USDT: entry=39.4300, stop=38.1147, dist=1.3153, size=1247.5434, cost=49190.63, cash=82043.03, risk_amt=1640.86
+2026-11-14 08:39:19 [INFO] src.strategy: MARGIN DEDUCTED: 4919.06 (Lev: 10x). Remaining cash: 77123.96
+2026-11-14 08:39:19 [INFO] src.strategy: OPEN APT/USDT: entry=9.2716, stop=8.9619, dist=0.3097, size=4980.3683, cost=46175.98, cash=77123.96, risk_amt=1542.48
+2026-11-14 08:39:19 [INFO] src.strategy: MARGIN DEDUCTED: 4617.60 (Lev: 10x). Remaining cash: 72506.37
+2026-11-14 08:39:19 [INFO] src.strategy: OPEN XRP/USDT: entry=3.1342, stop=3.0346, dist=0.0996, size=18180.5210, cost=56981.39, cash=90530.91, risk_amt=1810.62
+2026-11-14 08:39:19 [INFO] src.strategy: MARGIN DEDUCTED: 5698.14 (Lev: 10x). Remaining cash: 84832.77
+2026-11-14 08:39:19 [INFO] src.strategy: OPEN BTC/USDT: entry=103396.7000, stop=100874.8641, dist=2521.8359, size=0.7170, cost=74136.42, cash=90409.01, risk_amt=1808.18
+2026-11-14 08:39:19 [INFO] src.strategy: MARGIN DEDUCTED: 7413.64 (Lev: 10x). Remaining cash: 82995.37
+2026-11-14 08:39:19 [WARNING] src.risk_manager: Liquidation risk: entry=243.8000, stop=224.4217, liq=220.6390, stop_dist=19.3783, liq_dist=23.1610, buffer=2.0x
+2026-11-14 08:39:19 [WARNING] src.strategy: Liquidation risk: entry=243.8000, stop=224.4217, liq=220.6390 — skipping SOL/USDT at 2025-01-20 17:00:00+00:00
+2026-11-14 08:39:19 [INFO] src.strategy: OPEN ATOM/USDT: entry=5.9970, stop=5.8280, dist=0.1690, size=10481.2775, cost=62856.22, cash=88561.91, risk_amt=1771.24
+2026-11-14 08:39:19 [INFO] src.strategy: MARGIN DEDUCTED: 6285.62 (Lev: 10x). Remaining cash: 82276.29
+2026-11-14 08:39:19 [WARNING] src.strategy: Position cost 87717.63 > available cash 86755.32, skipping XRP/USDT at 2025-01-29 13:00:00+00:00
+2026-11-14 08:39:19 [INFO] src.strategy: OPEN XRP/USDT: entry=3.0711, stop=2.9752, dist=0.0959, size=18084.7104, cost=55539.95, cash=86755.32, risk_amt=1735.11
+2026-11-14 08:39:19 [INFO] src.strategy: MARGIN DEDUCTED: 5554.00 (Lev: 10x). Remaining cash: 81201.32
+2026-11-14 08:39:19 [INFO] src.strategy: OPEN LTC/USDT: entry=124.1700, stop=119.7657, dist=4.4043, size=396.0532, cost=49177.92, cash=87217.42, risk_amt=1744.35
+2026-11-14 08:39:19 [INFO] src.strategy: MARGIN DEDUCTED: 4917.79 (Lev: 10x). Remaining cash: 82299.63
+2026-11-14 08:39:19 [INFO] src.strategy: OPEN ETH/USDT: entry=2704.2500, stop=2624.5056, dist=79.7444, size=21.6130, cost=58447.05, cash=86175.98, risk_amt=1723.52
+2026-11-14 08:39:19 [INFO] src.strategy: MARGIN DEDUCTED: 5844.71 (Lev: 10x). Remaining cash: 80331.27
+2026-11-14 08:39:19 [INFO] src.strategy: OPEN LTC/USDT: entry=100.6500, stop=96.4709, dist=4.1791, size=384.4458, cost=38694.47, cash=80331.27, risk_amt=1606.63
+2026-11-14 08:39:19 [INFO] src.strategy: MARGIN DEDUCTED: 3869.45 (Lev: 10x). Remaining cash: 76461.82
+2026-11-14 08:39:19 [INFO] src.strategy: OPEN SOL/USDT: entry=195.0100, stop=189.7134, dist=5.2966, size=332.0707, cost=64757.12, cash=87942.80, risk_amt=1758.86
+2026-11-14 08:39:19 [INFO] src.strategy: MARGIN DEDUCTED: 6475.71 (Lev: 10x). Remaining cash: 81467.08
+2026-11-14 08:39:19 [INFO] src.strategy: OPEN DOT/USDT: entry=4.5680, stop=4.4067, dist=0.1613, size=10099.8962, cost=46136.33, cash=81467.08, risk_amt=1629.34
+2026-11-14 08:39:19 [INFO] src.strategy: MARGIN DEDUCTED: 4613.63 (Lev: 10x). Remaining cash: 76853.45
+2026-11-14 08:39:19 [INFO] src.strategy: OPEN ATOM/USDT: entry=4.4260, stop=4.2816, dist=0.1444, size=10642.7118, cost=47104.64, cash=76853.45, risk_amt=1537.07
+2026-11-14 08:39:19 [INFO] src.strategy: MARGIN DEDUCTED: 4710.46 (Lev: 10x). Remaining cash: 72142.99
+2026-11-14 08:39:19 [INFO] src.strategy: OPEN UNI/USDT: entry=9.0330, stop=8.6802, dist=0.3528, size=4089.7029, cost=36942.29, cash=72142.99, risk_amt=1442.86
+2026-11-14 08:39:19 [INFO] src.strategy: MARGIN DEDUCTED: 3694.23 (Lev: 10x). Remaining cash: 68448.76
+2026-11-14 08:39:19 [INFO] src.strategy: OPEN APT/USDT: entry=5.9885, stop=5.7656, dist=0.2229, size=8931.5405, cost=53486.53, cash=99539.12, risk_amt=1990.78
+2026-11-14 08:39:19 [INFO] src.strategy: MARGIN DEDUCTED: 5348.65 (Lev: 10x). Remaining cash: 94190.47
+2026-11-14 08:39:19 [INFO] src.strategy: OPEN LINK/USDT: entry=18.3890, stop=17.8091, dist=0.5799, size=3248.5899, cost=59738.32, cash=94190.47, risk_amt=1883.81
+2026-11-14 08:39:19 [INFO] src.strategy: MARGIN DEDUCTED: 5973.83 (Lev: 10x). Remaining cash: 88216.64
+2026-11-14 08:39:19 [INFO] src.strategy: OPEN NEAR/USDT: entry=3.1430, stop=3.0306, dist=0.1124, size=16400.8461, cost=51547.86, cash=92184.50, risk_amt=1843.69
+2026-11-14 08:39:19 [INFO] src.strategy: MARGIN DEDUCTED: 5154.79 (Lev: 10x). Remaining cash: 87029.71
+2026-11-14 08:39:19 [INFO] src.strategy: OPEN UNI/USDT: entry=9.2650, stop=8.9484, dist=0.3166, size=6163.5245, cost=57105.05, cash=97574.61, risk_amt=1951.49
+2026-11-14 08:39:19 [INFO] src.strategy: MARGIN DEDUCTED: 5710.51 (Lev: 10x). Remaining cash: 91864.10
+2026-11-14 08:39:19 [INFO] src.strategy: OPEN ADA/USDT: entry=0.7873, stop=0.7708, dist=0.0165, size=123705.0076, cost=97392.95, cash=102045.17, risk_amt=2040.90
+2026-11-14 08:39:19 [INFO] src.strategy: MARGIN DEDUCTED: 9739.30 (Lev: 10x). Remaining cash: 92305.87
+2026-11-14 08:39:19 [INFO] src.strategy: OPEN LINK/USDT: entry=18.9740, stop=18.5751, dist=0.3989, size=4627.8311, cost=87808.47, cash=92305.87, risk_amt=1846.12
+2026-11-14 08:39:19 [INFO] src.strategy: MARGIN DEDUCTED: 8780.85 (Lev: 10x). Remaining cash: 83525.02
+2026-11-14 08:39:19 [INFO] src.strategy: OPEN FIL/USDT: entry=3.4470, stop=3.3752, dist=0.0718, size=23257.8524, cost=80169.82, cash=83525.02, risk_amt=1670.50
+2026-11-14 08:39:19 [INFO] src.strategy: MARGIN DEDUCTED: 8016.98 (Lev: 10x). Remaining cash: 75508.04
+2026-11-14 08:39:19 [INFO] src.strategy: OPEN NEAR/USDT: entry=3.4310, stop=3.3392, dist=0.0918, size=16446.5721, cost=56428.19, cash=75508.04, risk_amt=1510.16
+2026-11-14 08:39:19 [INFO] src.strategy: MARGIN DEDUCTED: 5642.82 (Lev: 10x). Remaining cash: 69865.22
+2026-11-14 08:39:19 [WARNING] src.strategy: Position cost 94901.75 > available cash 89389.17, skipping DOGE/USDT at 2025-02-16 09:00:00+00:00
+2026-11-14 08:39:19 [INFO] src.strategy: OPEN LTC/USDT: entry=128.4300, stop=124.5822, dist=3.8478, size=464.6287, cost=59672.27, cash=89389.17, risk_amt=1787.78
+2026-11-14 08:39:19 [INFO] src.strategy: MARGIN DEDUCTED: 5967.23 (Lev: 10x). Remaining cash: 83421.95
+2026-11-14 08:39:19 [WARNING] src.strategy: Position cost 87796.24 > available cash 83421.95, skipping DOGE/USDT at 2025-02-16 14:00:00+00:00
+2026-11-14 08:39:19 [INFO] src.strategy: OPEN XRP/USDT: entry=2.6896, stop=2.6308, dist=0.0588, size=31074.3979, cost=83577.70, cash=91321.32, risk_amt=1826.43
+2026-11-14 08:39:19 [INFO] src.strategy: MARGIN DEDUCTED: 8357.77 (Lev: 10x). Remaining cash: 82963.55
+2026-11-14 08:39:19 [INFO] src.strategy: OPEN XRP/USDT: entry=2.6118, stop=2.5307, dist=0.0811, size=23252.4685, cost=60730.80, cash=94302.63, risk_amt=1886.05
+2026-11-14 08:39:19 [INFO] src.strategy: MARGIN DEDUCTED: 6073.08 (Lev: 10x). Remaining cash: 88229.55
+2026-11-14 08:39:19 [INFO] src.strategy: OPEN APT/USDT: entry=6.1616, stop=5.9299, dist=0.2317, size=7617.3172, cost=46934.86, cash=88229.55, risk_amt=1764.59
+2026-11-14 08:39:19 [INFO] src.strategy: MARGIN DEDUCTED: 4693.49 (Lev: 10x). Remaining cash: 83536.06
+2026-11-14 08:39:19 [INFO] src.strategy: OPEN BNB/USDT: entry=638.6300, stop=624.7824, dist=13.8476, size=130.8427, cost=83560.05, cash=90592.77, risk_amt=1811.86
+2026-11-14 08:39:19 [INFO] src.strategy: MARGIN DEDUCTED: 8356.00 (Lev: 10x). Remaining cash: 82236.77
+2026-11-14 08:39:19 [INFO] src.strategy: OPEN ETC/USDT: entry=20.0010, stop=19.2554, dist=0.7456, size=2205.8445, cost=44119.10, cash=82236.77, risk_amt=1644.74
+2026-11-14 08:39:19 [INFO] src.strategy: MARGIN DEDUCTED: 4411.91 (Lev: 10x). Remaining cash: 77824.86
+2026-11-14 08:39:19 [INFO] src.strategy: OPEN ETH/USDT: entry=2716.5600, stop=2656.8040, dist=59.7560, size=32.0126, cost=86964.23, cash=95647.29, risk_amt=1912.95
+2026-11-14 08:39:19 [INFO] src.strategy: MARGIN DEDUCTED: 8696.42 (Lev: 10x). Remaining cash: 86950.87
+2026-11-14 08:39:20 [INFO] src.strategy: OPEN LTC/USDT: entry=123.5900, stop=117.7678, dist=5.8222, size=324.5931, cost=40116.46, cash=94492.99, risk_amt=1889.86
+2026-11-14 08:39:20 [INFO] src.strategy: MARGIN DEDUCTED: 4011.65 (Lev: 10x). Remaining cash: 90481.34
+2026-11-14 08:39:20 [INFO] src.strategy: OPEN FIL/USDT: entry=3.0910, stop=2.9625, dist=0.1285, size=14085.0517, cost=43536.89, cash=90481.34, risk_amt=1809.63
+2026-11-14 08:39:20 [INFO] src.strategy: MARGIN DEDUCTED: 4353.69 (Lev: 10x). Remaining cash: 86127.65
+2026-11-14 08:39:20 [INFO] src.strategy: OPEN APT/USDT: entry=5.8703, stop=5.6364, dist=0.2339, size=7363.0426, cost=43223.27, cash=86127.65, risk_amt=1722.55
+2026-11-14 08:39:20 [INFO] src.strategy: MARGIN DEDUCTED: 4322.33 (Lev: 10x). Remaining cash: 81805.33
+2026-11-14 08:39:20 [INFO] src.strategy: OPEN ATOM/USDT: entry=4.4740, stop=4.3072, dist=0.1668, size=11733.9323, cost=52497.61, cash=97839.07, risk_amt=1956.78
+2026-11-14 08:39:20 [INFO] src.strategy: MARGIN DEDUCTED: 5249.76 (Lev: 10x). Remaining cash: 92589.31
+2026-11-14 08:39:20 [INFO] src.strategy: OPEN NEAR/USDT: entry=3.2200, stop=3.1006, dist=0.1194, size=15511.8477, cost=49948.15, cash=92589.31, risk_amt=1851.79
+2026-11-14 08:39:20 [INFO] src.strategy: MARGIN DEDUCTED: 4994.81 (Lev: 10x). Remaining cash: 87594.49
+2026-11-14 08:39:20 [INFO] src.strategy: OPEN ETH/USDT: entry=2286.3300, stop=2203.0235, dist=83.3065, size=21.0294, cost=48080.26, cash=87594.49, risk_amt=1751.89
+2026-11-14 08:39:20 [INFO] src.strategy: MARGIN DEDUCTED: 4808.03 (Lev: 10x). Remaining cash: 82786.47
+2026-11-14 08:39:20 [INFO] src.strategy: OPEN FIL/USDT: entry=3.2880, stop=3.1563, dist=0.1317, size=12568.7654, cost=41326.10, cash=82786.47, risk_amt=1655.73
+2026-11-14 08:39:20 [INFO] src.strategy: MARGIN DEDUCTED: 4132.61 (Lev: 10x). Remaining cash: 78653.86
+2026-11-14 08:39:20 [INFO] src.strategy: OPEN ADA/USDT: entry=0.9177, stop=0.8765, dist=0.0412, size=44841.4858, cost=41151.03, cash=92327.37, risk_amt=1846.55
+2026-11-14 08:39:20 [INFO] src.strategy: MARGIN DEDUCTED: 4115.10 (Lev: 10x). Remaining cash: 88212.27
+2026-11-14 08:39:20 [INFO] src.strategy: OPEN UNI/USDT: entry=7.2100, stop=7.0154, dist=0.1946, size=9064.6382, cost=65356.04, cash=88212.27, risk_amt=1764.25
+2026-11-14 08:39:20 [INFO] src.strategy: MARGIN DEDUCTED: 6535.60 (Lev: 10x). Remaining cash: 81676.66
+2026-11-14 08:39:20 [WARNING] src.risk_manager: Liquidation risk: entry=2.4060, stop=2.2743, liq=2.1774, stop_dist=0.1317, liq_dist=0.2286, buffer=2.0x
+2026-11-14 08:39:20 [WARNING] src.strategy: Liquidation risk: entry=2.4060, stop=2.2743, liq=2.1774 — skipping XRP/USDT at 2025-03-07 00:00:00+00:00
+2026-11-14 08:39:20 [INFO] src.strategy: OPEN BTC/USDT: entry=88210.0000, stop=84398.8201, dist=3811.1799, size=0.4756, cost=41951.26, cash=90626.79, risk_amt=1812.54
+2026-11-14 08:39:20 [INFO] src.strategy: MARGIN DEDUCTED: 4195.13 (Lev: 10x). Remaining cash: 86431.67
+2026-11-14 08:39:20 [INFO] src.strategy: OPEN BNB/USDT: entry=592.9900, stop=578.1234, dist=14.8666, size=116.2764, cost=68950.73, cash=86431.67, risk_amt=1728.63
+2026-11-14 08:39:20 [INFO] src.strategy: MARGIN DEDUCTED: 6895.07 (Lev: 10x). Remaining cash: 79536.59
+2026-11-14 08:39:20 [INFO] src.strategy: OPEN ETC/USDT: entry=19.8770, stop=19.1638, dist=0.7132, size=2230.4247, cost=44334.15, cash=79536.59, risk_amt=1590.73
+2026-11-14 08:39:20 [INFO] src.strategy: MARGIN DEDUCTED: 4433.42 (Lev: 10x). Remaining cash: 75103.18
+2026-11-14 08:39:20 [INFO] src.strategy: OPEN XRP/USDT: entry=2.4309, stop=2.3193, dist=0.1116, size=14207.4337, cost=34536.85, cash=79247.13, risk_amt=1584.94
+2026-11-14 08:39:20 [INFO] src.strategy: MARGIN DEDUCTED: 3453.69 (Lev: 10x). Remaining cash: 75793.45
+2026-11-14 08:39:20 [INFO] src.strategy: OPEN BTC/USDT: entry=80850.1000, stop=79227.8214, dist=1622.2786, size=1.1286, cost=91247.16, cash=91544.92, risk_amt=1830.90
+2026-11-14 08:39:20 [INFO] src.strategy: MARGIN DEDUCTED: 9124.72 (Lev: 10x). Remaining cash: 82420.20
+2026-11-14 08:39:20 [WARNING] src.strategy: Position cost 102089.31 > available cash 94132.87, skipping DOGE/USDT at 2025-03-16 10:00:00+00:00
+2026-11-14 08:39:20 [INFO] src.strategy: OPEN UNI/USDT: entry=6.0200, stop=5.8884, dist=0.1316, size=14303.8382, cost=86109.11, cash=94132.87, risk_amt=1882.66
+2026-11-14 08:39:20 [INFO] src.strategy: MARGIN DEDUCTED: 8610.91 (Lev: 10x). Remaining cash: 85521.96
+2026-11-14 08:39:20 [INFO] src.strategy: OPEN FIL/USDT: entry=2.8740, stop=2.7911, dist=0.0829, size=23907.7393, cost=68710.84, cash=99062.79, risk_amt=1981.26
+2026-11-14 08:39:20 [INFO] src.strategy: MARGIN DEDUCTED: 6871.08 (Lev: 10x). Remaining cash: 92191.71
+2026-11-14 08:39:20 [INFO] src.strategy: OPEN ETH/USDT: entry=1971.0600, stop=1931.2417, dist=39.8183, size=51.1944, cost=100907.27, cash=101923.71, risk_amt=2038.47
+2026-11-14 08:39:20 [INFO] src.strategy: MARGIN DEDUCTED: 10090.73 (Lev: 10x). Remaining cash: 91832.98
+2026-11-14 08:39:20 [INFO] src.strategy: OPEN XRP/USDT: entry=2.4013, stop=2.3245, dist=0.0768, size=23906.0359, cost=57405.56, cash=91832.98, risk_amt=1836.66
+2026-11-14 08:39:20 [INFO] src.strategy: MARGIN DEDUCTED: 5740.56 (Lev: 10x). Remaining cash: 86092.42
+2026-11-14 08:39:20 [INFO] src.strategy: OPEN LINK/USDT: entry=14.1100, stop=13.6946, dist=0.4154, size=4145.1987, cost=58488.75, cash=86092.42, risk_amt=1721.85
+2026-11-14 08:39:20 [INFO] src.strategy: MARGIN DEDUCTED: 5848.88 (Lev: 10x). Remaining cash: 80243.55
+2026-11-14 08:39:20 [WARNING] src.strategy: Position cost 109996.87 > available cash 102391.90, skipping ATOM/USDT at 2025-03-23 15:00:00+00:00
+2026-11-14 08:39:20 [INFO] src.strategy: OPEN SOL/USDT: entry=139.9300, stop=136.5248, dist=3.4052, size=601.3891, cost=84152.37, cash=102391.90, risk_amt=2047.84
+2026-11-14 08:39:20 [INFO] src.strategy: MARGIN DEDUCTED: 8415.24 (Lev: 10x). Remaining cash: 93976.66
+2026-11-14 08:39:20 [INFO] src.strategy: OPEN AVAX/USDT: entry=22.1680, stop=21.6251, dist=0.5429, size=3462.0974, cost=76747.77, cash=93976.66, risk_amt=1879.53
+2026-11-14 08:39:20 [INFO] src.strategy: MARGIN DEDUCTED: 7674.78 (Lev: 10x). Remaining cash: 86301.88
+2026-11-14 08:39:20 [WARNING] src.strategy: Position cost 89463.65 > available cash 86301.88, skipping ETC/USDT at 2025-03-26 19:00:00+00:00
+2026-11-14 08:39:20 [INFO] src.strategy: OPEN FIL/USDT: entry=3.0560, stop=2.9834, dist=0.0726, size=23761.5864, cost=72615.41, cash=86301.88, risk_amt=1726.04
+2026-11-14 08:39:20 [INFO] src.strategy: MARGIN DEDUCTED: 7261.54 (Lev: 10x). Remaining cash: 79040.34
+2026-11-14 08:39:20 [INFO] src.strategy: OPEN DOGE/USDT: entry=0.1910, stop=0.1853, dist=0.0057, size=328901.4158, cost=62816.88, cash=93022.21, risk_amt=1860.44
+2026-11-14 08:39:20 [INFO] src.strategy: MARGIN DEDUCTED: 6281.69 (Lev: 10x). Remaining cash: 86740.53
+2026-11-14 08:39:20 [INFO] src.strategy: OPEN DOT/USDT: entry=4.0630, stop=3.9728, dist=0.0902, size=21902.0928, cost=88988.20, cash=98767.17, risk_amt=1975.34
+2026-11-14 08:39:20 [INFO] src.strategy: MARGIN DEDUCTED: 8898.82 (Lev: 10x). Remaining cash: 89868.35
+2026-11-14 08:39:20 [INFO] src.strategy: OPEN UNI/USDT: entry=5.8270, stop=5.5533, dist=0.2737, size=7280.7694, cost=42425.04, cash=99641.30, risk_amt=1992.83
+2026-11-14 08:39:20 [INFO] src.strategy: MARGIN DEDUCTED: 4242.50 (Lev: 10x). Remaining cash: 95398.80
+2026-11-14 08:39:20 [INFO] src.strategy: OPEN ATOM/USDT: entry=4.8010, stop=4.6790, dist=0.1220, size=16419.3533, cost=78829.32, cash=100193.96, risk_amt=2003.88
+2026-11-14 08:39:20 [INFO] src.strategy: MARGIN DEDUCTED: 7882.93 (Lev: 10x). Remaining cash: 92311.03
+2026-11-14 08:39:20 [INFO] src.strategy: OPEN LTC/USDT: entry=71.4000, stop=69.0514, dist=2.3486, size=835.6687, cost=59666.74, cash=98133.91, risk_amt=1962.68
+2026-11-14 08:39:20 [INFO] src.strategy: MARGIN DEDUCTED: 5966.67 (Lev: 10x). Remaining cash: 92167.24
+2026-11-14 08:39:20 [INFO] src.strategy: OPEN ETC/USDT: entry=14.2740, stop=13.8309, dist=0.4431, size=4159.6883, cost=59375.39, cash=92167.24, risk_amt=1843.34
+2026-11-14 08:39:20 [INFO] src.strategy: MARGIN DEDUCTED: 5937.54 (Lev: 10x). Remaining cash: 86229.70
+2026-11-14 08:39:20 [INFO] src.strategy: OPEN FIL/USDT: entry=2.3140, stop=2.2377, dist=0.0763, size=22590.2022, cost=52273.73, cash=86229.70, risk_amt=1724.59
+2026-11-14 08:39:20 [INFO] src.strategy: MARGIN DEDUCTED: 5227.37 (Lev: 10x). Remaining cash: 81002.33
+2026-11-14 08:39:20 [INFO] src.strategy: OPEN BTC/USDT: entry=79406.1000, stop=77410.2463, dist=1995.8537, size=0.8117, cost=64454.41, cash=81002.33, risk_amt=1620.05
+2026-11-14 08:39:20 [INFO] src.strategy: MARGIN DEDUCTED: 6445.44 (Lev: 10x). Remaining cash: 74556.89
+2026-11-14 08:39:20 [INFO] src.strategy: OPEN LINK/USDT: entry=12.6330, stop=12.3178, dist=0.3152, size=7068.0054, cost=89290.11, cash=111393.62, risk_amt=2227.87
+2026-11-14 08:39:20 [INFO] src.strategy: MARGIN DEDUCTED: 8929.01 (Lev: 10x). Remaining cash: 102464.60
+2026-11-14 08:39:20 [WARNING] src.strategy: Position cost 111363.07 > available cash 102464.60, skipping ETC/USDT at 2025-04-13 13:00:00+00:00
+2026-11-14 08:39:20 [INFO] src.strategy: OPEN ETH/USDT: entry=1585.2000, stop=1549.0001, dist=36.1999, size=56.6105, cost=89738.98, cash=102464.60, risk_amt=2049.29
+2026-11-14 08:39:20 [INFO] src.strategy: MARGIN DEDUCTED: 8973.90 (Lev: 10x). Remaining cash: 93490.71
+2026-11-14 08:39:20 [WARNING] src.strategy: Position cost 123008.62 > available cash 112496.54, skipping SOL/USDT at 2025-04-20 11:00:00+00:00
+2026-11-14 08:39:20 [INFO] src.strategy: OPEN SOL/USDT: entry=134.6500, stop=131.1582, dist=3.4918, size=644.3453, cost=86761.09, cash=112496.54, risk_amt=2249.93
+2026-11-14 08:39:20 [INFO] src.strategy: MARGIN DEDUCTED: 8676.11 (Lev: 10x). Remaining cash: 103820.43
+2026-11-14 08:39:20 [INFO] src.strategy: OPEN LINK/USDT: entry=13.0260, stop=12.7236, dist=0.3024, size=6865.6438, cost=89431.88, cash=103820.43, risk_amt=2076.41
+2026-11-14 08:39:20 [INFO] src.strategy: MARGIN DEDUCTED: 8943.19 (Lev: 10x). Remaining cash: 94877.24
+2026-11-14 08:39:20 [WARNING] src.strategy: Position cost 104208.52 > available cash 94877.24, skipping ETC/USDT at 2025-04-21 17:00:00+00:00
+2026-11-14 08:39:20 [INFO] src.strategy: OPEN UNI/USDT: entry=5.2390, stop=5.1282, dist=0.1108, size=17129.4852, cost=89741.37, cash=94877.24, risk_amt=1897.54
+2026-11-14 08:39:20 [INFO] src.strategy: MARGIN DEDUCTED: 8974.14 (Lev: 10x). Remaining cash: 85903.10
+2026-11-14 08:39:20 [INFO] src.strategy: OPEN FIL/USDT: entry=2.5850, stop=2.5256, dist=0.0594, size=28903.4600, cost=74715.44, cash=85903.10, risk_amt=1718.06
+2026-11-14 08:39:20 [INFO] src.strategy: MARGIN DEDUCTED: 7471.54 (Lev: 10x). Remaining cash: 78431.56
+2026-11-14 08:39:20 [INFO] src.strategy: OPEN NEAR/USDT: entry=2.3800, stop=2.3100, dist=0.0700, size=36445.2000, cost=86739.58, cash=127552.22, risk_amt=2551.04
+2026-11-14 08:39:20 [INFO] src.strategy: MARGIN DEDUCTED: 8673.96 (Lev: 10x). Remaining cash: 118878.26
+2026-11-14 08:39:20 [INFO] src.strategy: OPEN DOT/USDT: entry=3.9820, stop=3.8880, dist=0.0940, size=25303.1944, cost=100757.32, cash=118878.26, risk_amt=2377.57
+2026-11-14 08:39:20 [INFO] src.strategy: MARGIN DEDUCTED: 10075.73 (Lev: 10x). Remaining cash: 108802.53
+2026-11-14 08:39:20 [INFO] src.strategy: OPEN ATOM/USDT: entry=4.4810, stop=4.3809, dist=0.1001, size=28001.4962, cost=125474.70, cash=140129.73, risk_amt=2802.59
+2026-11-14 08:39:20 [INFO] src.strategy: MARGIN DEDUCTED: 12547.47 (Lev: 10x). Remaining cash: 127582.26
+2026-11-14 08:39:21 [INFO] src.strategy: OPEN APT/USDT: entry=5.4241, stop=5.3140, dist=0.1101, size=25211.8892, cost=136751.81, cash=138766.23, risk_amt=2775.32
+2026-11-14 08:39:21 [INFO] src.strategy: MARGIN DEDUCTED: 13675.18 (Lev: 10x). Remaining cash: 125091.05
+2026-11-14 08:39:21 [INFO] src.strategy: OPEN FIL/USDT: entry=2.7390, stop=2.6816, dist=0.0574, size=43562.6859, cost=119318.20, cash=125091.05, risk_amt=2501.82
+2026-11-14 08:39:21 [INFO] src.strategy: MARGIN DEDUCTED: 11931.82 (Lev: 10x). Remaining cash: 113159.23
+2026-11-14 08:39:21 [INFO] src.strategy: OPEN ADA/USDT: entry=0.6903, stop=0.6752, dist=0.0151, size=179431.6777, cost=123861.69, cash=135375.80, risk_amt=2707.52
+2026-11-14 08:39:21 [INFO] src.strategy: MARGIN DEDUCTED: 12386.17 (Lev: 10x). Remaining cash: 122989.63
+2026-11-14 08:39:21 [INFO] src.strategy: OPEN FIL/USDT: entry=2.7660, stop=2.7096, dist=0.0564, size=43613.8590, cost=120635.93, cash=122989.63, risk_amt=2459.79
+2026-11-14 08:39:21 [INFO] src.strategy: MARGIN DEDUCTED: 12063.59 (Lev: 10x). Remaining cash: 110926.04
+2026-11-14 08:39:21 [INFO] src.strategy: OPEN LTC/USDT: entry=99.9900, stop=96.9746, dist=3.0154, size=935.2156, cost=93512.21, cash=141001.20, risk_amt=2820.02
+2026-11-14 08:39:21 [INFO] src.strategy: MARGIN DEDUCTED: 9351.22 (Lev: 10x). Remaining cash: 131649.98
+2026-11-14 08:39:21 [INFO] src.strategy: OPEN LINK/USDT: entry=16.2660, stop=15.5112, dist=0.7548, size=3737.3371, cost=60791.53, cash=141050.91, risk_amt=2821.02
+2026-11-14 08:39:21 [INFO] src.strategy: MARGIN DEDUCTED: 6079.15 (Lev: 10x). Remaining cash: 134971.76
+2026-11-14 08:39:21 [INFO] src.strategy: OPEN LTC/USDT: entry=99.7100, stop=96.9414, dist=2.7686, size=1018.3436, cost=101539.04, cash=140971.44, risk_amt=2819.43
+2026-11-14 08:39:21 [INFO] src.strategy: MARGIN DEDUCTED: 10153.90 (Lev: 10x). Remaining cash: 130817.54
+2026-11-14 08:39:21 [INFO] src.strategy: OPEN ETH/USDT: entry=2529.6000, stop=2464.2480, dist=65.3520, size=43.0200, cost=108823.28, cash=140572.01, risk_amt=2811.44
+2026-11-14 08:39:21 [INFO] src.strategy: MARGIN DEDUCTED: 10882.33 (Lev: 10x). Remaining cash: 129689.69
+2026-11-14 08:39:21 [INFO] src.strategy: OPEN ETH/USDT: entry=2565.3200, stop=2487.5363, dist=77.7837, size=35.7918, cost=91817.40, cash=139200.88, risk_amt=2784.02
+2026-11-14 08:39:21 [INFO] src.strategy: MARGIN DEDUCTED: 9181.74 (Lev: 10x). Remaining cash: 130019.14
+2026-11-14 08:39:21 [INFO] src.strategy: OPEN XRP/USDT: entry=2.3621, stop=2.3050, dist=0.0571, size=45515.0030, cost=107510.99, cash=130019.14, risk_amt=2600.38
+2026-11-14 08:39:21 [INFO] src.strategy: MARGIN DEDUCTED: 10751.10 (Lev: 10x). Remaining cash: 119268.04
+2026-11-14 08:39:21 [INFO] src.strategy: OPEN DOT/USDT: entry=4.7440, stop=4.5769, dist=0.1671, size=14277.8041, cost=67733.90, cash=119268.04, risk_amt=2385.36
+2026-11-14 08:39:21 [INFO] src.strategy: MARGIN DEDUCTED: 6773.39 (Lev: 10x). Remaining cash: 112494.65
+2026-11-14 08:39:21 [INFO] src.strategy: OPEN FIL/USDT: entry=2.9500, stop=2.8503, dist=0.0997, size=22573.5296, cost=66591.91, cash=112494.65, risk_amt=2249.89
+2026-11-14 08:39:21 [INFO] src.strategy: MARGIN DEDUCTED: 6659.19 (Lev: 10x). Remaining cash: 105835.46
+2026-11-14 08:39:21 [WARNING] src.strategy: Position cost 139168.66 > available cash 134858.44, skipping SOL/USDT at 2025-05-27 01:00:00+00:00
+2026-11-14 08:39:21 [INFO] src.strategy: OPEN UNI/USDT: entry=6.3720, stop=6.1731, dist=0.1989, size=13561.3561, cost=86412.96, cash=134858.44, risk_amt=2697.17
+2026-11-14 08:39:21 [INFO] src.strategy: MARGIN DEDUCTED: 8641.30 (Lev: 10x). Remaining cash: 126217.15
+2026-11-14 08:39:21 [INFO] src.strategy: OPEN AVAX/USDT: entry=22.9980, stop=22.4265, dist=0.5715, size=4978.5417, cost=114496.50, cash=142265.34, risk_amt=2845.31
+2026-11-14 08:39:21 [INFO] src.strategy: MARGIN DEDUCTED: 11449.65 (Lev: 10x). Remaining cash: 130815.69
+2026-11-14 08:39:21 [WARNING] src.strategy: Position cost 154560.97 > available cash 139349.90, skipping AVAX/USDT at 2025-06-04 13:00:00+00:00
+2026-11-14 08:39:21 [WARNING] src.strategy: Position cost 150455.44 > available cash 139349.90, skipping AVAX/USDT at 2025-06-04 14:00:00+00:00
+2026-11-14 08:39:21 [WARNING] src.strategy: Position cost 152687.71 > available cash 139349.90, skipping DOT/USDT at 2025-06-04 14:00:00+00:00
+2026-11-14 08:39:21 [INFO] src.strategy: OPEN UNI/USDT: entry=6.3870, stop=6.1307, dist=0.2563, size=10875.1334, cost=69459.48, cash=139349.90, risk_amt=2787.00
+2026-11-14 08:39:21 [INFO] src.strategy: MARGIN DEDUCTED: 6945.95 (Lev: 10x). Remaining cash: 132403.96
+2026-11-14 08:39:21 [WARNING] src.strategy: Position cost 147007.74 > available cash 132403.96, skipping FIL/USDT at 2025-06-04 14:00:00+00:00
+2026-11-14 08:39:21 [WARNING] src.strategy: Position cost 140289.69 > available cash 132403.96, skipping APT/USDT at 2025-06-04 14:00:00+00:00
+2026-11-14 08:39:21 [INFO] src.strategy: OPEN NEAR/USDT: entry=2.5050, stop=2.4504, dist=0.0546, size=48467.7202, cost=121411.64, cash=132403.96, risk_amt=2648.08
+2026-11-14 08:39:21 [INFO] src.strategy: MARGIN DEDUCTED: 12141.16 (Lev: 10x). Remaining cash: 120262.79
+2026-11-14 08:39:21 [INFO] src.strategy: OPEN FIL/USDT: entry=2.5650, stop=2.5131, dist=0.0519, size=52914.8538, cost=135726.60, cash=137378.44, risk_amt=2747.57
+2026-11-14 08:39:21 [INFO] src.strategy: MARGIN DEDUCTED: 13572.66 (Lev: 10x). Remaining cash: 123805.78
+2026-11-14 08:39:21 [WARNING] src.strategy: Position cost 139424.40 > available cash 136623.58, skipping APT/USDT at 2025-06-08 11:00:00+00:00
+2026-11-14 08:39:21 [INFO] src.strategy: OPEN AVAX/USDT: entry=21.4620, stop=20.8556, dist=0.6064, size=4506.3853, cost=96716.04, cash=136623.58, risk_amt=2732.47
+2026-11-14 08:39:21 [INFO] src.strategy: MARGIN DEDUCTED: 9671.60 (Lev: 10x). Remaining cash: 126951.98
+2026-11-14 08:39:21 [WARNING] src.strategy: Position cost 142140.07 > available cash 135240.73, skipping ETH/USDT at 2025-06-12 12:00:00+00:00
+2026-11-14 08:39:21 [INFO] src.strategy: OPEN SOL/USDT: entry=151.9300, stop=147.2826, dist=4.6474, size=582.0099, cost=88424.76, cash=135240.73, risk_amt=2704.81
+2026-11-14 08:39:21 [INFO] src.strategy: MARGIN DEDUCTED: 8842.48 (Lev: 10x). Remaining cash: 126398.26
+2026-11-14 08:39:21 [INFO] src.strategy: OPEN DOGE/USDT: entry=0.1742, stop=0.1689, dist=0.0053, size=477851.7291, cost=83222.66, cash=126398.26, risk_amt=2527.97
+2026-11-14 08:39:21 [INFO] src.strategy: MARGIN DEDUCTED: 8322.27 (Lev: 10x). Remaining cash: 118075.99
+2026-11-14 08:39:21 [INFO] src.strategy: OPEN ADA/USDT: entry=0.6356, stop=0.6174, dist=0.0182, size=129777.9067, cost=82486.84, cash=118075.99, risk_amt=2361.52
+2026-11-14 08:39:21 [INFO] src.strategy: MARGIN DEDUCTED: 8248.68 (Lev: 10x). Remaining cash: 109827.31
+2026-11-14 08:39:21 [INFO] src.strategy: OPEN AVAX/USDT: entry=19.2690, stop=18.6200, dist=0.6490, size=3384.3025, cost=65212.13, cash=109827.31, risk_amt=2196.55
+2026-11-14 08:39:21 [INFO] src.strategy: MARGIN DEDUCTED: 6521.21 (Lev: 10x). Remaining cash: 103306.09
+2026-11-14 08:39:21 [INFO] src.strategy: OPEN ADA/USDT: entry=0.5670, stop=0.5535, dist=0.0135, size=195964.4836, cost=111111.86, cash=131899.30, risk_amt=2637.99
+2026-11-14 08:39:21 [INFO] src.strategy: MARGIN DEDUCTED: 11111.19 (Lev: 10x). Remaining cash: 120788.12
+2026-11-14 08:39:21 [INFO] src.strategy: OPEN AVAX/USDT: entry=17.5830, stop=17.1802, dist=0.4028, size=5998.1562, cost=105465.58, cash=120788.12, risk_amt=2415.76
+2026-11-14 08:39:21 [INFO] src.strategy: MARGIN DEDUCTED: 10546.56 (Lev: 10x). Remaining cash: 110241.56
+2026-11-14 08:39:21 [INFO] src.strategy: OPEN FIL/USDT: entry=2.2330, stop=2.1860, dist=0.0470, size=46877.3593, cost=104677.14, cash=110241.56, risk_amt=2204.83
+2026-11-14 08:39:21 [INFO] src.strategy: MARGIN DEDUCTED: 10467.71 (Lev: 10x). Remaining cash: 99773.84
+2026-11-14 08:39:21 [INFO] src.strategy: OPEN UNI/USDT: entry=6.8140, stop=6.6218, dist=0.1922, size=13773.9537, cost=93855.72, cash=132399.91, risk_amt=2648.00
+2026-11-14 08:39:21 [INFO] src.strategy: MARGIN DEDUCTED: 9385.57 (Lev: 10x). Remaining cash: 123014.34
+2026-11-14 08:39:21 [INFO] src.strategy: OPEN ETH/USDT: entry=2425.2900, stop=2374.8797, dist=50.4103, size=48.8052, cost=118366.83, cash=123014.34, risk_amt=2460.29
+2026-11-14 08:39:21 [INFO] src.strategy: MARGIN DEDUCTED: 11836.68 (Lev: 10x). Remaining cash: 111177.66
+2026-11-14 08:39:21 [INFO] src.strategy: OPEN DOT/USDT: entry=3.3930, stop=3.3244, dist=0.0686, size=38598.8116, cost=130965.77, cash=132304.83, risk_amt=2646.10
+2026-11-14 08:39:21 [INFO] src.strategy: MARGIN DEDUCTED: 13096.58 (Lev: 10x). Remaining cash: 119208.25
+2026-11-14 08:39:21 [WARNING] src.strategy: Position cost 133411.60 > available cash 132587.78, skipping SOL/USDT at 2025-07-01 07:00:00+00:00
+2026-11-14 08:39:22 [WARNING] src.strategy: Position cost 146765.56 > available cash 132587.78, skipping LINK/USDT at 2025-07-04 09:00:00+00:00
+2026-11-14 08:39:22 [INFO] src.strategy: OPEN UNI/USDT: entry=8.4560, stop=8.1884, dist=0.2676, size=9907.8685, cost=83780.94, cash=132587.78, risk_amt=2651.76
+2026-11-14 08:39:22 [INFO] src.strategy: MARGIN DEDUCTED: 8378.09 (Lev: 10x). Remaining cash: 124209.69
+2026-11-14 08:39:22 [INFO] src.strategy: OPEN DOGE/USDT: entry=0.1967, stop=0.1902, dist=0.0065, size=381998.3754, cost=75131.44, cash=124209.69, risk_amt=2484.19
+2026-11-14 08:39:22 [INFO] src.strategy: MARGIN DEDUCTED: 7513.14 (Lev: 10x). Remaining cash: 116696.54
+2026-11-14 08:39:22 [INFO] src.strategy: OPEN LINK/USDT: entry=15.0780, stop=14.7142, dist=0.3638, size=6415.5071, cost=96733.02, cash=116696.54, risk_amt=2333.93
+2026-11-14 08:39:22 [INFO] src.strategy: MARGIN DEDUCTED: 9673.30 (Lev: 10x). Remaining cash: 107023.24
+2026-11-14 08:39:22 [INFO] src.strategy: OPEN LTC/USDT: entry=92.5900, stop=90.5512, dist=2.0388, size=1049.8393, cost=97204.62, cash=107023.24, risk_amt=2140.46
+2026-11-14 08:39:22 [INFO] src.strategy: MARGIN DEDUCTED: 9720.46 (Lev: 10x). Remaining cash: 97302.78
+2026-11-14 08:39:22 [INFO] src.strategy: OPEN AVAX/USDT: entry=20.3160, stop=19.7617, dist=0.5543, size=3759.5855, cost=76379.74, cash=104202.08, risk_amt=2084.04
+2026-11-14 08:39:22 [INFO] src.strategy: MARGIN DEDUCTED: 7637.97 (Lev: 10x). Remaining cash: 96564.11
+2026-11-14 08:39:22 [INFO] src.strategy: OPEN LTC/USDT: entry=93.7700, stop=91.3883, dist=2.3817, size=1181.7838, cost=110815.87, cash=140731.23, risk_amt=2814.62
+2026-11-14 08:39:22 [INFO] src.strategy: MARGIN DEDUCTED: 11081.59 (Lev: 10x). Remaining cash: 129649.65
+2026-11-14 08:39:22 [INFO] src.strategy: OPEN FIL/USDT: entry=2.5270, stop=2.4602, dist=0.0668, size=38792.1190, cost=98027.68, cash=129649.65, risk_amt=2592.99
+2026-11-14 08:39:22 [INFO] src.strategy: MARGIN DEDUCTED: 9802.77 (Lev: 10x). Remaining cash: 119846.88
+2026-11-14 08:39:22 [WARNING] src.strategy: Position cost 127519.86 > available cash 119846.88, skipping ETH/USDT at 2025-07-15 03:00:00+00:00
+2026-11-14 08:39:22 [INFO] src.strategy: OPEN XRP/USDT: entry=2.8508, stop=2.7526, dist=0.0982, size=24398.6040, cost=69555.54, cash=119846.88, risk_amt=2396.94
+2026-11-14 08:39:22 [INFO] src.strategy: MARGIN DEDUCTED: 6955.55 (Lev: 10x). Remaining cash: 112891.32
+2026-11-14 08:39:22 [INFO] src.strategy: OPEN NEAR/USDT: entry=2.5170, stop=2.4373, dist=0.0797, size=28335.9974, cost=71321.71, cash=112891.32, risk_amt=2257.83
+2026-11-14 08:39:22 [INFO] src.strategy: MARGIN DEDUCTED: 7132.17 (Lev: 10x). Remaining cash: 105759.15
+2026-11-14 08:39:22 [INFO] src.strategy: OPEN DOT/USDT: entry=4.2060, stop=4.0404, dist=0.1656, size=16770.0047, cost=70534.64, cash=138867.93, risk_amt=2777.36
+2026-11-14 08:39:22 [INFO] src.strategy: MARGIN DEDUCTED: 7053.46 (Lev: 10x). Remaining cash: 131814.46
+2026-11-14 08:39:22 [INFO] src.strategy: OPEN NEAR/USDT: entry=2.7680, stop=2.6485, dist=0.1195, size=22069.3570, cost=61087.98, cash=131814.46, risk_amt=2636.29
+2026-11-14 08:39:22 [INFO] src.strategy: MARGIN DEDUCTED: 6108.80 (Lev: 10x). Remaining cash: 125705.66
+2026-11-14 08:39:22 [INFO] src.strategy: OPEN LTC/USDT: entry=116.9300, stop=113.4231, dist=3.5069, size=801.8114, cost=93755.81, cash=140595.59, risk_amt=2811.91
+2026-11-14 08:39:22 [INFO] src.strategy: MARGIN DEDUCTED: 9375.58 (Lev: 10x). Remaining cash: 131220.01
+2026-11-14 08:39:22 [INFO] src.strategy: OPEN ETH/USDT: entry=3649.3900, stop=3556.0502, dist=93.3398, size=28.1166, cost=102608.58, cash=131220.01, risk_amt=2624.40
+2026-11-14 08:39:22 [INFO] src.strategy: MARGIN DEDUCTED: 10260.86 (Lev: 10x). Remaining cash: 120959.15
+2026-11-14 08:39:22 [INFO] src.strategy: OPEN LINK/USDT: entry=18.8580, stop=18.1384, dist=0.7196, size=3361.8691, cost=63398.13, cash=120959.15, risk_amt=2419.18
+2026-11-14 08:39:22 [INFO] src.strategy: MARGIN DEDUCTED: 6339.81 (Lev: 10x). Remaining cash: 114619.33
+2026-11-14 08:39:22 [WARNING] src.risk_manager: Liquidation risk: entry=5.1426, stop=4.8905, liq=4.6541, stop_dist=0.2521, liq_dist=0.4885, buffer=2.0x
+2026-11-14 08:39:22 [WARNING] src.strategy: Liquidation risk: entry=5.1426, stop=4.8905, liq=4.6541 — skipping APT/USDT at 2025-07-23 12:00:00+00:00
+2026-11-14 08:39:22 [INFO] src.strategy: OPEN LTC/USDT: entry=112.2500, stop=108.0495, dist=4.2005, size=667.2869, cost=74902.95, cash=140148.25, risk_amt=2802.96
+2026-11-14 08:39:22 [INFO] src.strategy: MARGIN DEDUCTED: 7490.30 (Lev: 10x). Remaining cash: 132657.95
+2026-11-14 08:39:22 [INFO] src.strategy: OPEN ETC/USDT: entry=22.5520, stop=22.0249, dist=0.5271, size=5285.2781, cost=119193.59, cash=139304.57, risk_amt=2786.09
+2026-11-14 08:39:22 [INFO] src.strategy: MARGIN DEDUCTED: 11919.36 (Lev: 10x). Remaining cash: 127385.21
+2026-11-14 08:39:22 [INFO] src.strategy: OPEN DOGE/USDT: entry=0.2321, stop=0.2251, dist=0.0070, size=365275.3285, cost=84780.40, cash=127385.21, risk_amt=2547.70
+2026-11-14 08:39:22 [INFO] src.strategy: MARGIN DEDUCTED: 8478.04 (Lev: 10x). Remaining cash: 118907.17
+2026-11-14 08:39:22 [INFO] src.strategy: OPEN ADA/USDT: entry=0.8044, stop=0.7829, dist=0.0215, size=110554.6132, cost=88930.13, cash=118907.17, risk_amt=2378.14
+2026-11-14 08:39:22 [INFO] src.strategy: MARGIN DEDUCTED: 8893.01 (Lev: 10x). Remaining cash: 110014.16
+2026-11-14 08:39:22 [INFO] src.strategy: OPEN DOT/USDT: entry=4.0910, stop=3.9952, dist=0.0958, size=22963.9865, cost=93945.67, cash=110014.16, risk_amt=2200.28
+2026-11-14 08:39:22 [INFO] src.strategy: MARGIN DEDUCTED: 9394.57 (Lev: 10x). Remaining cash: 100619.59
+2026-11-14 08:39:22 [INFO] src.strategy: OPEN SOL/USDT: entry=185.0800, stop=180.7332, dist=4.3468, size=504.6785, cost=93405.89, cash=109687.30, risk_amt=2193.75
+2026-11-14 08:39:22 [INFO] src.strategy: MARGIN DEDUCTED: 9340.59 (Lev: 10x). Remaining cash: 100346.71
+2026-11-14 08:39:22 [INFO] src.strategy: OPEN ETH/USDT: entry=3778.8700, stop=3702.7238, dist=76.1462, size=29.9179, cost=113055.78, cash=113906.70, risk_amt=2278.13
+2026-11-14 08:39:22 [INFO] src.strategy: MARGIN DEDUCTED: 11305.58 (Lev: 10x). Remaining cash: 102601.12
+2026-11-14 08:39:22 [WARNING] src.strategy: Position cost 131891.30 > available cash 130175.94, skipping BNB/USDT at 2025-07-29 14:00:00+00:00
+2026-11-14 08:39:22 [INFO] src.strategy: OPEN NEAR/USDT: entry=2.4440, stop=2.3944, dist=0.0496, size=52513.9776, cost=128344.16, cash=130175.94, risk_amt=2603.52
+2026-11-14 08:39:22 [INFO] src.strategy: MARGIN DEDUCTED: 12834.42 (Lev: 10x). Remaining cash: 117341.53
+2026-11-14 08:39:22 [INFO] src.strategy: OPEN DOGE/USDT: entry=0.1991, stop=0.1934, dist=0.0057, size=408445.9341, cost=81333.84, cash=117341.53, risk_amt=2346.83
+2026-11-14 08:39:22 [INFO] src.strategy: MARGIN DEDUCTED: 8133.38 (Lev: 10x). Remaining cash: 109208.14
+2026-11-14 08:39:22 [INFO] src.strategy: OPEN ADA/USDT: entry=0.7259, stop=0.7067, dist=0.0192, size=113579.6239, cost=82447.45, cash=109208.14, risk_amt=2184.16
+2026-11-14 08:39:22 [INFO] src.strategy: MARGIN DEDUCTED: 8244.74 (Lev: 10x). Remaining cash: 100963.40
+2026-11-14 08:39:22 [INFO] src.strategy: OPEN LINK/USDT: entry=16.3590, stop=15.9571, dist=0.4019, size=5024.4148, cost=82194.40, cash=100963.40, risk_amt=2019.27
+2026-11-14 08:39:22 [INFO] src.strategy: MARGIN DEDUCTED: 8219.44 (Lev: 10x). Remaining cash: 92743.96
+2026-11-14 08:39:22 [INFO] src.strategy: OPEN DOT/USDT: entry=3.5770, stop=3.4905, dist=0.0865, size=24777.4400, cost=88628.90, cash=107177.66, risk_amt=2143.55
+2026-11-14 08:39:22 [INFO] src.strategy: MARGIN DEDUCTED: 8862.89 (Lev: 10x). Remaining cash: 98314.77
+2026-11-14 08:39:22 [WARNING] src.strategy: Position cost 131880.28 > available cash 128201.17, skipping LTC/USDT at 2025-08-06 14:00:00+00:00
+2026-11-14 08:39:22 [INFO] src.strategy: OPEN LTC/USDT: entry=118.2100, stop=115.8140, dist=2.3960, size=1070.1384, cost=126501.06, cash=128201.17, risk_amt=2564.02
+2026-11-14 08:39:22 [INFO] src.strategy: MARGIN DEDUCTED: 12650.11 (Lev: 10x). Remaining cash: 115551.07
+2026-11-14 08:39:22 [WARNING] src.strategy: Position cost 138916.25 > available cash 128005.74, skipping XRP/USDT at 2025-08-09 22:00:00+00:00
+2026-11-14 08:39:22 [INFO] src.strategy: OPEN XRP/USDT: entry=3.2071, stop=3.1363, dist=0.0708, size=36163.8244, cost=115981.00, cash=128005.74, risk_amt=2560.11
+2026-11-14 08:39:22 [INFO] src.strategy: MARGIN DEDUCTED: 11598.10 (Lev: 10x). Remaining cash: 116407.64
+2026-11-14 08:39:22 [INFO] src.strategy: OPEN DOGE/USDT: entry=0.2339, stop=0.2266, dist=0.0073, size=319196.9158, cost=74644.20, cash=116407.64, risk_amt=2328.15
+2026-11-14 08:39:22 [INFO] src.strategy: MARGIN DEDUCTED: 7464.42 (Lev: 10x). Remaining cash: 108943.22
+2026-11-14 08:39:22 [INFO] src.strategy: OPEN AVAX/USDT: entry=23.6510, stop=23.0240, dist=0.6270, size=3475.2855, cost=82193.98, cash=108943.22, risk_amt=2178.86
+2026-11-14 08:39:22 [INFO] src.strategy: MARGIN DEDUCTED: 8219.40 (Lev: 10x). Remaining cash: 100723.83
+2026-11-14 08:39:22 [INFO] src.strategy: OPEN DOT/USDT: entry=4.0350, stop=3.9335, dist=0.1015, size=19838.5083, cost=80048.38, cash=100723.83, risk_amt=2014.48
+2026-11-14 08:39:22 [INFO] src.strategy: MARGIN DEDUCTED: 8004.84 (Lev: 10x). Remaining cash: 92718.99
+2026-11-14 08:39:22 [INFO] src.strategy: OPEN APT/USDT: entry=4.6848, stop=4.5749, dist=0.1099, size=18695.8519, cost=87586.33, cash=102689.60, risk_amt=2053.79
+2026-11-14 08:39:22 [INFO] src.strategy: MARGIN DEDUCTED: 8758.63 (Lev: 10x). Remaining cash: 93930.96
+2026-11-14 08:39:22 [INFO] src.strategy: OPEN LINK/USDT: entry=21.2800, stop=20.6942, dist=0.5858, size=4487.3742, cost=95491.32, cash=131426.59, risk_amt=2628.53
+2026-11-14 08:39:22 [INFO] src.strategy: MARGIN DEDUCTED: 9549.13 (Lev: 10x). Remaining cash: 121877.46
+2026-11-14 08:39:22 [INFO] src.strategy: OPEN AVAX/USDT: entry=23.2470, stop=22.6498, dist=0.5972, size=4081.5072, cost=94882.80, cash=121877.46, risk_amt=2437.55
+2026-11-14 08:39:22 [INFO] src.strategy: MARGIN DEDUCTED: 9488.28 (Lev: 10x). Remaining cash: 112389.18
+2026-11-14 08:39:22 [INFO] src.strategy: OPEN ETC/USDT: entry=22.4370, stop=21.8877, dist=0.5493, size=4092.4346, cost=91821.96, cash=112389.18, risk_amt=2247.78
+2026-11-14 08:39:22 [INFO] src.strategy: MARGIN DEDUCTED: 9182.20 (Lev: 10x). Remaining cash: 103206.98
+2026-11-14 08:39:22 [INFO] src.strategy: OPEN SOL/USDT: entry=179.5200, stop=175.6289, dist=3.8911, size=530.4754, cost=95230.94, cash=103206.98, risk_amt=2064.14
+2026-11-14 08:39:22 [INFO] src.strategy: MARGIN DEDUCTED: 9523.09 (Lev: 10x). Remaining cash: 93683.89
+2026-11-14 08:39:22 [INFO] src.strategy: OPEN ETH/USDT: entry=4568.4900, stop=4428.5797, dist=139.9103, size=18.6300, cost=85111.02, cash=130326.51, risk_amt=2606.53
+2026-11-14 08:39:22 [INFO] src.strategy: MARGIN DEDUCTED: 8511.10 (Lev: 10x). Remaining cash: 121815.41
+2026-11-14 08:39:22 [INFO] src.strategy: OPEN SOL/USDT: entry=194.4400, stop=185.5619, dist=8.8781, size=274.4171, cost=53357.66, cash=121815.41, risk_amt=2436.31
+2026-11-14 08:39:22 [INFO] src.strategy: MARGIN DEDUCTED: 5335.77 (Lev: 10x). Remaining cash: 116479.64
+2026-11-14 08:39:22 [WARNING] src.risk_manager: Liquidation risk: entry=22.3630, stop=21.2295, liq=20.2385, stop_dist=1.1335, liq_dist=2.1245, buffer=2.0x
+2026-11-14 08:39:22 [WARNING] src.strategy: Liquidation risk: entry=22.3630, stop=21.2295, liq=20.2385 — skipping LINK/USDT at 2025-08-14 12:00:00+00:00
+2026-11-14 08:39:22 [INFO] src.strategy: OPEN APT/USDT: entry=4.7440, stop=4.5332, dist=0.2108, size=11053.6598, cost=52438.56, cash=116479.64, risk_amt=2329.59
+2026-11-14 08:39:22 [INFO] src.strategy: MARGIN DEDUCTED: 5243.86 (Lev: 10x). Remaining cash: 111235.79
+2026-11-14 08:39:22 [INFO] src.strategy: OPEN AVAX/USDT: entry=23.9400, stop=22.8056, dist=1.1344, size=1961.1791, cost=46950.63, cash=111235.79, risk_amt=2224.72
+2026-11-14 08:39:22 [INFO] src.strategy: MARGIN DEDUCTED: 4695.06 (Lev: 10x). Remaining cash: 106540.72
+2026-11-14 08:39:22 [INFO] src.strategy: OPEN AVAX/USDT: entry=23.9380, stop=23.1621, dist=0.7759, size=3282.1262, cost=78567.54, cash=127326.73, risk_amt=2546.53
+2026-11-14 08:39:22 [INFO] src.strategy: MARGIN DEDUCTED: 7856.75 (Lev: 10x). Remaining cash: 119469.98
+2026-11-14 08:39:23 [INFO] src.strategy: OPEN ETC/USDT: entry=22.7590, stop=21.9782, dist=0.7808, size=3224.7686, cost=73392.51, cash=125893.33, risk_amt=2517.87
+2026-11-14 08:39:23 [INFO] src.strategy: MARGIN DEDUCTED: 7339.25 (Lev: 10x). Remaining cash: 118554.08
+2026-11-14 08:39:23 [WARNING] src.strategy: Position cost 128108.81 > available cash 125572.87, skipping APT/USDT at 2025-08-29 07:00:00+00:00
+2026-11-14 08:39:23 [INFO] src.strategy: OPEN ATOM/USDT: entry=4.5530, stop=4.4280, dist=0.1250, size=20097.9303, cost=91505.88, cash=125572.87, risk_amt=2511.46
+2026-11-14 08:39:23 [INFO] src.strategy: MARGIN DEDUCTED: 9150.59 (Lev: 10x). Remaining cash: 116422.28
+2026-11-14 08:39:23 [INFO] src.strategy: OPEN FIL/USDT: entry=2.5390, stop=2.4864, dist=0.0526, size=46770.5285, cost=118750.37, cash=123003.08, risk_amt=2460.06
+2026-11-14 08:39:23 [INFO] src.strategy: MARGIN DEDUCTED: 11875.04 (Lev: 10x). Remaining cash: 111128.04
+2026-11-14 08:39:23 [INFO] src.strategy: OPEN AVAX/USDT: entry=29.3060, stop=28.5957, dist=0.7103, size=3128.9608, cost=91697.32, cash=111128.04, risk_amt=2222.56
+2026-11-14 08:39:23 [INFO] src.strategy: MARGIN DEDUCTED: 9169.73 (Lev: 10x). Remaining cash: 101958.31
+2026-11-14 08:39:23 [INFO] src.strategy: OPEN SOL/USDT: entry=237.8700, stop=232.4574, dist=5.4126, size=446.6145, cost=106236.19, cash=120866.91, risk_amt=2417.34
+2026-11-14 08:39:23 [INFO] src.strategy: MARGIN DEDUCTED: 10623.62 (Lev: 10x). Remaining cash: 110243.30
+2026-11-14 08:39:23 [INFO] src.strategy: OPEN DOT/USDT: entry=4.4410, stop=4.3108, dist=0.1302, size=18192.1378, cost=80791.28, cash=118395.13, risk_amt=2367.90
+2026-11-14 08:39:23 [INFO] src.strategy: MARGIN DEDUCTED: 8079.13 (Lev: 10x). Remaining cash: 110316.00
+2026-11-14 08:39:23 [WARNING] src.strategy: Position cost 118368.12 > available cash 110316.00, skipping ATOM/USDT at 2025-09-19 15:00:00+00:00
+2026-11-14 08:39:23 [WARNING] src.strategy: Position cost 120138.90 > available cash 116924.05, skipping BNB/USDT at 2025-09-22 00:00:00+00:00
+2026-11-14 08:39:23 [INFO] src.strategy: OPEN BNB/USDT: entry=1024.8500, stop=997.8409, dist=27.0091, size=86.5811, cost=88732.67, cash=116924.05, risk_amt=2338.48
+2026-11-14 08:39:23 [INFO] src.strategy: MARGIN DEDUCTED: 8873.27 (Lev: 10x). Remaining cash: 108050.79
+2026-11-14 08:39:23 [INFO] src.strategy: OPEN AVAX/USDT: entry=30.2670, stop=29.5774, dist=0.6896, size=3349.8713, cost=101390.55, cash=115499.40, risk_amt=2309.99
+2026-11-14 08:39:23 [INFO] src.strategy: MARGIN DEDUCTED: 10139.06 (Lev: 10x). Remaining cash: 105360.35
+2026-11-14 08:39:23 [INFO] src.strategy: OPEN ADA/USDT: entry=0.8299, stop=0.8122, dist=0.0177, size=131035.9471, cost=108746.73, cash=116204.58, risk_amt=2324.09
+2026-11-14 08:39:23 [INFO] src.strategy: MARGIN DEDUCTED: 10874.67 (Lev: 10x). Remaining cash: 105329.91
+2026-11-14 08:39:23 [INFO] src.strategy: OPEN UNI/USDT: entry=8.1050, stop=7.8930, dist=0.2120, size=11486.9910, cost=93102.06, cash=121783.78, risk_amt=2435.68
+2026-11-14 08:39:23 [INFO] src.strategy: MARGIN DEDUCTED: 9310.21 (Lev: 10x). Remaining cash: 112473.57
+2026-11-14 08:39:23 [WARNING] src.strategy: Position cost 122039.76 > available cash 112473.57, skipping SOL/USDT at 2025-10-07 08:00:00+00:00
+2026-11-14 08:39:23 [WARNING] src.strategy: Position cost 114799.55 > available cash 112473.57, skipping SOL/USDT at 2025-10-07 13:00:00+00:00
+2026-11-14 08:39:23 [INFO] src.strategy: OPEN NEAR/USDT: entry=2.9190, stop=2.8269, dist=0.0921, size=26200.8558, cost=76480.30, cash=120637.76, risk_amt=2412.76
+2026-11-14 08:39:23 [INFO] src.strategy: MARGIN DEDUCTED: 7648.03 (Lev: 10x). Remaining cash: 112989.73
+2026-11-14 08:39:23 [INFO] src.strategy: OPEN BNB/USDT: entry=1260.2200, stop=1223.5632, dist=36.6568, size=65.9492, cost=83110.45, cash=120874.16, risk_amt=2417.48
+2026-11-14 08:39:23 [INFO] src.strategy: MARGIN DEDUCTED: 8311.04 (Lev: 10x). Remaining cash: 112563.12
+2026-11-14 08:39:23 [WARNING] src.risk_manager: Liquidation risk: entry=2.7840, stop=2.6079, liq=2.5195, stop_dist=0.1761, liq_dist=0.2645, buffer=2.0x
+2026-11-14 08:39:23 [WARNING] src.strategy: Liquidation risk: entry=2.7840, stop=2.6079, liq=2.5195 — skipping NEAR/USDT at 2025-10-10 20:00:00+00:00
+2026-11-14 08:39:23 [INFO] src.strategy: OPEN DOGE/USDT: entry=0.2033, stop=0.1969, dist=0.0064, size=380775.9865, cost=77423.18, cash=122099.17, risk_amt=2441.98
+2026-11-14 08:39:23 [INFO] src.strategy: MARGIN DEDUCTED: 7742.32 (Lev: 10x). Remaining cash: 114356.86
+2026-11-14 08:39:23 [INFO] src.strategy: OPEN UNI/USDT: entry=6.5420, stop=6.2802, dist=0.2618, size=8735.4774, cost=57147.49, cash=114356.86, risk_amt=2287.14
+2026-11-14 08:39:23 [INFO] src.strategy: MARGIN DEDUCTED: 5714.75 (Lev: 10x). Remaining cash: 108642.11
+2026-11-14 08:39:23 [INFO] src.strategy: OPEN NEAR/USDT: entry=2.4220, stop=2.3106, dist=0.1114, size=19513.3038, cost=47261.22, cash=108642.11, risk_amt=2172.84
+2026-11-14 08:39:23 [INFO] src.strategy: MARGIN DEDUCTED: 4726.12 (Lev: 10x). Remaining cash: 103915.98
+2026-11-14 08:39:23 [INFO] src.strategy: OPEN ETC/USDT: entry=16.3280, stop=15.6950, dist=0.6330, size=3283.0823, cost=53606.17, cash=103915.98, risk_amt=2078.32
+2026-11-14 08:39:23 [INFO] src.strategy: MARGIN DEDUCTED: 5360.62 (Lev: 10x). Remaining cash: 98555.37
+2026-11-14 08:39:24 [INFO] src.strategy: OPEN BNB/USDT: entry=1093.3800, stop=1070.6855, dist=22.6945, size=107.5396, cost=117581.62, cash=122027.79, risk_amt=2440.56
+2026-11-14 08:39:24 [INFO] src.strategy: MARGIN DEDUCTED: 11758.16 (Lev: 10x). Remaining cash: 110269.62
+2026-11-14 08:39:24 [INFO] src.strategy: OPEN APT/USDT: entry=3.4782, stop=3.3900, dist=0.0882, size=27486.9371, cost=95605.06, cash=121152.55, risk_amt=2423.05
+2026-11-14 08:39:24 [INFO] src.strategy: MARGIN DEDUCTED: 9560.51 (Lev: 10x). Remaining cash: 111592.05
+2026-11-14 08:39:24 [WARNING] src.strategy: Position cost 128289.50 > available cash 120633.19, skipping BNB/USDT at 2025-10-28 05:00:00+00:00
+2026-11-14 08:39:24 [INFO] src.strategy: OPEN AVAX/USDT: entry=20.0060, stop=19.5459, dist=0.4601, size=5243.7275, cost=104906.01, cash=120633.19, risk_amt=2412.66
+2026-11-14 08:39:24 [INFO] src.strategy: MARGIN DEDUCTED: 10490.60 (Lev: 10x). Remaining cash: 110142.59
+2026-11-14 08:39:24 [INFO] src.strategy: OPEN ADA/USDT: entry=0.6674, stop=0.6536, dist=0.0138, size=159491.7992, cost=106444.83, cash=110142.59, risk_amt=2202.85
+2026-11-14 08:39:24 [INFO] src.strategy: MARGIN DEDUCTED: 10644.48 (Lev: 10x). Remaining cash: 99498.11
+2026-11-14 08:39:24 [INFO] src.strategy: OPEN ETC/USDT: entry=16.0850, stop=15.7181, dist=0.3669, size=6487.8835, cost=104357.61, cash=119030.27, risk_amt=2380.61
+2026-11-14 08:39:24 [INFO] src.strategy: MARGIN DEDUCTED: 10435.76 (Lev: 10x). Remaining cash: 108594.50
+2026-11-14 08:39:24 [INFO] src.strategy: OPEN LINK/USDT: entry=17.6400, stop=17.0296, dist=0.6104, size=3557.9339, cost=62761.95, cash=108594.50, risk_amt=2171.89
+2026-11-14 08:39:24 [INFO] src.strategy: MARGIN DEDUCTED: 6276.20 (Lev: 10x). Remaining cash: 102318.31
+2026-11-14 08:39:24 [INFO] src.strategy: OPEN AVAX/USDT: entry=18.2660, stop=17.8988, dist=0.3672, size=6561.6064, cost=119854.30, cash=120463.41, risk_amt=2409.27
+2026-11-14 08:39:24 [INFO] src.strategy: MARGIN DEDUCTED: 11985.43 (Lev: 10x). Remaining cash: 108477.98
+2026-11-14 08:39:24 [INFO] src.strategy: OPEN DOT/USDT: entry=2.9170, stop=2.8516, dist=0.0654, size=33159.2747, cost=96725.60, cash=108477.98, risk_amt=2169.56
+2026-11-14 08:39:24 [INFO] src.strategy: MARGIN DEDUCTED: 9672.56 (Lev: 10x). Remaining cash: 98805.42
+2026-11-14 08:39:24 [WARNING] src.strategy: Position cost 107647.28 > available cash 98805.42, skipping ETC/USDT at 2025-11-02 16:00:00+00:00
+2026-11-14 08:39:24 [WARNING] src.strategy: Position cost 124713.19 > available cash 121710.96, skipping LTC/USDT at 2025-11-03 02:00:00+00:00
+2026-11-14 08:39:24 [INFO] src.strategy: OPEN XRP/USDT: entry=2.2331, stop=2.1737, dist=0.0594, size=40965.3997, cost=91479.83, cash=121710.96, risk_amt=2434.22
+2026-11-14 08:39:24 [INFO] src.strategy: MARGIN DEDUCTED: 9147.98 (Lev: 10x). Remaining cash: 112562.98
+2026-11-14 08:39:24 [INFO] src.strategy: OPEN DOT/USDT: entry=3.0830, stop=2.9779, dist=0.1051, size=22926.4357, cost=70682.20, cash=120421.80, risk_amt=2408.44
+2026-11-14 08:39:24 [INFO] src.strategy: MARGIN DEDUCTED: 7068.22 (Lev: 10x). Remaining cash: 113353.58
+2026-11-14 08:39:24 [INFO] src.strategy: OPEN ATOM/USDT: entry=2.8710, stop=2.8039, dist=0.0671, size=33783.4068, cost=96992.16, cash=113353.58, risk_amt=2267.07
+2026-11-14 08:39:24 [INFO] src.strategy: MARGIN DEDUCTED: 9699.22 (Lev: 10x). Remaining cash: 103654.36
+2026-11-14 08:39:24 [WARNING] src.strategy: Position cost 136024.20 > available cash 127648.45, skipping BNB/USDT at 2025-11-10 15:00:00+00:00
+2026-11-14 08:39:24 [INFO] src.strategy: OPEN LTC/USDT: entry=104.5900, stop=100.7895, dist=3.8005, size=671.7437, cost=70257.68, cash=127648.45, risk_amt=2552.97
+2026-11-14 08:39:24 [INFO] src.strategy: MARGIN DEDUCTED: 7025.77 (Lev: 10x). Remaining cash: 120622.69
+2026-11-14 08:39:24 [INFO] src.strategy: OPEN SOL/USDT: entry=162.9100, stop=159.2684, dist=3.6416, size=693.3564, cost=112954.70, cash=126248.02, risk_amt=2524.96
+2026-11-14 08:39:24 [INFO] src.strategy: MARGIN DEDUCTED: 11295.47 (Lev: 10x). Remaining cash: 114952.55
+2026-11-14 08:39:24 [WARNING] src.strategy: Position cost 125999.22 > available cash 123660.93, skipping ETC/USDT at 2025-11-16 13:00:00+00:00
+2026-11-14 08:39:24 [INFO] src.strategy: OPEN LINK/USDT: entry=12.9600, stop=12.5083, dist=0.4517, size=5475.5299, cost=70962.87, cash=123660.93, risk_amt=2473.22
+2026-11-14 08:39:24 [INFO] src.strategy: MARGIN DEDUCTED: 7096.29 (Lev: 10x). Remaining cash: 116564.65
+2026-11-14 08:39:24 [INFO] src.strategy: OPEN SOL/USDT: entry=132.6900, stop=127.9396, dist=4.7504, size=490.7554, cost=65118.34, cash=116564.65, risk_amt=2331.29
+2026-11-14 08:39:24 [INFO] src.strategy: MARGIN DEDUCTED: 6511.83 (Lev: 10x). Remaining cash: 110052.81
+2026-11-14 08:39:24 [INFO] src.strategy: OPEN ADA/USDT: entry=0.4081, stop=0.3988, dist=0.0093, size=264191.8937, cost=107816.71, cash=122965.03, risk_amt=2459.30
+2026-11-14 08:39:24 [INFO] src.strategy: MARGIN DEDUCTED: 10781.67 (Lev: 10x). Remaining cash: 112183.35
+2026-11-14 08:39:24 [WARNING] src.strategy: Position cost 129510.86 > available cash 125726.71, skipping ETC/USDT at 2025-11-26 16:00:00+00:00
+2026-11-14 08:39:24 [WARNING] src.strategy: Position cost 134165.55 > available cash 125726.71, skipping FIL/USDT at 2025-11-27 22:00:00+00:00
+2026-11-14 08:39:24 [INFO] src.strategy: OPEN APT/USDT: entry=2.2226, stop=2.1752, dist=0.0474, size=53058.3562, cost=117927.50, cash=125726.71, risk_amt=2514.53
+2026-11-14 08:39:24 [INFO] src.strategy: MARGIN DEDUCTED: 11792.75 (Lev: 10x). Remaining cash: 113933.96
+2026-11-14 08:39:24 [WARNING] src.strategy: Position cost 115851.92 > available cash 113933.96, skipping NEAR/USDT at 2025-11-28 02:00:00+00:00
+2026-11-14 08:39:24 [INFO] src.strategy: OPEN SOL/USDT: entry=137.1100, stop=133.7232, dist=3.3868, size=727.1770, cost=99703.24, cash=123139.95, risk_amt=2462.80
+2026-11-14 08:39:24 [INFO] src.strategy: MARGIN DEDUCTED: 9970.32 (Lev: 10x). Remaining cash: 113169.62
+2026-11-14 08:39:24 [INFO] src.strategy: OPEN DOT/USDT: entry=2.2880, stop=2.2280, dist=0.0600, size=37699.8058, cost=86257.16, cash=113169.62, risk_amt=2263.39
+2026-11-14 08:39:24 [INFO] src.strategy: MARGIN DEDUCTED: 8625.72 (Lev: 10x). Remaining cash: 104543.91
+2026-11-14 08:39:24 [INFO] src.strategy: OPEN SOL/USDT: entry=139.6000, stop=136.2796, dist=3.3204, size=734.6050, cost=102550.86, cash=121959.95, risk_amt=2439.20
+2026-11-14 08:39:24 [INFO] src.strategy: MARGIN DEDUCTED: 10255.09 (Lev: 10x). Remaining cash: 111704.87
+2026-11-14 08:39:24 [INFO] src.strategy: OPEN DOGE/USDT: entry=0.1480, stop=0.1449, dist=0.0030, size=736328.0235, cost=108947.09, cash=111704.87, risk_amt=2234.10
+2026-11-14 08:39:24 [INFO] src.strategy: MARGIN DEDUCTED: 10894.71 (Lev: 10x). Remaining cash: 100810.16
+2026-11-14 08:39:24 [INFO] src.strategy: OPEN LINK/USDT: entry=14.2000, stop=13.8245, dist=0.3755, size=5369.8353, cost=76251.66, cash=100810.16, risk_amt=2016.20
+2026-11-14 08:39:24 [INFO] src.strategy: MARGIN DEDUCTED: 7625.17 (Lev: 10x). Remaining cash: 93184.99
+2026-11-14 08:39:24 [INFO] src.strategy: OPEN DOT/USDT: entry=2.2890, stop=2.2385, dist=0.0505, size=36872.7322, cost=84401.68, cash=93184.99, risk_amt=1863.70
+2026-11-14 08:39:24 [INFO] src.strategy: MARGIN DEDUCTED: 8440.17 (Lev: 10x). Remaining cash: 84744.82
+2026-11-14 08:39:24 [INFO] src.strategy: OPEN NEAR/USDT: entry=1.7100, stop=1.6647, dist=0.0453, size=52173.4817, cost=89216.65, cash=118208.81, risk_amt=2364.18
+2026-11-14 08:39:24 [INFO] src.strategy: MARGIN DEDUCTED: 8921.67 (Lev: 10x). Remaining cash: 109287.15
+2026-11-14 08:39:24 [INFO] src.strategy: OPEN UNI/USDT: entry=5.2840, stop=5.1097, dist=0.1743, size=14296.2271, cost=75541.26, cash=124570.39, risk_amt=2491.41
+2026-11-14 08:39:24 [INFO] src.strategy: MARGIN DEDUCTED: 7554.13 (Lev: 10x). Remaining cash: 117016.27
+2026-11-14 08:39:24 [INFO] src.strategy: OPEN LINK/USDT: entry=13.3900, stop=12.9547, dist=0.4353, size=5376.6664, cost=71993.56, cash=117016.27, risk_amt=2340.33
+2026-11-14 08:39:24 [INFO] src.strategy: MARGIN DEDUCTED: 7199.36 (Lev: 10x). Remaining cash: 109816.91
+2026-11-14 08:39:24 [INFO] src.strategy: OPEN LTC/USDT: entry=80.8900, stop=79.1891, dist=1.7009, size=1291.2714, cost=104450.95, cash=109816.91, risk_amt=2196.34
+2026-11-14 08:39:24 [INFO] src.strategy: MARGIN DEDUCTED: 10445.09 (Lev: 10x). Remaining cash: 99371.81
+2026-11-14 08:39:25 [WARNING] src.strategy: Position cost 138534.78 > available cash 130885.64, skipping LINK/USDT at 2025-12-21 14:00:00+00:00
+2026-11-14 08:39:25 [INFO] src.strategy: OPEN APT/USDT: entry=1.5697, stop=1.5268, dist=0.0429, size=61009.0562, cost=95765.92, cash=130885.64, risk_amt=2617.71
+2026-11-14 08:39:25 [INFO] src.strategy: MARGIN DEDUCTED: 9576.59 (Lev: 10x). Remaining cash: 121309.05
+2026-11-14 08:39:25 [INFO] src.strategy: OPEN UNI/USDT: entry=5.9700, stop=5.7847, dist=0.1853, size=14652.6487, cost=87476.31, cash=135748.36, risk_amt=2714.97
+2026-11-14 08:39:25 [INFO] src.strategy: MARGIN DEDUCTED: 8747.63 (Lev: 10x). Remaining cash: 127000.73
+2026-11-14 08:39:25 [INFO] src.strategy: OPEN UNI/USDT: entry=5.9170, stop=5.7487, dist=0.1683, size=16107.1578, cost=95306.05, cash=135554.68, risk_amt=2711.09
+2026-11-14 08:39:25 [INFO] src.strategy: MARGIN DEDUCTED: 9530.61 (Lev: 10x). Remaining cash: 126024.07
+2026-11-14 08:39:25 [WARNING] src.strategy: Position cost 140754.72 > available cash 132791.17, skipping AVAX/USDT at 2025-12-23 13:00:00+00:00
+2026-11-14 08:39:25 [INFO] src.strategy: OPEN NEAR/USDT: entry=1.4360, stop=1.3982, dist=0.0378, size=70273.0956, cost=100912.17, cash=132791.17, risk_amt=2655.82
+2026-11-14 08:39:25 [INFO] src.strategy: MARGIN DEDUCTED: 10091.22 (Lev: 10x). Remaining cash: 122699.95
+2026-11-14 08:39:25 [INFO] src.strategy: OPEN APT/USDT: entry=1.6110, stop=1.5717, dist=0.0393, size=62501.2925, cost=100689.58, cash=122699.95, risk_amt=2454.00
+2026-11-14 08:39:25 [INFO] src.strategy: MARGIN DEDUCTED: 10068.96 (Lev: 10x). Remaining cash: 112630.99
+2026-11-14 08:39:25 [INFO] src.strategy: OPEN NEAR/USDT: entry=1.5420, stop=1.5042, dist=0.0378, size=74877.8046, cost=115461.57, cash=141415.77, risk_amt=2828.32
+2026-11-14 08:39:25 [INFO] src.strategy: MARGIN DEDUCTED: 11546.16 (Lev: 10x). Remaining cash: 129869.62
+2026-11-14 08:39:25 [INFO] src.strategy: OPEN DOT/USDT: entry=1.8350, stop=1.7927, dist=0.0423, size=61357.7314, cost=112591.44, cash=129869.62, risk_amt=2597.39
+2026-11-14 08:39:25 [INFO] src.strategy: MARGIN DEDUCTED: 11259.14 (Lev: 10x). Remaining cash: 118610.47
+2026-11-14 08:39:25 [INFO] src.strategy: OPEN ETC/USDT: entry=12.0230, stop=11.7810, dist=0.2420, size=9801.9047, cost=117848.30, cash=118610.47, risk_amt=2372.21
+2026-11-14 08:39:25 [INFO] src.strategy: MARGIN DEDUCTED: 11784.83 (Lev: 10x). Remaining cash: 106825.64
+2026-11-14 08:39:25 [INFO] src.strategy: OPEN DOGE/USDT: entry=0.1472, stop=0.1437, dist=0.0035, size=773797.1391, cost=113887.46, cash=136251.08, risk_amt=2725.02
+2026-11-14 08:39:25 [INFO] src.strategy: MARGIN DEDUCTED: 11388.75 (Lev: 10x). Remaining cash: 124862.34
+2026-11-14 08:39:25 [INFO] src.strategy: OPEN DOGE/USDT: entry=0.1454, stop=0.1399, dist=0.0055, size=503379.1703, cost=73211.47, cash=138255.42, risk_amt=2765.11
+2026-11-14 08:39:25 [INFO] src.strategy: MARGIN DEDUCTED: 7321.15 (Lev: 10x). Remaining cash: 130934.27
+2026-11-14 08:39:25 [INFO] src.strategy: OPEN XRP/USDT: entry=2.2079, stop=2.1265, dist=0.0814, size=32185.8330, cost=71063.10, cash=130934.27, risk_amt=2618.69
+2026-11-14 08:39:25 [INFO] src.strategy: MARGIN DEDUCTED: 7106.31 (Lev: 10x). Remaining cash: 123827.96
+2026-11-14 08:39:25 [INFO] src.strategy: OPEN APT/USDT: entry=1.8689, stop=1.8035, dist=0.0654, size=37875.3870, cost=70785.31, cash=123827.96, risk_amt=2476.56
+2026-11-14 08:39:25 [INFO] src.strategy: MARGIN DEDUCTED: 7078.53 (Lev: 10x). Remaining cash: 116749.43
+2026-11-14 08:39:25 [INFO] src.strategy: OPEN XRP/USDT: entry=2.2278, stop=2.1809, dist=0.0469, size=60951.3418, cost=135787.40, cash=142949.35, risk_amt=2858.99
+2026-11-14 08:39:25 [INFO] src.strategy: MARGIN DEDUCTED: 13578.74 (Lev: 10x). Remaining cash: 129370.61
+2026-11-14 08:39:25 [INFO] src.strategy: OPEN ETC/USDT: entry=12.9250, stop=12.6448, dist=0.2802, size=9233.3580, cost=119341.15, cash=129370.61, risk_amt=2587.41
+2026-11-14 08:39:25 [INFO] src.strategy: MARGIN DEDUCTED: 11934.12 (Lev: 10x). Remaining cash: 117436.50
+2026-11-14 08:39:25 [INFO] src.strategy: OPEN FIL/USDT: entry=1.5390, stop=1.4924, dist=0.0466, size=50380.8431, cost=77536.12, cash=117436.50, risk_amt=2348.73
+2026-11-14 08:39:25 [INFO] src.strategy: MARGIN DEDUCTED: 7753.61 (Lev: 10x). Remaining cash: 109682.89
+2026-11-14 08:39:25 [WARNING] src.strategy: Position cost 111400.35 > available cash 109682.89, skipping SOL/USDT at 2026-01-07 15:00:00+00:00
+2026-11-14 08:39:25 [INFO] src.strategy: OPEN ADA/USDT: entry=0.4026, stop=0.3914, dist=0.0112, size=196372.6953, cost=79059.65, cash=109682.89, risk_amt=2193.66
+2026-11-14 08:39:25 [INFO] src.strategy: MARGIN DEDUCTED: 7905.96 (Lev: 10x). Remaining cash: 101776.92
+2026-11-14 08:39:25 [INFO] src.strategy: OPEN APT/USDT: entry=1.8846, stop=1.8369, dist=0.0477, size=55615.0734, cost=104812.17, cash=132690.32, risk_amt=2653.81
+2026-11-14 08:39:25 [INFO] src.strategy: MARGIN DEDUCTED: 10481.22 (Lev: 10x). Remaining cash: 122209.10
+2026-11-14 08:39:25 [WARNING] src.strategy: Position cost 140967.85 > available cash 132606.01, skipping DOGE/USDT at 2026-01-15 14:00:00+00:00
+2026-11-14 08:39:25 [WARNING] src.strategy: Position cost 137084.36 > available cash 132606.01, skipping AVAX/USDT at 2026-01-15 14:00:00+00:00
+2026-11-14 08:39:25 [INFO] src.strategy: OPEN DOGE/USDT: entry=0.1420, stop=0.1389, dist=0.0031, size=860844.2586, cost=122265.71, cash=132606.01, risk_amt=2652.12
+2026-11-14 08:39:25 [INFO] src.strategy: MARGIN DEDUCTED: 12226.57 (Lev: 10x). Remaining cash: 120379.44
+2026-11-14 08:39:25 [INFO] src.strategy: OPEN AVAX/USDT: entry=14.0440, stop=13.7008, dist=0.3432, size=7014.3056, cost=98508.91, cash=120379.44, risk_amt=2407.59
+2026-11-14 08:39:25 [INFO] src.strategy: MARGIN DEDUCTED: 9850.89 (Lev: 10x). Remaining cash: 110528.55
+2026-11-14 08:39:25 [INFO] src.strategy: OPEN DOT/USDT: entry=2.1620, stop=2.1008, dist=0.0612, size=36106.6322, cost=78062.54, cash=110528.55, risk_amt=2210.57
+2026-11-14 08:39:25 [INFO] src.strategy: MARGIN DEDUCTED: 7806.25 (Lev: 10x). Remaining cash: 102722.30
+2026-11-14 08:39:25 [INFO] src.strategy: OPEN ETC/USDT: entry=12.8320, stop=12.5507, dist=0.2813, size=7303.4918, cost=93718.41, cash=102722.30, risk_amt=2054.45
+2026-11-14 08:39:25 [INFO] src.strategy: MARGIN DEDUCTED: 9371.84 (Lev: 10x). Remaining cash: 93350.46
+2026-11-14 08:39:25 [INFO] src.strategy: OPEN AVAX/USDT: entry=11.7860, stop=11.5290, dist=0.2570, size=9612.8773, cost=113297.37, cash=123505.13, risk_amt=2470.10
+2026-11-14 08:39:25 [INFO] src.strategy: MARGIN DEDUCTED: 11329.74 (Lev: 10x). Remaining cash: 112175.39
+2026-11-14 08:39:25 [INFO] src.strategy: OPEN UNI/USDT: entry=4.7010, stop=4.6012, dist=0.0998, size=22476.8806, cost=105663.82, cash=112175.39, risk_amt=2243.51
+2026-11-14 08:39:25 [INFO] src.strategy: MARGIN DEDUCTED: 10566.38 (Lev: 10x). Remaining cash: 101609.01
+2026-11-14 08:39:25 [WARNING] src.strategy: Position cost 112057.73 > available cash 101609.01, skipping ETC/USDT at 2026-01-29 02:00:00+00:00
+2026-11-14 08:39:25 [INFO] src.strategy: OPEN ADA/USDT: entry=0.3498, stop=0.3418, dist=0.0080, size=253869.7536, cost=88803.64, cash=101609.01, risk_amt=2032.18
+2026-11-14 08:39:25 [INFO] src.strategy: MARGIN DEDUCTED: 8880.36 (Lev: 10x). Remaining cash: 92728.65
+2026-11-14 08:39:25 [INFO] src.strategy: OPEN ATOM/USDT: entry=1.9770, stop=1.9092, dist=0.0678, size=35754.6617, cost=70686.97, cash=121176.43, risk_amt=2423.53
+2026-11-14 08:39:25 [INFO] src.strategy: MARGIN DEDUCTED: 7068.70 (Lev: 10x). Remaining cash: 114107.74
+2026-11-14 08:39:26 [INFO] src.strategy: OPEN ETH/USDT: entry=2048.8400, stop=1998.5482, dist=50.2918, size=47.2101, cost=96725.96, cash=118714.03, risk_amt=2374.28
+2026-11-14 08:39:26 [INFO] src.strategy: MARGIN DEDUCTED: 9672.60 (Lev: 10x). Remaining cash: 109041.43
+2026-11-14 08:39:26 [INFO] src.strategy: OPEN BTC/USDT: entry=68694.0000, stop=67198.0184, dist=1495.9816, size=1.4578, cost=100141.50, cash=109041.43, risk_amt=2180.83
+2026-11-14 08:39:26 [INFO] src.strategy: MARGIN DEDUCTED: 10014.15 (Lev: 10x). Remaining cash: 99027.28
+2026-11-14 08:39:26 [INFO] src.strategy: OPEN ETH/USDT: entry=2007.6500, stop=1947.4294, dist=60.2206, size=40.4275, cost=81164.33, cash=121728.40, risk_amt=2434.57
+2026-11-14 08:39:26 [INFO] src.strategy: MARGIN DEDUCTED: 8116.43 (Lev: 10x). Remaining cash: 113611.97
+2026-11-14 08:39:26 [WARNING] src.strategy: Position cost 132227.67 > available cash 121423.46, skipping BNB/USDT at 2026-02-15 13:00:00+00:00
+2026-11-14 08:39:26 [INFO] src.strategy: OPEN LINK/USDT: entry=8.7880, stop=8.5576, dist=0.2304, size=10539.0861, cost=92617.49, cash=121423.46, risk_amt=2428.47
+2026-11-14 08:39:26 [INFO] src.strategy: MARGIN DEDUCTED: 9261.75 (Lev: 10x). Remaining cash: 112161.71
+2026-11-14 08:39:26 [INFO] src.strategy: OPEN DOT/USDT: entry=1.3540, stop=1.3148, dist=0.0392, size=57242.8176, cost=77506.77, cash=112161.71, risk_amt=2243.23
+2026-11-14 08:39:26 [INFO] src.strategy: MARGIN DEDUCTED: 7750.68 (Lev: 10x). Remaining cash: 104411.03
+2026-11-14 08:39:26 [INFO] src.strategy: OPEN ATOM/USDT: entry=2.1030, stop=2.0499, dist=0.0531, size=39313.6135, cost=82676.53, cash=104411.03, risk_amt=2088.22
+2026-11-14 08:39:26 [INFO] src.strategy: MARGIN DEDUCTED: 8267.65 (Lev: 10x). Remaining cash: 96143.38
+2026-11-14 08:39:26 [INFO] src.strategy: OPEN ETC/USDT: entry=8.6940, stop=8.4805, dist=0.2135, size=9005.5133, cost=78293.93, cash=96143.38, risk_amt=1922.87
+2026-11-14 08:39:26 [INFO] src.strategy: MARGIN DEDUCTED: 7829.39 (Lev: 10x). Remaining cash: 88313.99
+2026-11-14 08:39:26 [INFO] src.strategy: OPEN LTC/USDT: entry=53.7700, stop=52.5527, dist=1.2173, size=1957.9025, cost=105276.42, cash=119167.75, risk_amt=2383.35
+2026-11-14 08:39:26 [INFO] src.strategy: MARGIN DEDUCTED: 10527.64 (Lev: 10x). Remaining cash: 108640.11
+2026-11-14 08:39:26 [INFO] src.strategy: OPEN NEAR/USDT: entry=1.0410, stop=1.0182, dist=0.0228, size=104996.8348, cost=109301.71, cash=119507.63, risk_amt=2390.15
+2026-11-14 08:39:26 [INFO] src.strategy: MARGIN DEDUCTED: 10930.17 (Lev: 10x). Remaining cash: 108577.46
+2026-11-14 08:39:26 [INFO] src.strategy: OPEN ETC/USDT: entry=8.8610, stop=8.6667, dist=0.1943, size=12046.9182, cost=106747.74, cash=117045.07, risk_amt=2340.90
+2026-11-14 08:39:26 [INFO] src.strategy: MARGIN DEDUCTED: 10674.77 (Lev: 10x). Remaining cash: 106370.29
+2026-11-14 08:39:26 [INFO] src.strategy: OPEN ETH/USDT: entry=1982.8900, stop=1926.9092, dist=55.9808, size=41.0153, cost=81328.77, cash=114803.37, risk_amt=2296.07
+2026-11-14 08:39:26 [INFO] src.strategy: MARGIN DEDUCTED: 8132.88 (Lev: 10x). Remaining cash: 106670.50
+2026-11-14 08:39:26 [INFO] src.strategy: OPEN FIL/USDT: entry=0.9800, stop=0.9408, dist=0.0392, size=54464.8275, cost=53375.53, cash=106670.50, risk_amt=2133.41
+2026-11-14 08:39:26 [INFO] src.strategy: MARGIN DEDUCTED: 5337.55 (Lev: 10x). Remaining cash: 101332.94
+2026-11-14 08:39:26 [INFO] src.strategy: OPEN AVAX/USDT: entry=9.0980, stop=8.9099, dist=0.1881, size=12506.3476, cost=113782.75, cash=117597.70, risk_amt=2351.95
+2026-11-14 08:39:26 [INFO] src.strategy: MARGIN DEDUCTED: 11378.28 (Lev: 10x). Remaining cash: 106219.42
+2026-11-14 08:39:26 [WARNING] src.strategy: Position cost 116901.93 > available cash 106219.42, skipping LTC/USDT at 2026-02-27 11:00:00+00:00
+2026-11-14 08:39:26 [INFO] src.strategy: OPEN LINK/USDT: entry=8.8330, stop=8.6233, dist=0.2097, size=10132.6008, cost=89501.26, cash=106219.42, risk_amt=2124.39
+2026-11-14 08:39:26 [INFO] src.strategy: MARGIN DEDUCTED: 8950.13 (Lev: 10x). Remaining cash: 97269.30
+2026-11-14 08:39:26 [INFO] src.strategy: OPEN APT/USDT: entry=0.9332, stop=0.9071, dist=0.0261, size=81368.0649, cost=75932.68, cash=106230.19, risk_amt=2124.60
+2026-11-14 08:39:26 [INFO] src.strategy: MARGIN DEDUCTED: 7593.27 (Lev: 10x). Remaining cash: 98636.92
+2026-11-14 08:39:26 [WARNING] src.risk_manager: Liquidation risk: entry=1.5020, stop=1.4290, liq=1.3593, stop_dist=0.0730, liq_dist=0.1427, buffer=2.0x
+2026-11-14 08:39:26 [WARNING] src.strategy: Liquidation risk: entry=1.5020, stop=1.4290, liq=1.3593 — skipping DOT/USDT at 2026-02-28 07:00:00+00:00
+2026-11-14 08:39:26 [INFO] src.strategy: OPEN ETH/USDT: entry=1941.8700, stop=1890.3525, dist=51.5175, size=43.0238, cost=83546.59, cash=110823.90, risk_amt=2216.48
+2026-11-14 08:39:26 [INFO] src.strategy: MARGIN DEDUCTED: 8354.66 (Lev: 10x). Remaining cash: 102469.24
+2026-11-14 08:39:26 [INFO] src.strategy: OPEN SOL/USDT: entry=83.2000, stop=80.9742, dist=2.2258, size=920.7258, cost=76604.38, cash=102469.24, risk_amt=2049.38
+2026-11-14 08:39:26 [INFO] src.strategy: MARGIN DEDUCTED: 7660.44 (Lev: 10x). Remaining cash: 94808.80
+2026-11-14 08:39:26 [INFO] src.strategy: OPEN ADA/USDT: entry=0.2687, stop=0.2606, dist=0.0081, size=299473.2582, cost=80468.46, cash=121915.16, risk_amt=2438.30
+2026-11-14 08:39:26 [INFO] src.strategy: MARGIN DEDUCTED: 8046.85 (Lev: 10x). Remaining cash: 113868.31
+2026-11-14 08:39:26 [INFO] src.strategy: OPEN ATOM/USDT: entry=1.8410, stop=1.7986, dist=0.0424, size=53687.0950, cost=98837.94, cash=113868.31, risk_amt=2277.37
+2026-11-14 08:39:26 [INFO] src.strategy: MARGIN DEDUCTED: 9883.79 (Lev: 10x). Remaining cash: 103984.52
+2026-11-14 08:39:26 [WARNING] src.strategy: Position cost 121420.63 > available cash 111420.00, skipping ETH/USDT at 2026-03-06 09:00:00+00:00
+2026-11-14 08:39:26 [WARNING] src.strategy: Position cost 125999.40 > available cash 120388.38, skipping LINK/USDT at 2026-03-06 12:00:00+00:00
+2026-11-14 08:39:26 [WARNING] src.strategy: Position cost 121545.55 > available cash 120388.38, skipping UNI/USDT at 2026-03-06 12:00:00+00:00
+2026-11-14 08:39:26 [WARNING] src.strategy: Position cost 123421.64 > available cash 120388.38, skipping ETC/USDT at 2026-03-14 06:00:00+00:00
+2026-11-14 08:39:26 [INFO] src.strategy: OPEN ADA/USDT: entry=0.2793, stop=0.2721, dist=0.0072, size=334381.7693, cost=93392.83, cash=120388.38, risk_amt=2407.77
+2026-11-14 08:39:26 [INFO] src.strategy: MARGIN DEDUCTED: 9339.28 (Lev: 10x). Remaining cash: 111049.10
+2026-11-14 08:39:26 [WARNING] src.strategy: Position cost 120437.79 > available cash 111049.10, skipping ETC/USDT at 2026-03-18 11:00:00+00:00
+2026-11-14 08:39:26 [INFO] src.strategy: OPEN APT/USDT: entry=0.9702, stop=0.9459, dist=0.0243, size=91558.7875, cost=88830.34, cash=111049.10, risk_amt=2220.98
+2026-11-14 08:39:26 [INFO] src.strategy: MARGIN DEDUCTED: 8883.03 (Lev: 10x). Remaining cash: 102166.07
+2026-11-14 08:39:26 [INFO] src.strategy: OPEN NEAR/USDT: entry=1.4130, stop=1.3784, dist=0.0346, size=58994.3551, cost=83359.02, cash=102166.07, risk_amt=2043.32
+2026-11-14 08:39:26 [INFO] src.strategy: MARGIN DEDUCTED: 8335.90 (Lev: 10x). Remaining cash: 93830.16
+2026-11-14 08:39:26 [INFO] src.strategy: OPEN FIL/USDT: entry=0.8790, stop=0.8433, dist=0.0357, size=63647.2441, cost=55945.93, cash=113573.63, risk_amt=2271.47
+2026-11-14 08:39:26 [INFO] src.strategy: MARGIN DEDUCTED: 5594.59 (Lev: 10x). Remaining cash: 107979.04
+2026-11-14 08:39:26 [INFO] src.strategy: OPEN APT/USDT: entry=0.9717, stop=0.9492, dist=0.0225, size=95879.5027, cost=93166.11, cash=107979.04, risk_amt=2159.58
+2026-11-14 08:39:26 [INFO] src.strategy: MARGIN DEDUCTED: 9316.61 (Lev: 10x). Remaining cash: 98662.43
+2026-11-14 08:39:27 [INFO] src.strategy: OPEN DOGE/USDT: entry=0.0905, stop=0.0887, dist=0.0018, size=1232164.7151, cost=111535.55, cash=111673.21, risk_amt=2233.46
+2026-11-14 08:39:27 [INFO] src.strategy: MARGIN DEDUCTED: 11153.56 (Lev: 10x). Remaining cash: 100519.66
+2026-11-14 08:39:27 [INFO] src.strategy: OPEN LINK/USDT: entry=8.7370, stop=8.5329, dist=0.2041, size=9848.4752, cost=86046.13, cash=100519.66, risk_amt=2010.39
+2026-11-14 08:39:27 [INFO] src.strategy: MARGIN DEDUCTED: 8604.61 (Lev: 10x). Remaining cash: 91915.04
+2026-11-14 08:39:27 [INFO] src.strategy: OPEN DOT/USDT: entry=1.2360, stop=1.2078, dist=0.0282, size=65244.1149, cost=80641.73, cash=91915.04, risk_amt=1838.30
+2026-11-14 08:39:27 [INFO] src.strategy: MARGIN DEDUCTED: 8064.17 (Lev: 10x). Remaining cash: 83850.87
+2026-11-14 08:39:27 [INFO] src.strategy: OPEN UNI/USDT: entry=3.5030, stop=3.4216, dist=0.0814, size=20610.0586, cost=72197.04, cash=83850.87, risk_amt=1677.02
+2026-11-14 08:39:27 [INFO] src.strategy: MARGIN DEDUCTED: 7219.70 (Lev: 10x). Remaining cash: 76631.17
+2026-11-14 08:39:27 [WARNING] src.strategy: Position cost 117042.95 > available cash 108816.87, skipping DOT/USDT at 2026-04-06 23:00:00+00:00
+2026-11-14 08:39:27 [WARNING] src.strategy: Position cost 109989.96 > available cash 108816.87, skipping NEAR/USDT at 2026-04-06 23:00:00+00:00
+2026-11-14 08:39:27 [INFO] src.strategy: OPEN FIL/USDT: entry=0.8500, stop=0.8299, dist=0.0201, size=108274.6984, cost=92033.49, cash=108816.87, risk_amt=2176.34
+2026-11-14 08:39:27 [INFO] src.strategy: MARGIN DEDUCTED: 9203.35 (Lev: 10x). Remaining cash: 99613.52
+2026-11-14 08:39:27 [INFO] src.strategy: OPEN AVAX/USDT: entry=9.0720, stop=8.8437, dist=0.2283, size=9962.3481, cost=90378.42, cash=113744.59, risk_amt=2274.89
+2026-11-14 08:39:27 [INFO] src.strategy: MARGIN DEDUCTED: 9037.84 (Lev: 10x). Remaining cash: 104706.75
+2026-11-14 08:39:27 [INFO] src.strategy: OPEN SOL/USDT: entry=82.6100, stop=80.8387, dist=1.7713, size=1182.2711, cost=97667.41, cash=104706.75, risk_amt=2094.13
+2026-11-14 08:39:27 [INFO] src.strategy: MARGIN DEDUCTED: 9766.74 (Lev: 10x). Remaining cash: 94940.00
+2026-11-14 08:39:27 [WARNING] src.strategy: Position cost 97645.02 > available cash 94940.00, skipping DOGE/USDT at 2026-04-12 02:00:00+00:00
+2026-11-14 08:39:27 [INFO] src.strategy: OPEN LINK/USDT: entry=8.8310, stop=8.6375, dist=0.1935, size=9814.5312, cost=86672.13, cash=94940.00, risk_amt=1898.80
+2026-11-14 08:39:27 [INFO] src.strategy: MARGIN DEDUCTED: 8667.21 (Lev: 10x). Remaining cash: 86272.79
+2026-11-14 08:39:27 [WARNING] src.strategy: Position cost 124340.14 > available cash 113731.54, skipping DOGE/USDT at 2026-04-18 08:00:00+00:00
+2026-11-14 08:39:27 [INFO] src.strategy: OPEN DOT/USDT: entry=1.2880, stop=1.2573, dist=0.0307, size=74191.6728, cost=95558.87, cash=113731.54, risk_amt=2274.63
+2026-11-14 08:39:27 [INFO] src.strategy: MARGIN DEDUCTED: 9555.89 (Lev: 10x). Remaining cash: 104175.65
+2026-11-14 08:39:27 [WARNING] src.strategy: Position cost 116078.18 > available cash 112470.70, skipping FIL/USDT at 2026-04-23 00:00:00+00:00
+2026-11-14 08:39:27 [INFO] src.strategy: OPEN APT/USDT: entry=0.9278, stop=0.9066, dist=0.0212, size=106206.1397, cost=98538.06, cash=112470.70, risk_amt=2249.41
+2026-11-14 08:39:27 [INFO] src.strategy: MARGIN DEDUCTED: 9853.81 (Lev: 10x). Remaining cash: 102616.89
+2026-11-14 08:39:27 [WARNING] src.strategy: Position cost 123943.86 > available cash 114086.46, skipping ADA/USDT at 2026-04-27 06:00:00+00:00
+2026-11-14 08:39:27 [WARNING] src.strategy: Position cost 117277.98 > available cash 114086.46, skipping DOT/USDT at 2026-04-27 06:00:00+00:00
+2026-11-14 08:39:27 [INFO] src.strategy: OPEN APT/USDT: entry=0.9568, stop=0.9360, dist=0.0208, size=109671.0329, cost=104933.24, cash=114086.46, risk_amt=2281.73
+2026-11-14 08:39:27 [INFO] src.strategy: MARGIN DEDUCTED: 10493.32 (Lev: 10x). Remaining cash: 103593.13
+2026-11-14 08:39:27 [INFO] src.strategy: OPEN UNI/USDT: entry=3.1830, stop=3.1184, dist=0.0646, size=34944.5885, cost=111228.63, cash=112860.77, risk_amt=2257.22
+2026-11-14 08:39:27 [INFO] src.strategy: MARGIN DEDUCTED: 11122.86 (Lev: 10x). Remaining cash: 101737.91
+2026-11-14 08:39:27 [INFO] src.strategy: OPEN FIL/USDT: entry=0.8940, stop=0.8596, dist=0.0344, size=59121.7013, cost=52854.80, cash=101737.91, risk_amt=2034.76
+2026-11-14 08:39:27 [INFO] src.strategy: MARGIN DEDUCTED: 5285.48 (Lev: 10x). Remaining cash: 96452.43
+2026-11-14 08:39:27 [INFO] src.strategy: OPEN LTC/USDT: entry=54.8700, stop=53.7662, dist=1.1038, size=1747.7008, cost=95896.34, cash=96452.43, risk_amt=1929.05
+2026-11-14 08:39:27 [INFO] src.strategy: MARGIN DEDUCTED: 9589.63 (Lev: 10x). Remaining cash: 86862.80
+2026-11-14 08:39:27 [WARNING] src.strategy: Position cost 122265.85 > available cash 113306.72, skipping APT/USDT at 2026-05-03 01:00:00+00:00
+2026-11-14 08:39:27 [INFO] src.strategy: OPEN APT/USDT: entry=0.9690, stop=0.9431, dist=0.0259, size=87516.4640, cost=84803.45, cash=113306.72, risk_amt=2266.13
+2026-11-14 08:39:27 [INFO] src.strategy: MARGIN DEDUCTED: 8480.35 (Lev: 10x). Remaining cash: 104826.38
+2026-11-14 08:39:27 [WARNING] src.strategy: Position cost 122874.84 > available cash 113361.07, skipping AVAX/USDT at 2026-05-07 15:00:00+00:00
+2026-11-14 08:39:27 [WARNING] src.strategy: Position cost 115115.23 > available cash 113361.07, skipping ADA/USDT at 2026-05-07 17:00:00+00:00
+2026-11-14 08:39:27 [WARNING] src.strategy: Position cost 122436.59 > available cash 113361.07, skipping APT/USDT at 2026-05-10 00:00:00+00:00
+2026-11-14 08:39:27 [INFO] src.strategy: OPEN UNI/USDT: entry=3.8310, stop=3.7248, dist=0.1062, size=21345.8597, cost=81775.99, cash=113361.07, risk_amt=2267.22
+2026-11-14 08:39:27 [INFO] src.strategy: MARGIN DEDUCTED: 8177.60 (Lev: 10x). Remaining cash: 105183.47
+2026-11-14 08:39:27 [INFO] src.strategy: OPEN UNI/USDT: entry=3.8060, stop=3.7076, dist=0.0984, size=23009.4106, cost=87573.82, cash=113202.27, risk_amt=2264.05
+2026-11-14 08:39:27 [INFO] src.strategy: MARGIN DEDUCTED: 8757.38 (Lev: 10x). Remaining cash: 104444.89
+2026-11-14 08:39:27 [INFO] src.strategy: OPEN DOGE/USDT: entry=0.1118, stop=0.1089, dist=0.0029, size=772838.5469, cost=86387.89, cash=112150.56, risk_amt=2243.01
+2026-11-14 08:39:27 [INFO] src.strategy: MARGIN DEDUCTED: 8638.79 (Lev: 10x). Remaining cash: 103511.77
+2026-11-14 08:39:27 [WARNING] src.strategy: Position cost 108932.43 > available cash 103511.77, skipping LTC/USDT at 2026-05-15 14:00:00+00:00
+2026-11-14 08:39:27 [INFO] src.strategy: OPEN ATOM/USDT: entry=2.0330, stop=1.9825, dist=0.0505, size=44500.5067, cost=90469.53, cash=112336.60, risk_amt=2246.73
+2026-11-14 08:39:27 [INFO] src.strategy: MARGIN DEDUCTED: 9046.95 (Lev: 10x). Remaining cash: 103289.65
+2026-11-14 08:39:27 [WARNING] src.strategy: Position cost 112293.08 > available cash 112200.51, skipping ADA/USDT at 2026-05-22 18:00:00+00:00
+2026-11-14 08:39:27 [WARNING] src.strategy: Position cost 121736.34 > available cash 112200.51, skipping AVAX/USDT at 2026-05-22 18:00:00+00:00
+2026-11-14 08:39:27 [WARNING] src.strategy: Position cost 115636.06 > available cash 112200.51, skipping DOGE/USDT at 2026-05-22 19:00:00+00:00
+2026-11-14 08:39:27 [INFO] src.strategy: OPEN UNI/USDT: entry=3.4710, stop=3.3593, dist=0.1117, size=20083.3553, cost=69709.33, cash=112200.51, risk_amt=2244.01
+2026-11-14 08:39:27 [INFO] src.strategy: MARGIN DEDUCTED: 6970.93 (Lev: 10x). Remaining cash: 105229.57
+2026-11-14 08:39:27 [INFO] src.strategy: OPEN ETC/USDT: entry=8.8210, stop=8.5671, dist=0.2539, size=8287.5655, cost=73104.61, cash=105229.57, risk_amt=2104.59
+2026-11-14 08:39:27 [INFO] src.strategy: MARGIN DEDUCTED: 7310.46 (Lev: 10x). Remaining cash: 97919.11
+2026-11-14 08:39:27 [INFO] src.strategy: OPEN FIL/USDT: entry=0.9770, stop=0.9407, dist=0.0363, size=53929.8877, cost=52689.50, cash=97919.11, risk_amt=1958.38
+2026-11-14 08:39:27 [INFO] src.strategy: MARGIN DEDUCTED: 5268.95 (Lev: 10x). Remaining cash: 92650.16
+2026-11-14 08:39:27 [INFO] src.strategy: OPEN APT/USDT: entry=0.9449, stop=0.9155, dist=0.0294, size=62954.0041, cost=59485.24, cash=92650.16, risk_amt=1853.00
+2026-11-14 08:39:27 [INFO] src.strategy: MARGIN DEDUCTED: 5948.52 (Lev: 10x). Remaining cash: 86701.64
+2026-11-14 08:39:27 [WARNING] src.risk_manager: Liquidation risk: entry=0.9780, stop=0.9229, liq=0.8851, stop_dist=0.0551, liq_dist=0.0929, buffer=2.0x
+2026-11-14 08:39:27 [WARNING] src.strategy: Liquidation risk: entry=0.9780, stop=0.9229, liq=0.8851 — skipping FIL/USDT at 2026-05-28 04:00:00+00:00
+2026-11-14 08:39:28 [INFO] src.strategy: OPEN UNI/USDT: entry=2.4660, stop=2.4000, dist=0.0660, size=33240.3063, cost=81970.60, cash=109619.99, risk_amt=2192.40
+2026-11-14 08:39:28 [INFO] src.strategy: MARGIN DEDUCTED: 8197.06 (Lev: 10x). Remaining cash: 101422.93
+2026-11-14 08:39:28 [INFO] src.strategy: OPEN ETC/USDT: entry=6.9480, stop=6.7982, dist=0.1498, size=13540.1208, cost=94076.76, cash=101422.93, risk_amt=2028.46
+2026-11-14 08:39:28 [INFO] src.strategy: MARGIN DEDUCTED: 9407.68 (Lev: 10x). Remaining cash: 92015.25
+2026-11-14 08:39:28 [INFO] src.strategy: OPEN APT/USDT: entry=0.6483, stop=0.6273, dist=0.0210, size=87759.0931, cost=56894.22, cash=92015.25, risk_amt=1840.31
+2026-11-14 08:39:28 [INFO] src.strategy: MARGIN DEDUCTED: 5689.42 (Lev: 10x). Remaining cash: 86325.83
+2026-11-14 08:39:28 [INFO] src.strategy: OPEN ETH/USDT: entry=1644.9000, stop=1611.5646, dist=33.3354, size=57.0987, cost=93921.61, cash=95170.48, risk_amt=1903.41
+2026-11-14 08:39:28 [INFO] src.strategy: MARGIN DEDUCTED: 9392.16 (Lev: 10x). Remaining cash: 85778.32
+2026-11-14 08:39:28 [INFO] src.strategy: OPEN SOL/USDT: entry=65.0300, stop=63.5302, dist=1.4998, size=1143.8833, cost=74386.73, cash=85778.32, risk_amt=1715.57
+2026-11-14 08:39:28 [INFO] src.strategy: MARGIN DEDUCTED: 7438.67 (Lev: 10x). Remaining cash: 78339.64
+2026-11-14 08:39:28 [WARNING] src.strategy: Position cost 98579.09 > available cash 93993.90, skipping DOGE/USDT at 2026-06-09 15:00:00+00:00
+2026-11-14 08:39:28 [INFO] src.strategy: OPEN DOGE/USDT: entry=0.0843, stop=0.0826, dist=0.0017, size=1103215.1250, cost=93012.07, cash=93993.90, risk_amt=1879.88
+2026-11-14 08:39:28 [INFO] src.strategy: MARGIN DEDUCTED: 9301.21 (Lev: 10x). Remaining cash: 84692.69
+2026-11-14 08:39:28 [INFO] src.strategy: OPEN ADA/USDT: entry=0.1620, stop=0.1568, dist=0.0052, size=323752.7047, cost=52447.94, cash=84692.69, risk_amt=1693.85
+2026-11-14 08:39:28 [INFO] src.strategy: MARGIN DEDUCTED: 5244.79 (Lev: 10x). Remaining cash: 79447.89
+2026-11-14 08:39:28 [INFO] src.strategy: OPEN XRP/USDT: entry=1.2091, stop=1.1814, dist=0.0277, size=79704.7341, cost=96370.99, cash=110205.62, risk_amt=2204.11
+2026-11-14 08:39:28 [INFO] src.strategy: MARGIN DEDUCTED: 9637.10 (Lev: 10x). Remaining cash: 100568.52
+2026-11-14 08:39:28 [WARNING] src.strategy: Position cost 106073.05 > available cash 100568.52, skipping DOGE/USDT at 2026-06-16 14:00:00+00:00
+2026-11-14 08:39:28 [WARNING] src.strategy: Position cost 108988.08 > available cash 100568.52, skipping LTC/USDT at 2026-06-16 14:00:00+00:00
+2026-11-14 08:39:28 [INFO] src.strategy: OPEN FIL/USDT: entry=0.7780, stop=0.7561, dist=0.0219, size=91795.6471, cost=71417.01, cash=100568.52, risk_amt=2011.37
+2026-11-14 08:39:28 [INFO] src.strategy: MARGIN DEDUCTED: 7141.70 (Lev: 10x). Remaining cash: 93426.82
+2026-11-14 08:39:28 [INFO] src.strategy: OPEN APT/USDT: entry=0.6586, stop=0.6366, dist=0.0220, size=84864.1188, cost=55891.51, cash=93426.82, risk_amt=1868.54
+2026-11-14 08:39:28 [INFO] src.strategy: MARGIN DEDUCTED: 5589.15 (Lev: 10x). Remaining cash: 87837.67
+2026-11-14 08:39:28 [WARNING] src.risk_manager: Liquidation risk: entry=2.3230, stop=2.2109, liq=2.1023, stop_dist=0.1121, liq_dist=0.2207, buffer=2.0x
+2026-11-14 08:39:28 [WARNING] src.strategy: Liquidation risk: entry=2.3230, stop=2.2109, liq=2.1023 — skipping NEAR/USDT at 2026-06-16 14:00:00+00:00
+2026-11-14 08:39:28 [WARNING] src.strategy: Position cost 126023.08 > available cash 113852.29, skipping LINK/USDT at 2026-06-17 12:00:00+00:00
+2026-11-14 08:39:28 [INFO] src.strategy: OPEN SOL/USDT: entry=72.0600, stop=70.5514, dist=1.5086, size=1509.3953, cost=108767.03, cash=113852.29, risk_amt=2277.05
+2026-11-14 08:39:28 [INFO] src.strategy: MARGIN DEDUCTED: 10876.70 (Lev: 10x). Remaining cash: 102975.59
+2026-11-14 08:39:28 [INFO] src.strategy: OPEN AVAX/USDT: entry=6.1630, stop=6.0115, dist=0.1515, size=14718.9638, cost=90712.97, cash=111509.98, risk_amt=2230.20
+2026-11-14 08:39:28 [INFO] src.strategy: MARGIN DEDUCTED: 9071.30 (Lev: 10x). Remaining cash: 102438.69
+2026-11-14 08:39:28 [INFO] src.strategy: OPEN AVAX/USDT: entry=6.1200, stop=5.8546, dist=0.2654, size=8736.3339, cost=53466.36, cash=115935.77, risk_amt=2318.72
+2026-11-14 08:39:28 [INFO] src.strategy: MARGIN DEDUCTED: 5346.64 (Lev: 10x). Remaining cash: 110589.13
+2026-11-14 08:39:28 [WARNING] src.strategy: Position cost 122172.70 > available cash 115645.90, skipping SOL/USDT at 2026-06-30 13:00:00+00:00
+2026-11-14 08:39:28 [INFO] src.strategy: OPEN AVAX/USDT: entry=6.4700, stop=6.3317, dist=0.1383, size=16726.6476, cost=108221.41, cash=115645.90, risk_amt=2312.92
+2026-11-14 08:39:28 [INFO] src.strategy: MARGIN DEDUCTED: 10822.14 (Lev: 10x). Remaining cash: 104823.76
+2026-11-14 08:39:28 [INFO] src.strategy: OPEN FIL/USDT: entry=0.7770, stop=0.7610, dist=0.0160, size=148556.8459, cost=115428.67, cash=118801.70, risk_amt=2376.03
+2026-11-14 08:39:28 [INFO] src.strategy: MARGIN DEDUCTED: 11542.87 (Lev: 10x). Remaining cash: 107258.83
+2026-11-14 08:39:28 [INFO] src.strategy: OPEN ADA/USDT: entry=0.1851, stop=0.1807, dist=0.0044, size=545609.7586, cost=100992.37, cash=120563.72, risk_amt=2411.27
+2026-11-14 08:39:28 [INFO] src.strategy: MARGIN DEDUCTED: 10099.24 (Lev: 10x). Remaining cash: 110464.49
+2026-11-14 08:39:28 [WARNING] src.strategy: Position cost 118834.01 > available cash 118093.12, skipping DOGE/USDT at 2026-07-06 13:00:00+00:00
+2026-11-14 08:39:28 [INFO] src.strategy: OPEN ADA/USDT: entry=0.1635, stop=0.1598, dist=0.0037, size=637906.6184, cost=104297.73, cash=118093.12, risk_amt=2361.86
+2026-11-14 08:39:28 [INFO] src.strategy: MARGIN DEDUCTED: 10429.77 (Lev: 10x). Remaining cash: 107663.34
+2026-11-14 08:39:28 [WARNING] src.strategy: Position cost 115575.52 > available cash 107663.34, skipping APT/USDT at 2026-07-12 00:00:00+00:00
+2026-11-14 08:39:28 [INFO] src.strategy: OPEN UNI/USDT: entry=3.5180, stop=3.4113, dist=0.1067, size=22115.5950, cost=77802.66, cash=117967.37, risk_amt=2359.35
+2026-11-14 08:39:28 [INFO] src.strategy: MARGIN DEDUCTED: 7780.27 (Lev: 10x). Remaining cash: 110187.10
+2026-11-14 08:39:28 [WARNING] src.strategy: Position cost 122668.04 > available cash 117313.00, skipping APT/USDT at 2026-07-16 08:00:00+00:00
+2026-11-14 08:39:28 [WARNING] src.strategy: Position cost 124924.99 > available cash 117313.00, skipping APT/USDT at 2026-07-16 13:00:00+00:00
+2026-11-14 08:39:28 [INFO] src.strategy: OPEN NEAR/USDT: entry=1.9380, stop=1.8945, dist=0.0435, size=53943.8460, cost=104543.17, cash=117313.00, risk_amt=2346.26
+2026-11-14 08:39:28 [INFO] src.strategy: MARGIN DEDUCTED: 10454.32 (Lev: 10x). Remaining cash: 106858.69
+2026-11-14 08:39:28 [INFO] src.strategy: OPEN ADA/USDT: entry=0.1704, stop=0.1664, dist=0.0040, size=584442.5664, cost=99589.01, cash=116356.17, risk_amt=2327.12
+2026-11-14 08:39:28 [INFO] src.strategy: MARGIN DEDUCTED: 9958.90 (Lev: 10x). Remaining cash: 106397.27
+2026-11-14 08:39:28 [WARNING] src.strategy: Position cost 125180.95 > available cash 113955.60, skipping DOGE/USDT at 2026-07-27 14:00:00+00:00
+2026-11-14 08:39:28 [INFO] src.strategy: OPEN FIL/USDT: entry=0.7234, stop=0.7073, dist=0.0161, size=141172.0149, cost=102123.84, cash=113955.60, risk_amt=2279.11
+2026-11-14 08:39:28 [INFO] src.strategy: MARGIN DEDUCTED: 10212.38 (Lev: 10x). Remaining cash: 103743.21
+2026-11-14 08:39:28 [INFO] src.strategy: OPEN APT/USDT: entry=0.6120, stop=0.5986, dist=0.0134, size=155040.2915, cost=94884.66, cash=103743.21, risk_amt=2074.86
+2026-11-14 08:39:28 [INFO] src.strategy: MARGIN DEDUCTED: 9488.47 (Lev: 10x). Remaining cash: 94254.75
+2026-11-14 08:39:28 [WARNING] src.strategy: Position cost 103082.44 > available cash 94254.75, skipping AVAX/USDT at 2026-07-27 15:00:00+00:00
+2026-11-14 08:39:28 [INFO] src.strategy: OPEN NEAR/USDT: entry=1.7760, stop=1.7356, dist=0.0404, size=46685.8558, cost=82914.08, cash=94254.75, risk_amt=1885.09
+2026-11-14 08:39:28 [INFO] src.strategy: MARGIN DEDUCTED: 8291.41 (Lev: 10x). Remaining cash: 85963.34
+2026-11-14 08:39:29 [WARNING] src.strategy: Position cost 115341.47 > available cash 108182.01, skipping NEAR/USDT at 2026-08-05 05:00:00+00:00
+2026-11-14 08:39:29 [INFO] src.strategy: OPEN UNI/USDT: entry=3.9380, stop=3.8537, dist=0.0843, size=25679.9313, cost=101127.57, cash=108182.01, risk_amt=2163.64
+2026-11-14 08:39:29 [INFO] src.strategy: MARGIN DEDUCTED: 10112.76 (Lev: 10x). Remaining cash: 98069.26
+2026-11-14 08:39:29 [INFO] src.strategy: OPEN APT/USDT: entry=0.6151, stop=0.5882, dist=0.0269, size=80445.2154, cost=49481.85, cash=108250.63, risk_amt=2165.01
+2026-11-14 08:39:29 [INFO] src.strategy: MARGIN DEDUCTED: 4948.19 (Lev: 10x). Remaining cash: 103302.45
+2026-11-14 08:39:29 [WARNING] src.risk_manager: Liquidation risk: entry=1.8380, stop=1.7501, liq=1.6634, stop_dist=0.0879, liq_dist=0.1746, buffer=2.0x
+2026-11-14 08:39:29 [WARNING] src.strategy: Liquidation risk: entry=1.8380, stop=1.7501, liq=1.6634 — skipping NEAR/USDT at 2026-08-23 03:00:00+00:00
+2026-11-14 08:39:29 [WARNING] src.strategy: Position cost 112662.95 > available cash 103302.45, skipping BNB/USDT at 2026-08-23 05:00:00+00:00
+2026-11-14 08:39:29 [INFO] src.strategy: OPEN AVAX/USDT: entry=7.4110, stop=7.2481, dist=0.1629, size=13473.5411, cost=99852.41, cash=109721.32, risk_amt=2194.43
+2026-11-14 08:39:29 [INFO] src.strategy: MARGIN DEDUCTED: 9985.24 (Lev: 10x). Remaining cash: 99736.08
+2026-11-14 08:39:29 [INFO] src.strategy: OPEN ETC/USDT: entry=7.6570, stop=7.3978, dist=0.2592, size=8427.3146, cost=64527.95, cash=109234.06, risk_amt=2184.68
+2026-11-14 08:39:29 [INFO] src.strategy: MARGIN DEDUCTED: 6452.79 (Lev: 10x). Remaining cash: 102781.26
+2026-11-14 08:39:29 [INFO] src.strategy: OPEN DOGE/USDT: entry=0.0871, stop=0.0853, dist=0.0018, size=1220040.1402, cost=106216.69, cash=109260.42, risk_amt=2185.21
+2026-11-14 08:39:29 [INFO] src.strategy: MARGIN DEDUCTED: 10621.67 (Lev: 10x). Remaining cash: 98638.75
+2026-11-14 08:39:29 [WARNING] src.strategy: Position cost 103136.50 > available cash 98638.75, skipping AVAX/USDT at 2026-08-28 14:00:00+00:00
+2026-11-14 08:39:29 [INFO] src.strategy: OPEN ETH/USDT: entry=2440.8300, stop=2381.8756, dist=58.9544, size=36.5378, cost=89182.51, cash=107703.22, risk_amt=2154.06
+2026-11-14 08:39:29 [INFO] src.strategy: MARGIN DEDUCTED: 8918.25 (Lev: 10x). Remaining cash: 98784.97
+2026-11-14 08:39:29 [INFO] src.strategy: OPEN LINK/USDT: entry=11.4480, stop=11.1138, dist=0.3342, size=5912.0649, cost=67681.32, cash=98784.97, risk_amt=1975.70
+2026-11-14 08:39:29 [INFO] src.strategy: MARGIN DEDUCTED: 6768.13 (Lev: 10x). Remaining cash: 92016.84
+2026-11-14 08:39:29 [INFO] src.strategy: OPEN UNI/USDT: entry=4.4430, stop=4.2624, dist=0.1806, size=10188.0135, cost=45265.34, cash=92016.84, risk_amt=1840.34
+2026-11-14 08:39:29 [INFO] src.strategy: MARGIN DEDUCTED: 4526.53 (Lev: 10x). Remaining cash: 87490.31
+2026-11-14 08:39:29 [INFO] src.strategy: OPEN ETH/USDT: entry=2415.5500, stop=2360.1527, dist=55.3973, size=39.6505, cost=95777.87, cash=109826.67, risk_amt=2196.53
+2026-11-14 08:39:29 [INFO] src.strategy: MARGIN DEDUCTED: 9577.79 (Lev: 10x). Remaining cash: 100248.88
+2026-11-14 08:39:29 [INFO] src.strategy: OPEN LINK/USDT: entry=11.1370, stop=10.8339, dist=0.3031, size=6614.2279, cost=73662.66, cash=100248.88, risk_amt=2004.98
+2026-11-14 08:39:29 [INFO] src.strategy: MARGIN DEDUCTED: 7366.27 (Lev: 10x). Remaining cash: 92882.61
+2026-11-14 08:39:29 [INFO] src.strategy: OPEN LINK/USDT: entry=11.2090, stop=10.9565, dist=0.2525, size=8928.1885, cost=100076.07, cash=112733.22, risk_amt=2254.66
+2026-11-14 08:39:29 [INFO] src.strategy: MARGIN DEDUCTED: 10007.61 (Lev: 10x). Remaining cash: 102725.62
+2026-11-14 08:39:29 [INFO] src.strategy: OPEN FIL/USDT: entry=0.7746, stop=0.7527, dist=0.0219, size=101898.0424, cost=78930.22, cash=111752.21, risk_amt=2235.04
+2026-11-14 08:39:29 [INFO] src.strategy: MARGIN DEDUCTED: 7893.02 (Lev: 10x). Remaining cash: 103859.19
+2026-11-14 08:39:29 [INFO] src.strategy: OPEN SOL/USDT: entry=101.5400, stop=99.2699, dist=2.2701, size=964.4522, cost=97930.48, cash=109467.84, risk_amt=2189.36
+2026-11-14 08:39:29 [INFO] src.strategy: MARGIN DEDUCTED: 9793.05 (Lev: 10x). Remaining cash: 99674.79
+2026-11-14 08:39:29 [INFO] src.strategy: OPEN ETC/USDT: entry=7.3820, stop=7.1679, dist=0.2141, size=9312.4056, cost=68744.18, cash=99674.79, risk_amt=1993.50
+2026-11-14 08:39:29 [INFO] src.strategy: MARGIN DEDUCTED: 6874.42 (Lev: 10x). Remaining cash: 92800.37
+2026-11-14 08:39:29 [INFO] src.strategy: OPEN XRP/USDT: entry=1.3888, stop=1.3489, dist=0.0399, size=46482.6043, cost=64555.04, cash=92800.37, risk_amt=1856.01
+2026-11-14 08:39:29 [INFO] src.strategy: MARGIN DEDUCTED: 6455.50 (Lev: 10x). Remaining cash: 86344.87
+2026-11-14 08:39:29 [WARNING] src.strategy: Position cost 128380.20 > available cash 115852.24, skipping SOL/USDT at 2026-09-07 15:00:00+00:00
+2026-11-14 08:39:29 [WARNING] src.strategy: Position cost 115949.20 > available cash 115852.24, skipping AVAX/USDT at 2026-09-08 13:00:00+00:00
+2026-11-14 08:39:29 [INFO] src.strategy: OPEN NEAR/USDT: entry=2.4000, stop=2.3010, dist=0.0990, size=23411.3024, cost=56187.13, cash=115852.24, risk_amt=2317.04
+2026-11-14 08:39:29 [INFO] src.strategy: MARGIN DEDUCTED: 5618.71 (Lev: 10x). Remaining cash: 110233.52
+2026-11-14 08:39:29 [INFO] src.strategy: OPEN UNI/USDT: entry=6.1410, stop=5.9800, dist=0.1610, size=14431.1978, cost=88621.99, cash=116136.57, risk_amt=2322.73
+2026-11-14 08:39:29 [INFO] src.strategy: MARGIN DEDUCTED: 8862.20 (Lev: 10x). Remaining cash: 107274.37
+2026-11-14 08:39:29 [INFO] src.strategy: OPEN NEAR/USDT: entry=2.3570, stop=2.2755, dist=0.0815, size=30197.2302, cost=71174.87, cash=122982.64, risk_amt=2459.65
+2026-11-14 08:39:29 [INFO] src.strategy: MARGIN DEDUCTED: 7117.49 (Lev: 10x). Remaining cash: 115865.16
+2026-11-14 08:39:29 [INFO] src.strategy: OPEN AVAX/USDT: entry=7.3500, stop=7.1070, dist=0.2430, size=9535.3766, cost=70085.02, cash=115865.16, risk_amt=2317.30
+2026-11-14 08:39:29 [INFO] src.strategy: MARGIN DEDUCTED: 7008.50 (Lev: 10x). Remaining cash: 108856.65
+2026-11-14 08:39:29 [WARNING] src.risk_manager: Liquidation risk: entry=3.5230, stop=3.3475, liq=3.1883, stop_dist=0.1755, liq_dist=0.3347, buffer=2.0x
+2026-11-14 08:39:29 [WARNING] src.strategy: Liquidation risk: entry=3.5230, stop=3.3475, liq=3.1883 — skipping NEAR/USDT at 2026-09-19 19:00:00+00:00
+2026-11-14 08:39:29 [INFO] src.strategy: OPEN DOGE/USDT: entry=0.0854, stop=0.0832, dist=0.0022, size=1122416.1464, cost=95854.34, cash=123477.76, risk_amt=2469.56
+2026-11-14 08:39:29 [INFO] src.strategy: MARGIN DEDUCTED: 9585.43 (Lev: 10x). Remaining cash: 113892.33
+2026-11-14 08:39:29 [INFO] src.strategy: OPEN FIL/USDT: entry=0.9577, stop=0.9168, dist=0.0409, size=55730.9335, cost=53373.52, cash=113892.33, risk_amt=2277.85
+2026-11-14 08:39:29 [INFO] src.strategy: MARGIN DEDUCTED: 5337.35 (Lev: 10x). Remaining cash: 108554.97
+2026-11-14 08:39:29 [INFO] src.strategy: OPEN AVAX/USDT: entry=10.7000, stop=10.3138, dist=0.3862, size=6568.5705, cost=70283.70, cash=126831.21, risk_amt=2536.62
+2026-11-14 08:39:29 [INFO] src.strategy: MARGIN DEDUCTED: 7028.37 (Lev: 10x). Remaining cash: 119802.84
+2026-11-14 08:39:29 [INFO] src.strategy: OPEN AVAX/USDT: entry=10.7620, stop=10.3706, dist=0.3914, size=6596.3836, cost=70990.28, cash=129100.03, risk_amt=2582.00
+2026-11-14 08:39:29 [INFO] src.strategy: MARGIN DEDUCTED: 7099.03 (Lev: 10x). Remaining cash: 122001.00
+2026-11-14 08:39:29 [INFO] src.strategy: OPEN LINK/USDT: entry=12.7080, stop=12.4038, dist=0.3042, size=8020.1165, cost=101919.64, cash=122001.00, risk_amt=2440.02
+2026-11-14 08:39:29 [INFO] src.strategy: MARGIN DEDUCTED: 10191.96 (Lev: 10x). Remaining cash: 111809.03
+2026-11-14 08:39:29 [INFO] src.strategy: OPEN DOT/USDT: entry=1.1515, stop=1.1195, dist=0.0320, size=69885.4235, cost=80473.07, cash=111809.03, risk_amt=2236.18
+2026-11-14 08:39:29 [INFO] src.strategy: MARGIN DEDUCTED: 8047.31 (Lev: 10x). Remaining cash: 103761.73
+2026-11-14 08:39:29 [INFO] src.strategy: OPEN SOL/USDT: entry=115.0800, stop=112.3972, dist=2.6828, size=873.9631, cost=100575.67, cash=117231.32, risk_amt=2344.63
+2026-11-14 08:39:29 [INFO] src.strategy: MARGIN DEDUCTED: 10057.57 (Lev: 10x). Remaining cash: 107173.75
+2026-11-14 08:39:29 [INFO] src.strategy: OPEN XRP/USDT: entry=1.5273, stop=1.4672, dist=0.0601, size=35679.8288, cost=54493.80, cash=107173.75, risk_amt=2143.48
+2026-11-14 08:39:29 [INFO] src.strategy: MARGIN DEDUCTED: 5449.38 (Lev: 10x). Remaining cash: 101724.37
+2026-11-14 08:39:29 [INFO] src.strategy: OPEN ADA/USDT: entry=0.2399, stop=0.2298, dist=0.0101, size=201534.9348, cost=48348.23, cash=101724.37, risk_amt=2034.49
+2026-11-14 08:39:29 [INFO] src.strategy: MARGIN DEDUCTED: 4834.82 (Lev: 10x). Remaining cash: 96889.55
+2026-11-14 08:39:29 [INFO] src.strategy: OPEN ADA/USDT: entry=0.2502, stop=0.2440, dist=0.0062, size=379928.0699, cost=95058.00, cash=117144.77, risk_amt=2342.90
+2026-11-14 08:39:29 [INFO] src.strategy: MARGIN DEDUCTED: 9505.80 (Lev: 10x). Remaining cash: 107638.97
+2026-11-14 08:39:29 [INFO] src.strategy: OPEN APT/USDT: entry=0.8322, stop=0.8049, dist=0.0273, size=78755.7955, cost=65540.57, cash=107638.97, risk_amt=2152.78
+2026-11-14 08:39:29 [INFO] src.strategy: MARGIN DEDUCTED: 6554.06 (Lev: 10x). Remaining cash: 101084.91
+2026-11-14 08:39:29 [INFO] src.strategy: OPEN UNI/USDT: entry=9.4190, stop=9.1260, dist=0.2930, size=8190.4098, cost=77145.47, cash=119985.36, risk_amt=2399.71
+2026-11-14 08:39:29 [INFO] src.strategy: MARGIN DEDUCTED: 7714.55 (Lev: 10x). Remaining cash: 112270.81
+2026-11-14 08:39:29 [INFO] src.strategy: OPEN FIL/USDT: entry=1.0883, stop=1.0510, dist=0.0373, size=60240.8814, cost=65560.15, cash=112270.81, risk_amt=2245.42
+2026-11-14 08:39:29 [INFO] src.strategy: MARGIN DEDUCTED: 6556.02 (Lev: 10x). Remaining cash: 105714.80
+2026-11-14 08:39:29 [INFO] src.strategy: OPEN SOL/USDT: entry=119.0900, stop=116.6357, dist=2.4543, size=861.4732, cost=102592.84, cash=105714.80, risk_amt=2114.30
+2026-11-14 08:39:29 [INFO] src.strategy: MARGIN DEDUCTED: 10259.28 (Lev: 10x). Remaining cash: 95455.51
+2026-11-14 08:39:29 [INFO] src.strategy: OPEN AVAX/USDT: entry=10.6270, stop=10.2669, dist=0.3601, size=5301.7791, cost=56342.01, cash=95455.51, risk_amt=1909.11
+2026-11-14 08:39:29 [INFO] src.strategy: MARGIN DEDUCTED: 5634.20 (Lev: 10x). Remaining cash: 89821.31
+2026-11-14 08:39:29 [WARNING] src.risk_manager: Liquidation risk: entry=4.9800, stop=4.7360, liq=4.5069, stop_dist=0.2440, liq_dist=0.4731, buffer=2.0x
+2026-11-14 08:39:29 [WARNING] src.strategy: Liquidation risk: entry=4.9800, stop=4.7360, liq=4.5069 — skipping NEAR/USDT at 2026-09-28 09:00:00+00:00
+2026-11-14 08:39:29 [WARNING] src.risk_manager: Liquidation risk: entry=4.9030, stop=4.6269, liq=4.4372, stop_dist=0.2761, liq_dist=0.4658, buffer=2.0x
+2026-11-14 08:39:29 [WARNING] src.strategy: Liquidation risk: entry=4.9030, stop=4.6269, liq=4.4372 — skipping NEAR/USDT at 2026-09-28 15:00:00+00:00
+2026-11-14 08:39:29 [INFO] src.strategy: OPEN AVAX/USDT: entry=10.8800, stop=10.5080, dist=0.3720, size=6070.7903, cost=66050.20, cash=112928.89, risk_amt=2258.58
+2026-11-14 08:39:29 [INFO] src.strategy: MARGIN DEDUCTED: 6605.02 (Lev: 10x). Remaining cash: 106323.87
+2026-11-14 08:39:30 [INFO] src.strategy: OPEN DOT/USDT: entry=1.1935, stop=1.1594, dist=0.0341, size=62292.8661, cost=74346.54, cash=106323.87, risk_amt=2126.48
+2026-11-14 08:39:30 [INFO] src.strategy: MARGIN DEDUCTED: 7434.65 (Lev: 10x). Remaining cash: 98889.22
+2026-11-14 08:39:30 [INFO] src.strategy: OPEN XRP/USDT: entry=1.4633, stop=1.4234, dist=0.0399, size=55601.2520, cost=81361.31, cash=110931.68, risk_amt=2218.63
+2026-11-14 08:39:30 [INFO] src.strategy: MARGIN DEDUCTED: 8136.13 (Lev: 10x). Remaining cash: 102795.55
+2026-11-14 08:39:30 [INFO] src.strategy: OPEN ADA/USDT: entry=0.2392, stop=0.2301, dist=0.0091, size=225016.5644, cost=53823.96, cash=102795.55, risk_amt=2055.91
+2026-11-14 08:39:30 [INFO] src.strategy: MARGIN DEDUCTED: 5382.40 (Lev: 10x). Remaining cash: 97413.15
+2026-11-14 08:39:30 [INFO] src.strategy: OPEN AVAX/USDT: entry=10.5850, stop=10.2099, dist=0.3751, size=5194.4279, cost=54983.02, cash=97413.15, risk_amt=1948.26
+2026-11-14 08:39:30 [INFO] src.strategy: MARGIN DEDUCTED: 5498.30 (Lev: 10x). Remaining cash: 91914.85
+2026-11-14 08:39:30 [INFO] src.strategy: OPEN UNI/USDT: entry=8.6850, stop=8.3766, dist=0.3084, size=5961.6032, cost=51776.52, cash=91914.85, risk_amt=1838.30
+2026-11-14 08:39:30 [INFO] src.strategy: MARGIN DEDUCTED: 5177.65 (Lev: 10x). Remaining cash: 86737.19
+2026-11-14 08:39:30 [INFO] src.strategy: OPEN NEAR/USDT: entry=4.9740, stop=4.7918, dist=0.1822, size=13174.7244, cost=65531.08, cash=120036.47, risk_amt=2400.73
+2026-11-14 08:39:30 [INFO] src.strategy: MARGIN DEDUCTED: 6553.11 (Lev: 10x). Remaining cash: 113483.36
+2026-11-14 08:39:30 [INFO] src.strategy: OPEN FIL/USDT: entry=1.0903, stop=1.0605, dist=0.0298, size=80829.4818, cost=88128.38, cash=120286.06, risk_amt=2405.72
+2026-11-14 08:39:30 [INFO] src.strategy: MARGIN DEDUCTED: 8812.84 (Lev: 10x). Remaining cash: 111473.23
+2026-11-14 08:39:30 [WARNING] src.strategy: Position cost 139280.14 > available cash 125561.32, skipping SOL/USDT at 2026-10-12 14:00:00+00:00
+2026-11-14 08:39:30 [INFO] src.strategy: OPEN LINK/USDT: entry=12.9650, stop=12.6880, dist=0.2770, size=9065.9263, cost=117539.73, cash=125561.32, risk_amt=2511.23
+2026-11-14 08:39:30 [INFO] src.strategy: MARGIN DEDUCTED: 11753.97 (Lev: 10x). Remaining cash: 113807.35
+2026-11-14 08:39:30 [INFO] src.strategy: OPEN UNI/USDT: entry=7.4360, stop=7.2407, dist=0.1953, size=11652.6363, cost=86649.00, cash=113807.35, risk_amt=2276.15
+2026-11-14 08:39:30 [INFO] src.strategy: MARGIN DEDUCTED: 8664.90 (Lev: 10x). Remaining cash: 105142.45
+2026-11-14 08:39:30 [INFO] src.strategy: OPEN ETC/USDT: entry=8.2650, stop=8.0996, dist=0.1654, size=12715.8899, cost=105096.83, cash=105142.45, risk_amt=2102.85
+2026-11-14 08:39:30 [INFO] src.strategy: MARGIN DEDUCTED: 10509.68 (Lev: 10x). Remaining cash: 94632.77
+2026-11-14 08:39:30 [INFO] src.strategy: OPEN SOL/USDT: entry=103.6500, stop=101.5094, dist=2.1406, size=1123.7552, cost=116477.23, cash=120273.92, risk_amt=2405.48
+2026-11-14 08:39:30 [INFO] src.strategy: MARGIN DEDUCTED: 11647.72 (Lev: 10x). Remaining cash: 108626.20
+2026-11-14 08:39:30 [INFO] src.strategy: OPEN UNI/USDT: entry=7.1590, stop=6.9365, dist=0.2225, size=9766.1452, cost=69915.83, cash=108626.20, risk_amt=2172.52
+2026-11-14 08:39:30 [INFO] src.strategy: MARGIN DEDUCTED: 6991.58 (Lev: 10x). Remaining cash: 101634.61
+2026-11-14 08:39:30 [WARNING] src.strategy: Position cost 112137.29 > available cash 101634.61, skipping ETC/USDT at 2026-10-16 17:00:00+00:00
+2026-11-14 08:39:30 [WARNING] src.strategy: Position cost 108884.46 > available cash 101634.61, skipping ETC/USDT at 2026-10-16 18:00:00+00:00
+2026-11-14 08:39:30 [INFO] src.strategy: OPEN DOT/USDT: entry=1.1259, stop=1.0967, dist=0.0292, size=83203.0454, cost=93678.31, cash=121358.52, risk_amt=2427.17
+2026-11-14 08:39:30 [INFO] src.strategy: MARGIN DEDUCTED: 9367.83 (Lev: 10x). Remaining cash: 111990.69
+2026-11-14 08:39:30 [INFO] src.strategy: OPEN NEAR/USDT: entry=5.0410, stop=4.8934, dist=0.1476, size=15174.2224, cost=76493.25, cash=111990.69, risk_amt=2239.81
+2026-11-14 08:39:30 [INFO] src.strategy: MARGIN DEDUCTED: 7649.33 (Lev: 10x). Remaining cash: 104341.36
+2026-11-14 08:39:30 [INFO] src.strategy: OPEN NEAR/USDT: entry=4.4810, stop=4.3187, dist=0.1623, size=15242.4701, cost=68301.51, cash=123701.49, risk_amt=2474.03
+2026-11-14 08:39:30 [INFO] src.strategy: MARGIN DEDUCTED: 6830.15 (Lev: 10x). Remaining cash: 116871.34
+2026-11-14 08:39:30 [INFO] src.strategy: OPEN LINK/USDT: entry=11.4010, stop=11.1107, dist=0.2903, size=8052.1710, cost=91802.80, cash=116871.34, risk_amt=2337.43
+2026-11-14 08:39:30 [INFO] src.strategy: MARGIN DEDUCTED: 9180.28 (Lev: 10x). Remaining cash: 107691.06
+2026-11-14 08:39:30 [INFO] src.strategy: OPEN DOT/USDT: entry=0.9342, stop=0.9129, dist=0.0213, size=118266.8058, cost=110484.85, cash=125910.63, risk_amt=2518.21
+2026-11-14 08:39:30 [INFO] src.strategy: MARGIN DEDUCTED: 11048.49 (Lev: 10x). Remaining cash: 114862.14
+2026-11-14 08:39:30 [INFO] src.strategy: OPEN UNI/USDT: entry=7.3090, stop=7.0892, dist=0.2198, size=10450.5175, cost=76382.83, cash=114862.14, risk_amt=2297.24
+2026-11-14 08:39:30 [INFO] src.strategy: MARGIN DEDUCTED: 7638.28 (Lev: 10x). Remaining cash: 107223.86
+2026-11-14 08:39:30 [INFO] src.strategy: OPEN SOL/USDT: entry=92.9600, stop=90.9311, dist=2.0289, size=1056.9597, cost=98254.98, cash=107223.86, risk_amt=2144.48
+2026-11-14 08:39:30 [INFO] src.strategy: MARGIN DEDUCTED: 9825.50 (Lev: 10x). Remaining cash: 97398.36
+2026-11-14 08:39:30 [WARNING] src.strategy: Position cost 108052.51 > available cash 97398.36, skipping XRP/USDT at 2026-11-05 14:00:00+00:00
+2026-11-14 08:39:30 [INFO] src.strategy: OPEN AVAX/USDT: entry=8.5360, stop=8.3558, dist=0.1802, size=10812.2163, cost=92293.08, cash=97398.36, risk_amt=1947.97
+2026-11-14 08:39:30 [INFO] src.strategy: MARGIN DEDUCTED: 9229.31 (Lev: 10x). Remaining cash: 88169.05
+2026-11-14 08:39:30 [INFO] src.strategy: OPEN ATOM/USDT: entry=1.4200, stop=1.3663, dist=0.0537, size=43478.3325, cost=61739.23, cash=116804.63, risk_amt=2336.09
+2026-11-14 08:39:30 [INFO] src.strategy: MARGIN DEDUCTED: 6173.92 (Lev: 10x). Remaining cash: 110630.71
+2026-11-14 08:39:30 [INFO] src.strategy: OPEN AVAX/USDT: entry=8.2890, stop=8.0825, dist=0.2065, size=11228.3130, cost=93071.49, cash=115945.11, risk_amt=2318.90
+2026-11-14 08:39:30 [INFO] src.strategy: MARGIN DEDUCTED: 9307.15 (Lev: 10x). Remaining cash: 106637.96
+2026-11-14 08:39:30 [INFO] src.strategy: OPEN AVAX/USDT: entry=8.2030, stop=7.9180, dist=0.2850, size=8018.7423, cost=65777.74, cash=114251.66, risk_amt=2285.03
+2026-11-14 08:39:30 [INFO] src.strategy: MARGIN DEDUCTED: 6577.77 (Lev: 10x). Remaining cash: 107673.88
+2026-11-14 08:39:30 [INFO] src.strategy: OPEN AVAX/USDT: entry=8.3270, stop=8.1096, dist=0.2174, size=10861.0405, cost=90439.88, cash=118076.20, risk_amt=2361.52
+2026-11-14 08:39:30 [INFO] src.strategy: MARGIN DEDUCTED: 9043.99 (Lev: 10x). Remaining cash: 109032.21
+2026-11-14 08:39:30 [WARNING] src.strategy: Position cost 110643.44 > available cash 109032.21, skipping ATOM/USDT at 2026-11-12 13:00:00+00:00
+2026-11-14 08:39:30 [INFO] src.backtest_engine: Simulation complete: 371 trades, 0 unclosed
+2026-11-14 08:39:30 [INFO] src.backtest_engine: [5/6] Computing metrics...
+2026-11-14 08:39:30 [INFO] src.backtest_engine: [6/6] Generating visualizations...
+2026-11-14 08:39:31 [INFO] src.visualization: Equity curve saved to results/equity_curve.png
+2026-11-14 08:39:31 [INFO] src.visualization: PNG charts saved to results
+2026-11-14 08:39:32 [INFO] src.visualization: HTML report saved to results/backtest_report.html
+2026-11-14 08:39:32 [INFO] src.backtest_engine: Trades CSV saved: 371 rows
+2026-11-14 08:39:32 [INFO] src.backtest_engine: Equity curve CSV saved
+2026-11-14 08:39:32 [INFO] src.backtest_engine: Text report saved to results/metrics_report.txt
+2026-11-14 08:39:32 [INFO] src.backtest_engine: ============================================================
+2026-11-14 08:39:32 [INFO] src.backtest_engine: BACKTEST COMPLETE — 648.28 seconds
+2026-11-14 08:39:32 [INFO] src.backtest_engine: ============================================================

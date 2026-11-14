@@ -144,6 +144,7 @@ class BacktestEngine:
             self.equity_curve,
             self.cfg.backtest.initial_cash,
             timeframe=tf,
+            final_equity_override=result.final_equity,
         )
 
         # === 6. Визуализация ===

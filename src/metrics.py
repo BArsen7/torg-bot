@@ -203,6 +203,7 @@ def compute_metrics(
     equity_curve: pd.DataFrame,
     initial_equity: float,
     timeframe: str = "1h",
+    final_equity_override: float = None,
 ) -> PerformanceMetrics:
     """
     Вычислить все метрики по списку сделок и equity curve.
@@ -220,7 +221,8 @@ def compute_metrics(
     """
     m = PerformanceMetrics()
     m.initial_equity = initial_equity
-    m.final_equity = float(equity_curve["equity"].iloc[-1]) if not equity_curve.empty else initial_equity
+    # ИСПРАВЛЕНО: используем реальный final_equity из движка, а не последнюю точку кривой (которая может быть искажена halt)
+    m.final_equity = float(final_equity_override) if final_equity_override is not None else (float(equity_curve["equity"].iloc[-1]) if not equity_curve.empty else initial_equity)
 
     # --- Return ---
     m.total_return = (m.final_equity - initial_equity) / initial_equity

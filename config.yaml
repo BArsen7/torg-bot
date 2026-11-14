@@ -55,7 +55,7 @@ strategy:
   correlation_symbol: "BTC/USDT"
   correlation_window: 60  # Rolling window для корреляции (дни)
   correlation_threshold: 0.8
-  leverage: 1             # Плечо (1 = без плеча, spot)
+  leverage: 10             # Плечо (1 = без плеча, spot)
   liquidation_buffer: 2.0 # Минимум в 2x расстояние до ликвидации
 
   # --- Costs (M6) ---

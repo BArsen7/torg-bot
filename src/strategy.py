@@ -430,10 +430,9 @@ def simulate_trading(
             # Реализованный PnL = gross - комиссия
             pnl = gross_pnl - commission
 
-            # --- Обновляем кэш: при закрытии_long возвращаем cost + PnL ---
-            # Раньше: cash += exit_price * size (это cost + PnL)
-            # Но cost уже был вычтен при входе → cash += exit_price * size верно
-            cash += exit_price * trade.entry_size
+            # --- ИСПРАВЛЕНО: Возвращаем МАРЖУ + PnL при закрытии фьючерса ---
+            margin_returned = (trade.entry_price * trade.entry_size) / strategy_cfg.leverage
+            cash += margin_returned + gross_pnl - commission
 
             # --- Обновляем сделку ---
             trade.exit_time = dt
@@ -527,21 +526,30 @@ def simulate_trading(
                         )
                         continue
 
+                # Детальное логирование для отладки риска
+                logger.info(
+                    f"OPEN {symbol}: entry={entry_price:.4f}, stop={stop_price:.4f}, "
+                    f"dist={abs(entry_price-stop_price):.4f}, size={size:.4f}, "
+                    f"cost={entry_price*size:.2f}, cash={cash:.2f}, risk_amt={cash*strategy_cfg.risk_per_trade:.2f}"
+                )
+                
                 trade = Trade(
                     symbol=symbol,
                     entry_time=dt,
                     entry_price=entry_price,
                     entry_size=size,
                     stop_price=stop_price,
-                    take_profit_price=None,  # upper_band — динамический
+                    take_profit_price=None,
                     max_price=entry_price,
                     max_stop=stop_price,
                     equity_at_entry=cash,
                     fee_rate=fee_rate,
                 )
 
-                # --- Вычитаем стоимость позиции из кэша (ВАЖНО!) ---
-                cash -= position_cost
+                # --- ИСПРАВЛЕНО: Вычитаем МАРЖУ, а не полную стоимость (фьючерсы) ---
+                margin_cost = position_cost / strategy_cfg.leverage
+                cash -= margin_cost
+                logger.info(f"MARGIN DEDUCTED: {margin_cost:.2f} (Lev: {strategy_cfg.leverage}x). Remaining cash: {cash:.2f}")
 
                 open_positions[symbol] = trade
 
@@ -568,38 +576,50 @@ def simulate_trading(
         # --- 5. DRAWDOWN GUARD: если equity упал ниже 50% от начального, останавливаемся ---
         if current_equity < initial_equity * 0.5:
             logger.error(
-                "Halted due to max drawdown limit: equity=%.2f < initial=%.2f * 0.5",
+                "HALT TRIGGERED: equity=%.2f < initial=%.2f * 0.5",
                 current_equity, initial_equity
             )
-            # Закрываем все позиции по текущей цене с корректным PnL
+            # Принудительно закрываем ВСЕ позиции по последней известной цене
             for symbol, trade in list(open_positions.items()):
-                df = symbols_data[symbol]
-                if dt in df.index:
-                    row = df.loc[dt]
-                    # Закрываем по текущей цене
-                    gross_pnl = (row["close"] - trade.entry_price) * trade.entry_size
-                    # Commission
-                    holding_hours = max(1, int((dt - trade.entry_time).total_seconds() / 3600))
-                    commission, _ = apply_costs(
-                        trade.entry_price, row["close"], trade.entry_size,
-                        is_long=True,
-                        maker_fee=strategy_cfg.maker_fee,
-                        taker_fee=strategy_cfg.taker_fee,
-                        slippage_pct=slippage_pct,
-                        funding_pct=funding_pct,
-                        holding_hours=holding_hours,
-                    )
-                    pnl = gross_pnl - commission
+                df = symbols_data.get(symbol, pd.DataFrame())
+                
+                # Берём цену закрытия: либо текущую, либо последнюю доступную в DF, либо цену входа (безопасный фолбэк)
+                if not df.empty and dt in df.index:
+                    exit_price = df.loc[dt, "close"]
+                elif not df.empty:
+                    exit_price = df["close"].iloc[-1]
+                else:
+                    exit_price = trade.entry_price
 
-                    trade.exit_time = dt
-                    trade.exit_price = row["close"]
-                    trade.exit_reason = "drawdown_halt"
-                    trade.pnl = pnl
-                    trade.pnl_pct = pnl / (trade.entry_price * trade.entry_size) * 100.0 if trade.entry_price * trade.entry_size > 0 else 0.0
-                    trade.is_closed = True
-                    cash += row["close"] * trade.entry_size
-                    result.trades.append(trade)
-                    del open_positions[symbol]
+                gross_pnl = (exit_price - trade.entry_price) * trade.entry_size
+                holding_hours = max(1, int((dt - trade.entry_time).total_seconds() / 3600))
+                
+                commission, _ = apply_costs(
+                    trade.entry_price, exit_price, trade.entry_size,
+                    is_long=True,
+                    maker_fee=strategy_cfg.maker_fee,
+                    taker_fee=strategy_cfg.taker_fee,
+                    slippage_pct=slippage_pct,
+                    funding_pct=funding_pct,
+                    holding_hours=holding_hours,
+                )
+                
+                pnl = gross_pnl - commission
+
+                trade.exit_time = dt
+                trade.exit_price = exit_price
+                trade.exit_reason = "drawdown_halt"
+                trade.pnl = pnl
+                trade.pnl_pct = (pnl / (trade.entry_price * trade.entry_size) * 100.0) if (trade.entry_price * trade.entry_size) > 0 else 0.0
+                trade.is_closed = True
+                
+                # ВОЗВРАЩАЕМ ДЕНЬГИ В CASH
+                cash += exit_price * trade.entry_size
+                
+                result.trades.append(trade)
+                del open_positions[symbol]
+                
+            logger.warning(f"Emergency closed {len(result.trades)} positions. Final cash: {cash:.2f}")
             break  # Прерываем симуляцию
 
     # --- 6. Закрываем все оставшиеся позиции (end-of-data) ---

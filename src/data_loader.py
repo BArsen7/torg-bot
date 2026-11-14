@@ -37,8 +37,7 @@ ALL_SYMBOLS_TF: Dict[str, str] = {
 WEEKLY_MAP = {"1w": "1w"}
 
 
-# Топ-монеты для fallback, если API недоступен
-_FALLBACK_SYMBOLS = [
+_FALLBACK_SYMBOLS_BASE = [
     "BTC/USDT", "ETH/USDT", "SOL/USDT", "BNB/USDT", "XRP/USDT",
     "DOGE/USDT", "ADA/USDT", "AVAX/USDT", "LINK/USDT", "MATIC/USDT",
     "DOT/USDT", "UNI/USDT", "ATOM/USDT", "LTC/USDT", "ETC/USDT",
@@ -118,7 +117,7 @@ async def _get_top_symbols(
     # Проверка: если tickers пустой для futures — используем fallback
     if not tickers and market_type == "futures":
         logger.warning("No tickers returned for futures — using fallback symbols")
-        fallback_symbols = _FALLBACK_SYMBOLS[:top_n]
+        fallback_symbols = _FALLBACK_SYMBOLS_BASE[:top_n]
         logger.info("Using fallback: %d symbols", len(fallback_symbols))
         return fallback_symbols
 
@@ -127,7 +126,7 @@ async def _get_top_symbols(
         non_zero_count = sum(1 for t in tickers.values() if (t.get("quoteVolume", 0) or 0) > 1_000_000)
         if non_zero_count == 0:
             logger.warning("All futures tickers have zero volume — using fallback")
-            fallback_symbols = _FALLBACK_SYMBOLS[:top_n]
+            fallback_symbols = _FALLBACK_SYMBOLS_BASE[:top_n]
             logger.info("Using fallback: %d symbols", len(fallback_symbols))
             return fallback_symbols
 
@@ -141,7 +140,7 @@ async def _get_top_symbols(
         
         if swap_tickers == 0:
             logger.warning("No futures tickers found (all appear to be spot) — using fallback")
-            fallback_symbols = _FALLBACK_SYMBOLS[:top_n]
+            fallback_symbols = _FALLBACK_SYMBOLS_BASE[:top_n]
             logger.info("Using fallback: %d symbols", len(fallback_symbols))
             return fallback_symbols
 
@@ -189,6 +188,10 @@ async def _get_top_symbols(
     selected = candidates[:top_n]
 
     symbols = [c["symbol"] for c in selected]
+    # КРИТИЧЕСКИ ВАЖНО: для фьючерсов CCXT требует суффикс :USDT (например, BTC/USDT:USDT)
+    if market_type == "futures":
+        symbols = [s + ":USDT" if not s.endswith(":USDT") else s for s in symbols]
+    
     logger.info("Selected %d symbols from %d candidates (top-%d by volume)",
                 len(symbols), len(candidates), top_n)
     return symbols
@@ -346,13 +349,11 @@ async def fetch_all_symbols(
     Dict[str, pd.DataFrame] — символ -> DataFrame
     """
     since_ts = int((datetime.now(tz=timezone.utc) - timedelta(days=since_days * 365)).timestamp() * 1000)
-    exchange = getattr(ccxt_async, "binance")({
-        "enableRateLimit": True,
-    })
-
-    # Для futures указываем тип рынка
+    exchange_opts = {"enableRateLimit": True}
     if market_type == "futures":
-        exchange.options["defaultType"] = "swap"
+        exchange_opts["options"] = {"defaultType": "swap"}
+    
+    exchange = getattr(ccxt_async, "binance")(exchange_opts)
 
     data: Dict[str, pd.DataFrame] = {}
 
@@ -503,12 +504,10 @@ class DataLoader:
         """Async-версия получения топ-символов."""
         max_retries = 3
         for attempt in range(max_retries):
-            exchange = ccxt_async.binance({
-                "enableRateLimit": True,
-            })
-            # Для futures обязательно указываем тип рынка
+            exchange_opts = {"enableRateLimit": True}
             if self.cfg.data.market_type == "futures":
-                exchange.options["defaultType"] = "swap"
+                exchange_opts["options"] = {"defaultType": "swap"}
+            exchange = ccxt_async.binance(exchange_opts)
             try:
                 await exchange.load_markets()
                 return await _get_top_symbols(
@@ -528,7 +527,9 @@ class DataLoader:
         # Fallback: если API не доступен — используем хардкод
         logger.warning("All attempts failed, using fallback symbols")
         top = self.cfg.data.top_coins
-        symbols = _FALLBACK_SYMBOLS[:top]
+        base_symbols = _FALLBACK_SYMBOLS_BASE[:top]
+        # Для фьючерсов CCXT требует суффикс :USDT
+        symbols = [s + ":USDT" if not s.endswith(":USDT") else s for s in base_symbols] if self.cfg.data.market_type == "futures" else base_symbols
         logger.info("Using fallback: %d symbols", len(symbols))
         return symbols
 

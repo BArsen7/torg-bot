@@ -5,48 +5,39 @@
   ДОХОДНОСТЬ
 ----------------------------------------
   Начальный капитал:      $  100,000.00
-  Конечный капитал:       $   99,460.55
-  Общая доходность:            -0.54%
-  CAGR:                        -0.54%
-  Дней в данных:                    19
+  Конечный капитал:       $   99,379.97
+  Общая доходность:            -0.62%
+  CAGR:                        -1.01%
+  Дней в данных:                   224
 
   РИСК
 ----------------------------------------
-  Sharpe Ratio:                -1.643
-  Sortino Ratio:               -0.769
-  Calmar Ratio:                -0.008
-  Max Drawdown (abs):     $  66,622.06
-  Max Drawdown (pct):          66.08%
-  Max DD Duration:                   8 days
+  Sharpe Ratio:                -0.128
+  Sortino Ratio:               -0.016
+  Calmar Ratio:                -0.177
+  Max Drawdown (abs):     $   5,683.44
+  Max Drawdown (pct):           5.68%
+  Max DD Duration:                 224 days
 
   ТОРГОВЛЯ
 ----------------------------------------
-  Всего сделок:                     10
-  Побед:                             2
-  Поражений:                         8
-  Win Rate:                    20.00%
-  Profit Factor:                0.698
-  Avg Win:                $     624.48
-  Avg Loss:               $    -223.55
-  Avg Holding (bars):              7.5
-  Best Trade:             $   1,193.61
-  Worst Trade:            $    -710.78
+  Всего сделок:                      1
+  Побед:                             0
+  Поражений:                         1
+  Win Rate:                     0.00%
+  Profit Factor:                0.000
+  Avg Win:                $       0.00
+  Avg Loss:               $    -620.03
+  Avg Holding (bars):             16.0
+  Best Trade:             $       0.00
+  Worst Trade:            $    -620.03
 
   ПРОЧЕЕ
 ----------------------------------------
-  Exposure Time:                 16.7%
-  Комиссии (всего):       $      81.40
+  Exposure Time:                  0.9%
+  Комиссии (всего):       $      53.56
 
 ============================================================
 
 Trade list:
-  ATOM/USDT       2024-11-25 entry=8.03 → exit=7.86 pnl=$-368.87 [trailing_stop]
-  FIL/USDT        2024-11-26 entry=5.30 → exit=5.73 pnl=$1,193.61 [take_profit]
-  APT/USDT        2024-12-02 entry=12.95 → exit=12.65 pnl=$-538.11 [trailing_stop]
-  ETH/USDT        2024-12-02 entry=3606.02 → exit=3595.34 pnl=$-145.31 [trailing_stop]
-  ADA/USDT        2024-12-04 entry=1.15 → exit=1.15 pnl=$-7.63 [trailing_stop]
-  XRP/USDT        2024-12-04 entry=2.39 → exit=2.24 pnl=$-710.78 [trailing_stop]
-  BNB/USDT        2024-12-05 entry=713.99 → exit=715.65 pnl=$55.35 [drawdown_halt]
-  ETH/USDT        2024-12-05 entry=3805.76 → exit=3805.76 pnl=$-8.76 [drawdown_halt]
-  AVAX/USDT       2024-12-05 entry=50.89 → exit=50.89 pnl=$-4.88 [drawdown_halt]
-  ATOM/USDT       2024-12-05 entry=9.66 → exit=9.66 pnl=$-4.06 [drawdown_halt]
+  ZEC/USDT        2025-12-13 entry=436.52 → exit=430.92 pnl=$-620.03 [trailing_stop]

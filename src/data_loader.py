@@ -334,125 +334,69 @@ async def _fetch_kline_page(
 
 async def _fetch_ohlcv_paginated(
     client: httpx.AsyncClient,
-    symbol: str,  # в формате проекта: "BTC/USDT"
-    interval: str,  # в формате Bybit: "60", "240", "D", ...
+    symbol: str,
+    interval: str,
     since_ms: int,
     until_ms: Optional[int] = None,
     max_candles: int = 200_000,
-) -> Optional[pd.DataFrame]:
+) -> List[List]:
     """
-    Асинхронная загрузка всех свечей с пагинацией назад во времени.
-
-    ВАЖНО: Bybit V5 возвращает свечи в ПРЯМОМ порядке (от старых к новым),
-    но принимает start_timestamp и возвращает max limit=1000 за запрос.
-
-    Алгоритм пагинации:
-    1. Начинаем с until_ms (или текущего времени).
-    2. Запрашиваем свечи, где start <= candle_timestamp <= until_ms.
-    3. Берём самый старый timestamp из ответа.
-    4. Следующий запрос: start = самый_старый_timestamp - 1 мс.
-    5. Повторяем, пока не достигнем since_ms.
-
-    Почему начинаем с конца и двигаемся назад?
-    - Bybit V5 kline endpoint не поддерживает end параметр, только start.
-    - Мы запрашиваем "свечи начиная с start" и получаем limit последних из них.
-    - Чтобы получить данные до определённой даты, используем хитрость:
-      запрашиваем с большим start и берём последние limit свечей.
-    - Альтернатива: запрашиваем весь диапазон, затем фильтруем.
-
-    Более надёжный подход:
-    - Запрос "с since_ms" → получаем первые 1000 свечей.
-    - Берём последний timestamp, следующий запрос: start = last_ts + 1.
-    - Двигаемся ВПЕРЁД от начала к концу периода.
-
-    Параметры
-    ---------
-    client : httpx.AsyncClient
-    symbol : str — символ в формате проекта ("BTC/USDT")
-    interval : str — интервал в формате Bybit ("60", "240", "D", ...)
-    since_ms : int — начальная дата периода (ms)
-    until_ms : int | None — конечная дата (ms). Если None — до текущего времени.
-    max_candles : int — защитный лимит на общее число свечей.
-
-    Возвращает
-    ----------
-    pd.DataFrame | None — OHLCV DataFrame или None при ошибке.
+    Корректная загрузка свечей с пагинацией ВПЕРЕД во времени.
     """
-    bybit_symbol = _symbol_to_bybit(symbol)
     all_ohlcv: List[List] = []
     current_start = since_ms
-    total_fetched = 0
-
-    if until_ms is None:
-        until_ms = int(datetime.now(tz=timezone.utc).timestamp() * 1000)
-
-    while total_fetched < max_candles:
-        try:
-            page = await _fetch_kline_page(
-                client, bybit_symbol, interval,
-                current_start, limit=1000,
-            )
-        except Exception as e:
-            logger.error("Failed to fetch kline page for %s: %s", symbol, e)
-            return None
-
-        result_list = page.get("result", {}).get("list", [])
-        if not result_list:
-            # Нет больше данных — конец
-            logger.debug(
-                "Empty response for %s at start=%d. Pagination done.",
-                symbol, current_start,
-            )
+    
+    while len(all_ohlcv) < max_candles:
+        params = {
+            "category": "linear",
+            "symbol": symbol,
+            "interval": interval,
+            "start": current_start,
+            "limit": 1000,
+        }
+        
+        response = await client.get("https://api.bybit.com/v5/market/kline", params=params)
+        response.raise_for_status()
+        data = response.json()
+        
+        if data.get("retCode") != 0:
+            logger.error(f"Bybit API error for {symbol}: {data.get('retMsg')}")
+            break
+            
+        raw_list = data.get("result", {}).get("list", [])
+        if not raw_list:
+            break
+            
+        # Bybit возвращает свечи от новых к старым. raw_list[0] - самая новая.
+        newest_ts = int(raw_list[0][0])
+        
+        # ЗАЩИТА ОТ ЗАЦИКЛИВАНИЯ: если самая новая свеча не новее текущего старта, мы застряли
+        if newest_ts <= current_start and len(all_ohlcv) > 0:
+            logger.warning(f"Pagination loop detected for {symbol} at ts={current_start}. Breaking.")
+            break
+            
+        all_ohlcv.extend(raw_list)
+        
+        # Двигаемся вперед во времени: следующий старт = самая новая свеча + 1 мс
+        current_start = newest_ts + 1
+        
+        # Если достигли целевой даты окончания, прерываем
+        if until_ms and newest_ts >= until_ms:
             break
 
-        # Bybit возвращает свечи в прямом порядке:
-        # [timestamp, open, high, low, close, volume, turnover, adjChange]
-        for candle in result_list:
-            all_ohlcv.append([
-                int(candle[0]),   # timestamp (ms)
-                float(candle[1]), # open
-                float(candle[2]), # high
-                float(candle[3]), # low
-                float(candle[4]), # close
-                float(candle[5]), # volume
-            ])
-
-        total_fetched = len(all_ohlcv)
-        last_ts = int(result_list[-1][0])
-        first_ts = int(result_list[0][0])
-
-        # Логирование прогресса
-        if total_fetched % 5000 == 0 or total_fetched <= 1000:
-            start_dt = _ms_to_dt(first_ts).strftime("%Y-%m-%d")
-            end_dt = _ms_to_dt(last_ts).strftime("%Y-%m-%d")
-            logger.info(
-                "  ✓ %s: %d свечей (диапазон: %s → %s, next_start=%d)",
-                symbol, total_fetched, start_dt, end_dt,
-                current_start,
-            )
-
-        # Останавливаемся, если достигли target-диапазона
-        if last_ts >= until_ms:
-            break
-
-        # Если получено меньше лимита (1000) — это конец доступных данных
-        if len(result_list) < 1000:
-            logger.debug(
-                "Partial page (%d candles) for %s. No more data.",
-                len(result_list), symbol,
-            )
-            break
-
-        # Продвигаемся: следующий start = последний timestamp + 1 мс
-        # Это обеспечивает отсутствие пропусков и дубликатов.
-        current_start = last_ts + 1
-
-    if not all_ohlcv:
-        logger.warning("No data fetched for %s", symbol)
-        return None
-
-    return _ohlcv_to_df(all_ohlcv, symbol)
-
+    # 1. Сортируем по времени возрастания (от старых к новым) для корректной работы pandas
+    all_ohlcv.sort(key=lambda x: int(x[0]))
+    
+    # 2. Удаляем возможные дубликаты свечей на стыке батчей
+    unique_ohlcv = []
+    seen_ts = set()
+    for candle in all_ohlcv:
+        ts = int(candle[0])
+        if ts not in seen_ts:
+            seen_ts.add(ts)
+            unique_ohlcv.append(candle)
+            
+    return unique_ohlcv
 
 def _ohlcv_to_df(
     ohlcv: List[List],

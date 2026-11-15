@@ -5,39 +5,39 @@
   ДОХОДНОСТЬ
 ----------------------------------------
   Начальный капитал:      $  100,000.00
-  Конечный капитал:       $   99,379.97
-  Общая доходность:            -0.62%
-  CAGR:                        -1.01%
-  Дней в данных:                   224
+  Конечный капитал:       $  102,118.18
+  Общая доходность:             2.12%
+  CAGR:                        21.67%
+  Дней в данных:                    39
 
   РИСК
 ----------------------------------------
-  Sharpe Ratio:                -0.128
-  Sortino Ratio:               -0.016
-  Calmar Ratio:                -0.177
-  Max Drawdown (abs):     $   5,683.44
-  Max Drawdown (pct):           5.68%
-  Max DD Duration:                 224 days
+  Sharpe Ratio:                 1.321
+  Sortino Ratio:                0.253
+  Calmar Ratio:                 0.459
+  Max Drawdown (abs):     $  47,218.32
+  Max Drawdown (pct):          47.22%
+  Max DD Duration:                  19 days
 
   ТОРГОВЛЯ
 ----------------------------------------
   Всего сделок:                      1
-  Побед:                             0
-  Поражений:                         1
-  Win Rate:                     0.00%
+  Побед:                             1
+  Поражений:                         0
+  Win Rate:                   100.00%
   Profit Factor:                0.000
-  Avg Win:                $       0.00
-  Avg Loss:               $    -620.03
-  Avg Holding (bars):             16.0
-  Best Trade:             $       0.00
-  Worst Trade:            $    -620.03
+  Avg Win:                $   2,118.18
+  Avg Loss:               $       0.00
+  Avg Holding (bars):             20.0
+  Best Trade:             $   2,118.18
+  Worst Trade:            $       0.00
 
   ПРОЧЕЕ
 ----------------------------------------
-  Exposure Time:                  0.9%
-  Комиссии (всего):       $      53.56
+  Exposure Time:                  2.3%
+  Комиссии (всего):       $      59.61
 
 ============================================================
 
 Trade list:
-  ZEC/USDT        2025-12-13 entry=436.52 → exit=430.92 pnl=$-620.03 [trailing_stop]
+  BTC/USDT        2024-12-05 entry=96977.90 → exit=101450.70 pnl=$2,118.18 [take_profit]

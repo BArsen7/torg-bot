@@ -1,8 +1,6 @@
 """
 Загрузка и кэширование исторических данных.
-
 Источник: Bybit API V5 (прямая асинхронная интеграция через httpx).
-Формат хранения: Apache Parquet для скорости и экономии места.
 """
 
 from __future__ import annotations
@@ -12,382 +10,102 @@ import logging
 import pathlib
 import time
 from datetime import datetime, timedelta, timezone
-from functools import wraps
-from typing import Any, Callable, Dict, List, Optional, Tuple
+from typing import Any, Dict, List, Optional, Tuple
 
 import httpx
-import numpy as np
 import pandas as pd
 
 from src.config import Config
 
 logger = logging.getLogger(__name__)
 
-# ---------------------------------------------------------------------------
-# Настройки Bybit V5 API
-# ---------------------------------------------------------------------------
-
-# Базовый URL API V5 (без ключей — публичные эндпоинты)
 BYBIT_BASE_URL = "https://api.bybit.com"
 
-# Словарь маппинга таймфреймов проекта → значения interval Bybit V5.
-# Bybit использует свои обозначения:
-#   1m, 3m, 5m, 15m, 30m → одинаковые
-#   1h → "60", 2h → "120", 4h → "240"
-#   6h → "360", 1d → "D", 1w → "W", 1M → "M"
-# 8h и 12h не поддерживаются напрямую → маппим на ближайшие (480 и 720 минут)
-TIMEFRAME_TO_INTERVAL: Dict[str, str] = {
-    "1m": "1",
-    "3m": "3",
-    "5m": "5",
-    "15m": "15",
-    "30m": "30",
-    "1h": "60",
-    "2h": "120",
-    "4h": "240",
-    "6h": "360",
-    "8h": "480",   # Bybit не имеет 8h, используем 480 минут
-    "12h": "720",  # Bybit не имеет 12h, используем 720 минут
-    "1d": "D",
-    "1w": "W",
-    "1M": "M",
+# Разрешенные базовые активы (исключаем токенизированные акции типа NVDA, SOXL, AKE)
+ALLOWED_CRYPTO_BASES = {
+    "BTC", "ETH", "SOL", "XRP", "ZEC", "HYPE", "NEAR", "DOGE", "ADA", "AVAX",
+    "LINK", "DOT", "UNI", "ATOM", "LTC", "ETC", "FIL", "APT", "ARB", "ALGO",
+    "FTM", "SAND", "MANA", "AXS", "THETA", "ICP", "VET", "HBAR", "EGLD", "XTZ",
+    "BNB", "MATIC", "TRX", "SUI", "PEPE", "WLD", "ONDO", "TAO", "INJ", "AAVE", "MSTR"
 }
 
-# Фallback-список топ-30 USDT-перпетуалов на случай недоступности API.
-# Отсортированы по примерному объёму и ликвидности.
-_FALLBACK_SYMBOLS: List[str] = [
-    "BTC/USDT", "ETH/USDT", "SOL/USDT", "BNB/USDT", "XRP/USDT",
-    "DOGE/USDT", "ADA/USDT", "AVAX/USDT", "LINK/USDT", "TRX/USDT",
-    "DOT/USDT", "UNI/USDT", "ATOM/USDT", "LTC/USDT", "ETC/USDT",
-    "FIL/USDT", "APT/USDT", "ARB/USDT", "NEAR/USDT", "ALGO/USDT",
-    "FTM/USDT", "SAND/USDT", "MANA/USDT", "AXS/USDT", "THETA/USDT",
-    "ICP/USDT", "VET/USDT", "HBAR/USDT", "EGLD/USDT", "XTZ/USDT",
-]
-
-
-# ---------------------------------------------------------------------------
-# Вспомогательные функции
-# ---------------------------------------------------------------------------
-
-
-def _ms_to_dt(ms: int) -> datetime:
-    """Конвертировать Unix-таймстамп в миллисекундах в datetime (UTC)."""
-    return datetime.fromtimestamp(ms / 1000.0, tz=timezone.utc)
-
-
-def _symbol_to_bybit(symbol: str) -> str:
-    """
-    Преобразовать символ проекта в формат Bybit API.
-
-    Проект:  "BTC/USDT"  →  Bybit: "BTCUSDT"
-    Проект:  "ETH/USDT"  →  Bybit: "ETHUSDT"
-    """
-    return symbol.replace("/", "")
-
-
-def _bybit_to_symbol(symbol: str) -> str:
-    """
-    Преобразовать символ Bybit API в формат проекта.
-
-    Bybit: "BTCUSDT"  →  проект: "BTC/USDT"
-    """
-    if symbol.endswith("USDT"):
-        return symbol[:-4] + "/USDT"
-    return symbol
-
-
-# ---------------------------------------------------------------------------
-# Декоратор retry с экспоненциальной задержкой (exponential backoff)
-# ---------------------------------------------------------------------------
-
-
-def _retry_with_backoff(
-    max_retries: int = 5,
-    base_delay: float = 1.0,
-    max_delay: float = 60.0,
-):
-    """
-    Декоратор для повторных попыток с экспоненциальной задержкой.
-
-    Повторяет вызов при:
-    - HTTP 429 (Rate Limit)
-    - HTTP 5xx (Server Error)
-    - Timeout / ConnectionError
-
-    Задержка: base_delay * (2 ** attempt), но не больше max_delay.
-    """
-    def decorator(func: Callable) -> Callable:
-        @wraps(func)
-        async def wrapper(*args: Any, **kwargs: Any) -> Any:
-            last_error: Optional[Exception] = None
-
-            for attempt in range(max_retries):
-                try:
-                    return await func(*args, **kwargs)
-                except httpx.RemoteProtocolError as e:
-                    last_error = e
-                    wait = min(base_delay * (2 ** attempt), max_delay)
-                    logger.warning(
-                        "Protocol error in %s (attempt %d/%d): %s. "
-                        "Retrying in %.1fs",
-                        func.__name__, attempt + 1, max_retries, e, wait,
-                    )
-                    await asyncio.sleep(wait)
-                except httpx.HTTPStatusError as e:
-                    if e.response.status_code == 429:
-                        wait = min(base_delay * (2 ** attempt), max_delay)
-                        # Попробуем прочитать Retry-After из заголовка
-                        retry_after = e.response.headers.get("retry-after")
-                        if retry_after:
-                            try:
-                                wait = float(retry_after)
-                            except (ValueError, TypeError):
-                                pass
-                        logger.warning(
-                            "Rate limited (429) in %s (attempt %d/%d). "
-                            "Waiting %.1fs",
-                            func.__name__, attempt + 1, max_retries, wait,
-                        )
-                        await asyncio.sleep(wait)
-                    elif e.response.status_code >= 500:
-                        wait = min(base_delay * (2 ** attempt), max_delay)
-                        logger.warning(
-                            "Server error %d in %s (attempt %d/%d): %s. "
-                            "Retrying in %.1fs",
-                            e.response.status_code,
-                            func.__name__, attempt + 1, max_retries,
-                            e, wait,
-                        )
-                        await asyncio.sleep(wait)
-                    else:
-                        # Код 4xx — это не ошибка сети, пробрасываем сразу
-                        raise
-                except (httpx.TimeoutException, httpx.ConnectError) as e:
-                    last_error = e
-                    wait = min(base_delay * (2 ** attempt), max_delay)
-                    logger.warning(
-                        "Network error in %s (attempt %d/%d): %s. "
-                        "Retrying in %.1fs",
-                        func.__name__, attempt + 1, max_retries, e, wait,
-                    )
-                    await asyncio.sleep(wait)
-
-            logger.error(
-                "All %d retries exhausted for %s. Last error: %s",
-                max_retries, func.__name__, last_error,
-            )
-            raise last_error  # type: ignore[misc]
-
-        return wrapper
-    return decorator
-
-
-# ---------------------------------------------------------------------------
-# 1. Получение списка топ-монет
-# ---------------------------------------------------------------------------
-
-
-@_retry_with_backoff(max_retries=3, base_delay=1.0)
-async def _get_top_symbols(
-    client: Optional[httpx.AsyncClient],
-    top_n: int = 30,
-    quote: str = "USDT",
-) -> List[str]:
-    """
-    Получить топ-N монет по объёму за 24ч через Bybit V5.
-
-    Если client=None, создаётся автономно и закрывается внутри.
-    """
-    own_client = False
-    if client is None:
-        client = httpx.AsyncClient(timeout=30.0)
-        own_client = True
-
-    try:
-        return await _get_top_symbols_impl(client, top_n, quote)
-    finally:
-        if own_client:
-            await client.aclose()
-
-
-async def _get_top_symbols_impl(
-    client: httpx.AsyncClient,
-    top_n: int = 30,
-    quote: str = "USDT",
-) -> List[str]:
-    """
-    Реальная логика получения топ-N монет через Bybit V5.
-
-    Эндпоинт: GET /v5/market/tickers с параметром category=linear.
-    Фильтр: только USDT-перпетуалы с turnover24h > 1M USD.
-    """
-    url = f"{BYBIT_BASE_URL}/v5/market/tickers"
-    params = {"category": "linear"}
-
-    response = await client.get(url, params=params, timeout=30.0)
-    response.raise_for_status()
-    data = response.json()
-
-    # Проверяем статус API
-    if data.get("retCode") != 0:
-        logger.error(
-            "Bybit API error retCode=%d retMsg=%s — fallback",
-            data["retCode"], data.get("retMsg"),
-        )
-        return _fallback_symbols(top_n)
-
-    tickers_list = data.get("result", {}).get("list", [])
-    if not tickers_list:
-        logger.warning("No tickers from Bybit — using fallback")
-        return _fallback_symbols(top_n)
-
-    # Фильтрация: USDT-перпетуалы с turnover24h > 1M USD
-    candidates: List[Dict[str, Any]] = []
-    for t in tickers_list:
-        symbol = t.get("symbol", "")
-        if not symbol.endswith(quote):
-            continue
-
-        base = symbol.replace(quote, "")
-        if not base:
-            continue
-
-        turnover = float(t.get("turnover24h", 0) or 0)
-        if turnover < 1_000_000:
-            continue
-
-        candidates.append({"symbol": symbol, "volume": turnover})
-
-    logger.info("Found %d candidates out of %d Bybit tickers",
-                len(candidates), len(tickers_list))
-
-    # Сортировка по убыванию объёма
-    candidates.sort(key=lambda x: x["volume"], reverse=True)
-    selected = candidates[:top_n]
-
-    symbols = [_bybit_to_symbol(c["symbol"]) for c in selected]
-    logger.info("Top symbols: %s", ", ".join(symbols[:10]))
-    return symbols
-
-
-def _fallback_symbols(top_n: int = 30) -> List[str]:
-    """
-    Возвращает fallback-список топ-символов.
-
-    Используется, когда API недоступен или вернул пустой результат.
-    """
-    return _FALLBACK_SYMBOLS[:top_n]
-
-
-# ---------------------------------------------------------------------------
-# 2. Загрузка исторических свечей с пагинацией
-# ---------------------------------------------------------------------------
-
-
-@_retry_with_backoff(max_retries=5, base_delay=1.0, max_delay=60.0)
-async def _fetch_kline_page(
-    client: httpx.AsyncClient,
-    symbol: str,  # в формате Bybit: "BTCUSDT"
-    interval: str,  # в формате Bybit: "60", "D", "W", ...
-    start_ms: int,
-    limit: int = 1000,
-) -> Optional[Dict]:
-    """
-    Загрузить одну страницу свечей с Bybit V5.
-
-    Эндпоинт: GET /v5/market/kline
-
-    Параметры
-    ---------
-    symbol : str — символ в формате Bybit (например, "BTCUSDT")
-    interval : str — интервал в формате Bybit (например, "60", "D")
-    start_ms : int — стартовый timestamp в миллисекундах
-    limit : int — количество свечей (максимум 1000)
-
-    Возвращает
-    ----------
-    Dict с полем 'list': [[timestamp_ms, open, high, low, close, volume], ...]
-    или None при ошибке.
-    """
-    url = f"{BYBIT_BASE_URL}/v5/market/kline"
-    params = {
-        "category": "linear",
-        "symbol": symbol,
-        "interval": interval,
-        "start": start_ms,
-        "limit": limit,
-    }
-
-    response = await client.get(url, params=params, timeout=30.0)
-    response.raise_for_status()
-    data = response.json()
-
-    if data.get("retCode") != 0:
-        raise httpx.HTTPStatusError(
-            f"Bybit error retCode={data['retCode']}, retMsg={data.get('retMsg')}",
-            request=response.request,
-            response=response,
-        )
-
-    return data
-
+def _ohlcv_to_df(ohlcv: List[List], symbol: str) -> pd.DataFrame:
+    if not ohlcv:
+        return pd.DataFrame()
+    
+    # Bybit возвращает 7 столбцов (добавлен 'turnover'), берем только первые 6 для OHLCV
+    clean_ohlcv = [row[:6] for row in ohlcv]
+    df = pd.DataFrame(
+        clean_ohlcv,
+        columns=["timestamp", "open", "high", "low", "close", "volume"]
+    )
+    df["timestamp"] = pd.to_datetime(df["timestamp"].astype(float), unit="ms", utc=True)
+    df.set_index("timestamp", inplace=True)
+    
+    for col in ["open", "high", "low", "close", "volume"]:
+        df[col] = pd.to_numeric(df[col], errors="coerce")
+        
+    df.dropna(subset=["open", "high", "low", "close"], inplace=True)
+    df.sort_index(inplace=True)
+    df = df[~df.index.duplicated(keep="last")]
+    df.attrs["symbol"] = symbol
+    return df
 
 async def _fetch_ohlcv_paginated(
     client: httpx.AsyncClient,
-    symbol: str,
+    symbol_bybit: str,
     interval: str,
     since_ms: int,
-    until_ms: Optional[int] = None,
-    max_candles: int = 200_000,
+    limit: int = 1000,
 ) -> List[List]:
-    """
-    Корректная загрузка свечей с пагинацией ВПЕРЕД во времени.
-    """
     all_ohlcv: List[List] = []
-    current_start = since_ms
+    # Bybit V5 возвращает данные от новых к старым.
+    # Начинаем с текущего времени и двигаемся назад к since_ms.
+    current_end = int(datetime.now(tz=timezone.utc).timestamp() * 1000)
     
-    while len(all_ohlcv) < max_candles:
+    while current_end > since_ms:
         params = {
             "category": "linear",
-            "symbol": symbol,
+            "symbol": symbol_bybit,
             "interval": interval,
-            "start": current_start,
-            "limit": 1000,
+            "end": current_end,
+            "limit": limit,
         }
-        
-        response = await client.get("https://api.bybit.com/v5/market/kline", params=params)
+
+        response = await client.get(f"{BYBIT_BASE_URL}/v5/market/kline", params=params)
         response.raise_for_status()
         data = response.json()
-        
+
         if data.get("retCode") != 0:
-            logger.error(f"Bybit API error for {symbol}: {data.get('retMsg')}")
+            logger.error(f"Bybit API error for {symbol_bybit}: {data.get('retMsg')}")
             break
-            
+
         raw_list = data.get("result", {}).get("list", [])
         if not raw_list:
             break
-            
-        # Bybit возвращает свечи от новых к старым. raw_list[0] - самая новая.
-        newest_ts = int(raw_list[0][0])
-        
-        # ЗАЩИТА ОТ ЗАЦИКЛИВАНИЯ: если самая новая свеча не новее текущего старта, мы застряли
-        if newest_ts <= current_start and len(all_ohlcv) > 0:
-            logger.warning(f"Pagination loop detected for {symbol} at ts={current_start}. Breaking.")
-            break
-            
+
         all_ohlcv.extend(raw_list)
         
-        # Двигаемся вперед во времени: следующий старт = самая новая свеча + 1 мс
-        current_start = newest_ts + 1
+        # raw_list отсортирован от новых к старым.
+        # Последний элемент - самая старая свеча в этом батче.
+        oldest_ts = int(raw_list[-1][0])
         
-        # Если достигли целевой даты окончания, прерываем
-        if until_ms and newest_ts >= until_ms:
+        # Сдвигаем конец окна времени на 1 мс перед самой старой свечей
+        current_end = oldest_ts - 1
+        
+        # Если получили меньше лимита, значит это самые старые доступные данные
+        if len(raw_list) < limit:
+            break
+            
+        # Защита от бесконечного цикла (макс ~50k свечей = ~5.7 лет для 1h)
+        if len(all_ohlcv) > 50000:
+            logger.warning(f"Reached max safety limit for {symbol_bybit}, stopping fetch.")
             break
 
-    # 1. Сортируем по времени возрастания (от старых к новым) для корректной работы pandas
-    all_ohlcv.sort(key=lambda x: int(x[0]))
+    # all_ohlcv сейчас идет от новых к старым. Переворачиваем, чтобы было от старых к новым.
+    all_ohlcv.reverse()
     
-    # 2. Удаляем возможные дубликаты свечей на стыке батчей
+    # Удаляем возможные дубликаты на стыке батчей
     unique_ohlcv = []
     seen_ts = set()
     for candle in all_ohlcv:
@@ -395,110 +113,31 @@ async def _fetch_ohlcv_paginated(
         if ts not in seen_ts:
             seen_ts.add(ts)
             unique_ohlcv.append(candle)
-            
+
     return unique_ohlcv
-
-def _ohlcv_to_df(
-    ohlcv: List[List],
-    symbol: str,
-) -> pd.DataFrame:
-    """
-    Преобразовать сырой OHLCV в DataFrame.
-
-    Параметры
-    ----------
-    ohlcv : List[List]
-        [[timestamp_ms, open, high, low, close, volume], ...]
-    symbol : str
-        "BTC/USDT"
-
-    Возвращает
-    ----------
-    pd.DataFrame с DatetimeIndex (UTC) и колонками
-    ['open', 'high', 'low', 'close', 'volume'].
-    """
-    if not ohlcv:
-        return pd.DataFrame()
-
-    df = pd.DataFrame(
-        ohlcv,
-        columns=["timestamp", "open", "high", "low", "close", "volume"],
-    )
-
-    # Конвертация timestamp (мс) в DatetimeIndex с UTC
-    df["timestamp"] = pd.to_datetime(df["timestamp"], unit="ms", utc=True)
-    df.set_index("timestamp", inplace=True)
-
-    # Приведение типов к float
-    for col in ["open", "high", "low", "close", "volume"]:
-        df[col] = pd.to_numeric(df[col], errors="coerce")
-
-    # Удаляем строки с NaN в ключевых полях
-    df.dropna(subset=["open", "high", "low", "close"], inplace=True)
-
-    # Сортировка по индексу и удаление дубликатов (на всякий случай)
-    df.sort_index(inplace=True)
-    df = df[~df.index.duplicated(keep="last")]
-
-    df.attrs["symbol"] = symbol
-    return df
-
-
-# ---------------------------------------------------------------------------
-# 3. Параллельная загрузка для нескольких символов
-# ---------------------------------------------------------------------------
-
 
 async def fetch_all_symbols(
     symbols: List[str],
-    interval: str,  # в формате Bybit: "60", "240", "D"
+    interval: str,
     since_ms: int,
-    until_ms: Optional[int] = None,
-    max_candles_per_symbol: int = 200_000,
     fetch_limit: int = 10,
 ) -> Dict[str, pd.DataFrame]:
-    """
-    Загрузить OHLCV для списка символов параллельно.
-
-    Использует asyncio.Semaphore для ограничения параллельных запросов
-    и избежания rate-лимитов.
-
-    Параметры
-    ---------
-    symbols : List[str] — символы в формате "BTC/USDT"
-    interval : str — интервал в формате Bybit
-    since_ms : int — начальная дата (ms)
-    until_ms : int | None — конечная дата
-    max_candles_per_symbol : int — защитный лимит свечей на символ
-    fetch_limit : int — макс. параллельных загрузок символов
-
-    Возвращает
-    ----------
-    Dict[str, pd.DataFrame] — символ → DataFrame
-    """
-    # Создаём один httpx.AsyncClient для всех запросов.
-    # Это гарантирует корректное закрытие соединения и переиспользование
-    # TCP/TLS-сессий (no "Unclosed client session").
-    async with httpx.AsyncClient(
-        timeout=30.0,
-        follow_redirects=True,
-        headers={"User-Agent": "torg-bot/1.0"},
-    ) as client:
+    async with httpx.AsyncClient(timeout=30.0, follow_redirects=True) as client:
         semaphore = asyncio.Semaphore(fetch_limit)
         data: Dict[str, pd.DataFrame] = {}
 
-        async def _fetch_one(sym: str) -> Tuple[str, pd.DataFrame | None, int]:
-            """Загрузить данные для одного символа с ограничением parallelism."""
+        async def _fetch_one(sym: str) -> Tuple[str, Optional[pd.DataFrame], int]:
             async with semaphore:
                 try:
-                    df = await _fetch_ohlcv_paginated(
-                        client, sym, interval,
-                        since_ms, until_ms, max_candles_per_symbol,
-                    )
-                    count = len(df) if df is not None else 0
-                    return sym, df, count
+                    symbol_bybit = sym.replace("/", "")
+                    ohlcv = await _fetch_ohlcv_paginated(client, symbol_bybit, interval, since_ms)
+                    df = _ohlcv_to_df(ohlcv, sym)
+                    count = len(df) if not df.empty else 0
+                    if count > 0:
+                        logger.info(f"  ✓ {sym}: {count} свечей (диапазон: {df.index[0].strftime('%Y-%m-%d')} → {df.index[-1].strftime('%Y-%m-%d')})")
+                    return sym, df if not df.empty else None, count
                 except Exception as e:
-                    logger.error("Failed to fetch %s: %s", sym, e)
+                    logger.error(f"Failed to fetch {sym}: {e}")
                     return sym, None, 0
 
         tasks = [_fetch_one(sym) for sym in symbols]
@@ -506,293 +145,147 @@ async def fetch_all_symbols(
 
         for result in results:
             if isinstance(result, Exception):
-                logger.error("Task exception: %s", result)
+                logger.error(f"Task exception: {result}")
                 continue
-
             if isinstance(result, tuple) and len(result) == 3:
                 sym, df, count = result
-                if df is not None and count > 0:
+                if df is not None and isinstance(df, pd.DataFrame) and count > 0:
                     data[sym] = df
 
     return data
 
-
-# ---------------------------------------------------------------------------
-# 4. Кэширование (совместимо со старым интерфейсом)
-# ---------------------------------------------------------------------------
-
+async def _get_top_symbols_impl(client: httpx.AsyncClient, top_n: int, quote: str = "USDT") -> List[str]:
+    response = await client.get(f"{BYBIT_BASE_URL}/v5/market/tickers", params={"category": "linear"})
+    response.raise_for_status()
+    data = response.json()
+    
+    if data.get("retCode") != 0:
+        logger.error(f"Bybit API error: {data.get('retMsg')}")
+        return []
+        
+    tickers_list = data.get("result", {}).get("list", [])
+    candidates = []
+    
+    for t in tickers_list:
+        symbol = t.get("symbol", "")
+        if not symbol.endswith(quote):
+            continue
+            
+        base = symbol.replace(quote, "")
+        # Фильтр: оставляем только известные крипто-активы
+        if base not in ALLOWED_CRYPTO_BASES:
+            continue
+            
+        turnover = float(t.get("turnover24h", 0) or 0)
+        if turnover < 1_000_000:
+            continue
+            
+        candidates.append({"symbol": f"{base}/{quote}", "volume": turnover})
+        
+    candidates.sort(key=lambda x: x["volume"], reverse=True)
+    selected = candidates[:top_n]
+    
+    symbols = [c["symbol"] for c in selected]
+    logger.info(f"Top symbols: {', '.join(symbols)}")
+    return symbols
 
 def _cache_path(cache_dir: str, symbol: str, timeframe: str) -> pathlib.Path:
-    """Сформировать путь к кэш-файлу для символа и таймфрейма."""
     safe = symbol.replace("/", "_")
-    return pathlib.Path(cache_dir) / f"{safe}_{timeframe}.parquet"
-
+    return pathlib.Path(cache_dir) / f"{safe}_{timeframe}.csv"
 
 def _is_cache_fresh(cache_file: pathlib.Path, max_age_days: int) -> bool:
-    """Проверить, не истёк ли кэш по возрасту."""
     if not cache_file.exists():
         return False
     age = time.time() - cache_file.stat().st_mtime
-    max_age = max_age_days * 86400  # секунд в днях
-    return age < max_age
+    return age < (max_age_days * 86400)
 
-
-def save_cache(
-    data: Dict[str, pd.DataFrame],
-    cache_dir: str,
-    max_age_days: int = 1,
-) -> None:
-    """Сохранить данные в parquet-файлы."""
+def save_cache(data: Dict[str, pd.DataFrame], cache_dir: str, max_age_days: int = 1) -> None:
     pathlib.Path(cache_dir).mkdir(parents=True, exist_ok=True)
     saved = 0
     for symbol, df in data.items():
-        # Таймфрейм берём из attrs, установленного при загрузке
-        timeframe = df.attrs.get("timeframe", "1h")
-        path = _cache_path(cache_dir, symbol, timeframe)
-        df.to_parquet(path, engine="pyarrow")
+        if not isinstance(df, pd.DataFrame) or df.empty:
+            logger.warning(f"Пропуск кэширования {symbol}: не DataFrame или пуст")
+            continue
+        path = _cache_path(cache_dir, symbol, df.attrs.get("timeframe", "1h"))
+        df.to_csv(path)
         saved += 1
-    logger.info("Cached %d symbol datasets to %s/", saved, cache_dir)
+    logger.info(f"Cached {saved} symbol datasets to {cache_dir}/")
 
-
-def load_cache(
-    cache_dir: str,
-    symbols: List[str],
-    timeframe: str,
-) -> Dict[str, pd.DataFrame]:
-    """
-    Загрузить данные из кэша.
-
-    Возвращает
-    ----------
-    Dict[str, pd.DataFrame] — только те символы, кэш которых существует и свеж.
-    """
+def load_cache(cache_dir: str, symbols: List[str], timeframe: str) -> Dict[str, pd.DataFrame]:
     data: Dict[str, pd.DataFrame] = {}
     for symbol in symbols:
         path = _cache_path(cache_dir, symbol, timeframe)
         if path.exists() and _is_cache_fresh(path, max_age_days=365):
             try:
-                df = pd.read_parquet(path)
+                df = pd.read_csv(path, index_col=0, parse_dates=True)
                 df.attrs["timeframe"] = timeframe
                 df.attrs["cached"] = True
                 df.attrs["symbol"] = symbol
                 data[symbol] = df
             except Exception as e:
-                logger.warning("Failed to read cache %s: %s", path, e)
-        else:
-            logger.debug("Cache not found or expired: %s", path)
-    logger.info("Loaded %d datasets from cache", len(data))
+                logger.warning(f"Failed to read cache {path}: {e}")
+    logger.info(f"Loaded {len(data)} datasets from cache")
     return data
 
-
-# ---------------------------------------------------------------------------
-# Главный класс загрузки данных
-# ---------------------------------------------------------------------------
-
-
 class DataLoader:
-    """
-    Загрузка и кэширование исторических данных с Bybit.
-
-    Использует прямую асинхронную интеграцию с Bybit API V5
-    (без ccxt), что устраняет проблемы с "Unclosed client session",
-    неверным определением фьючерсов и лимитами CCXT.
-    """
-
     def __init__(self, config: Config):
         self.cfg = config
         self.cache_dir = pathlib.Path(config.data.cache_dir)
         self.cache_dir.mkdir(parents=True, exist_ok=True)
 
-    # --- Символы ----------------------------------------------------------
-
-    def _get_symbols(self) -> List[str]:
-        """Получить список символов для торговли."""
-        cached_files = list(self.cache_dir.glob("*.parquet"))
-        if cached_files and not self.cfg.download_only:
-            # Извлекаем символы из имён файлов: BTC_USDT_1h → BTC/USDT
-            existing_symbols: List[str] = []
-            for f in cached_files:
-                parts = f.stem.split("_")
-                base_parts = parts[:-1]  # последняя часть — таймфрейм
-                symbol = "/".join(base_parts)
-                existing_symbols.append(symbol)
-            logger.info("%d cached datasets found", len(existing_symbols))
-            return existing_symbols
-
-        return self._run_sync(_get_top_symbols(
-            None,  # будет создан внутри
-            top_n=self.cfg.data.top_coins,
-            quote=self.cfg.data.quote_currency,
-        ))
-
-    @staticmethod
-    def _run_sync(coro) -> Any:
-        """Запустить async-корутину из синхронного контекста."""
+    def _run_sync(self, coro):
         return asyncio.run(coro)
 
-    # --- Фильтрация по кэшу -----------------------------------------------
+    def load(self) -> Dict[str, pd.DataFrame]:
+        async def _load_async():
+            async with httpx.AsyncClient(timeout=30.0) as client:
+                symbols = await _get_top_symbols_impl(client, self.cfg.data.top_coins, self.cfg.data.quote_currency)
+            
+            if not symbols:
+                return {}
+                
+            to_download, already_cached = self._filter_cached(symbols)
+            data = load_cache(str(self.cache_dir), already_cached, self.cfg.data.timeframe) if already_cached else {}
+            
+            if to_download and not self.cfg.skip_download:
+                logger.info(f"Downloading {len(to_download)} datasets from Bybit...")
+                since_dt = datetime.now(tz=timezone.utc) - timedelta(days=self.cfg.data.data_years * 365)
+                since_ms = int(since_dt.timestamp() * 1000)
+                interval = {"1h": "60", "4h": "240", "1d": "D"}.get(self.cfg.data.timeframe, "60")
+                
+                fetched = await fetch_all_symbols(to_download, interval, since_ms, fetch_limit=10)
+                data.update(fetched)
+                
+            if not data:
+                logger.error("No data loaded. Aborting.")
+                return {}
+                
+            save_cache(data, str(self.cache_dir), self.cfg.data.cache_max_age_days)
+            logger.info(f"Total loaded: {len(data)} symbols")
+            return data
+            
+        return self._run_sync(_load_async())
 
-    def _filter_cached(
-        self,
-        symbols: List[str],
-    ) -> Tuple[List[str], List[str]]:
-        """
-        Разделить символы на те, что нужно загрузить, и уже кэшированные.
-
-        Возвращает
-        ----------
-        (to_download, already_cached)
-        """
-        to_download: List[str] = []
-        already_cached: List[str] = []
-
+    def _filter_cached(self, symbols: List[str]) -> Tuple[List[str], List[str]]:
+        to_download, already_cached = [], []
         for symbol in symbols:
             path = _cache_path(str(self.cache_dir), symbol, self.cfg.data.timeframe)
             if path.exists() and _is_cache_fresh(path, self.cfg.data.cache_max_age_days):
                 already_cached.append(symbol)
             else:
                 to_download.append(symbol)
-
-        logger.info("Already cached: %d, need download: %d",
-                    len(already_cached), len(to_download))
+        logger.info(f"Already cached: {len(already_cached)}, need download: {len(to_download)}")
         return to_download, already_cached
 
-    # --- Основная точка загрузки -------------------------------------------
-
-    def load(self) -> Dict[str, pd.DataFrame]:
-        """
-        Загрузить OHLCV данные для всех символов.
-
-        Алгоритм:
-        1. Получить список топ-символов
-        2. Проверить кэш
-        3. Скачать недостающее через Bybit V5 API
-        4. Слить и сохранить кэш
-
-        Возвращает
-        ----------
-        Dict[str, pd.DataFrame] — символ → OHLCV DataFrame
-        """
-        symbols = self._get_symbols()
-        if not symbols:
-            logger.warning("No symbols found")
-            return {}
-
-        # Фильтрация по кэшу
-        to_download, already_cached = self._filter_cached(symbols)
-
-        # Загрузка из кэша
-        data: Dict[str, pd.DataFrame] = {}
-        if already_cached:
-            data = load_cache(
-                str(self.cache_dir),
-                already_cached,
-                self.cfg.data.timeframe,
-            )
-
-        # Скачивание нового
-        if to_download and not self.cfg.skip_download:
-            logger.info("Downloading %d datasets from Bybit...", len(to_download))
-
-            # Вычисляем даты
-            since_dt = datetime.now(tz=timezone.utc) - timedelta(
-                days=self.cfg.data.data_years * 365
-            )
-            since_ms = int(since_dt.timestamp() * 1000)
-            until_ms = None  # до текущего времени
-
-            # Маппинг таймфрейма
-            interval = TIMEFRAME_TO_INTERVAL.get(
-                self.cfg.data.timeframe, "60",
-            )
-
-            fetched = self._run_sync(
-                fetch_all_symbols(
-                    to_download,
-                    interval,
-                    since_ms,
-                    until_ms,
-                    max_candles_per_symbol=200_000,
-                    fetch_limit=10,
-                ),
-            )
-            data.update(fetched)
-
-        if not data:
-            logger.error("No data loaded. Aborting.")
-            return {}
-
-        # Сохраняем кэш (один раз — все символы)
-        # Пока не устанавливаем timeframe, сделаем это в load_for_backtest
-        save_cache(data, str(self.cache_dir), self.cfg.data.cache_max_age_days)
-
-        logger.info("Total loaded: %d symbols", len(data))
-        return data
-
     def load_for_backtest(self) -> Dict[str, pd.DataFrame]:
-        """
-        Загрузить данные, готовые для бэктеста.
-
-        Делает дополнительную обработку:
-        - Оставляет только нужные колонки [O, H, L, C, V]
-        - Устанавливает attrs (timeframe, symbol)
-        - Сортирует по индексу
-        - Повторно кэширует уже отфильтрованные данные
-        """
         data = self.load()
         for symbol, df in data.items():
-            df = df[["open", "high", "low", "close", "volume"]].copy()
-            df.sort_index(inplace=True)
-            df.dropna(
-                subset=["open", "high", "low", "close"], inplace=True,
-            )
-            df.attrs["timeframe"] = self.cfg.data.timeframe
-            df.attrs["symbol"] = symbol
-
-        # Повторный кэш уже с правильным timeframe
+            if isinstance(df, pd.DataFrame) and not df.empty:
+                df = df[["open", "high", "low", "close", "volume"]].copy()
+                df.sort_index(inplace=True)
+                df.dropna(subset=["open", "high", "low", "close"], inplace=True)
+                df.attrs["timeframe"] = self.cfg.data.timeframe
+                df.attrs["symbol"] = symbol
+                data[symbol] = df
         save_cache(data, str(self.cache_dir), self.cfg.data.cache_max_age_days)
-
         return data
-
-
-# ---------------------------------------------------------------------------
-# Загрузка данных для нескольких таймфреймов (тренд на 1d/1w)
-# ---------------------------------------------------------------------------
-
-
-class MultiTimeframeDataLoader:
-    """
-    Загрузка данных для нескольких таймфреймов.
-
-    Нужен для:
-    - 1h / 4h — основная торговля
-    - 1d / 1w — определение тренда
-    """
-
-    def __init__(self, config: Config):
-        self.cfg = config
-
-    def load(self) -> Dict[str, Dict[str, pd.DataFrame]]:
-        """
-        Загрузить данные для всех нужных ТФ.
-
-        Возвращает
-        ----------
-        Dict[timeframe, Dict[symbol, DataFrame]]
-        """
-        timeframes = set()
-        timeframes.add(self.cfg.data.timeframe)
-        timeframes.update(self.cfg.strategy.trend_timeframes)
-
-        result: Dict[str, Dict[str, pd.DataFrame]] = {}
-        for tf in sorted(timeframes):  # sorted для детерминированного порядка
-            loader = DataLoader(self.cfg)
-            # Временно переопределяем таймфрейм
-            orig_tf = loader.cfg.data.timeframe
-            loader.cfg.data.timeframe = tf
-            data = loader.load_for_backtest()
-            loader.cfg.data.timeframe = orig_tf
-            result[tf] = data
-
-        logger.info("MultiTimeframe loaded: %d timeframes", len(result))
-        return result

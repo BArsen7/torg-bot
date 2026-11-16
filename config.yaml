@@ -4,7 +4,7 @@
 # ============================================================
 
 data:
-  exchange: "binance"
+  exchange: "bybit"
   # 'spot' или 'futures' (perpetual)
   market_type: "futures"
   # Таймфреймы: 1h, 4h, 1d
@@ -14,7 +14,7 @@ data:
   # Топ-N монет по объёму
   top_coins: 10 #30
   # Исключить из анализа
-  exclude: ["USDT", "BUSD", "FDUSD", "TUSD", "USDC", "DAI", "BUSD", "EUR", "GBP", "AUD", "BTC", "ETH"]
+  exclude: ["USDT", "BUSD", "FDUSD", "TUSD", "USDC", "DAI", "EUR", "GBP", "AUD", "BTC", "ETH", "XAU", "XAG", "NVDA", "MSTR", "SOXL"]
   # Директория кэша
   cache_dir: "data_cache"
   # Пропуск загрузки, если есть кэш (дни)
@@ -39,7 +39,7 @@ strategy:
 
   # --- Entry conditions (M3) ---
   rsi_period: 14
-  rsi_threshold: 35       # RSI < threshold = oversold
+  rsi_threshold: 40       # RSI < threshold = oversold
   atr_pct_min: 1.0        # Минимальная ATR % (в процентах)
   atr_pct_max: 6.0        # Максимальная ATR %
   volume_sma_period: 50   # Период для SMA объёма

@@ -1,113 +1,104 @@
 #!/bin/bash
 set -e
 
-GREEN='\033[0;32m'
-YELLOW='\033[1;33m'
-NC='\033[0m'
+FILE="src/data_loader.py"
 
-echo -e "${YELLOW}🛡️  Создание резервных копий...${NC}"
-cp src/strategy.py src/strategy.py.ultimate_bak
-cp src/data_loader.py src/data_loader.py.ultimate_bak
+if [ ! -f "$FILE" ]; then
+    echo "❌ Ошибка: Файл $FILE не найден. Запустите скрипт из корня проекта (~/python/torg-bot/)."
+    exit 1
+fi
 
-echo -e "${YELLOW}🔧 Применение исправлений бухгалтерии фьючерсов...${NC}"
+echo "🛡️  Создание резервной копии $FILE.bak..."
+cp "$FILE" "$FILE.bak"
+
+echo "🔧 Применение исправления пагинации Bybit V5..."
 
 python3 << 'PYTHON_SCRIPT'
-import os
+import re
 
-def replace_in_file(filepath, old_str, new_str, desc):
-    if not os.path.exists(filepath):
-        return
-    with open(filepath, 'r', encoding='utf-8') as f:
-        content = f.read()
-    if old_str in content:
-        content = content.replace(old_str, new_str)
-        with open(filepath, 'w', encoding='utf-8') as f:
-            f.write(content)
-        print(f"✅ {desc}")
-    else:
-        print(f"⚠️  Не найдено: {desc}")
+with open("src/data_loader.py", "r", encoding="utf-8") as f:
+    content = f.read()
 
-# 1. ИСПРАВЛЕНИЕ БУХГАЛТЕРИИ: Списание МАРЖИ при открытии, а не полной стоимости
-old_entry_cash = """                # --- Вычитаем стоимость позиции из кэша (ВАЖНО!) ---
-                cash -= position_cost"""
+# Находим старую функцию _fetch_ohlcv_paginated и заменяем её на правильную
+old_func_pattern = r'async def _fetch_ohlcv_paginated\([\s\S]*?return unique_ohlcv'
 
-new_entry_cash = """                # --- ИСПРАВЛЕНО: Вычитаем МАРЖУ, а не полную стоимость (фьючерсы) ---
-                margin_cost = position_cost / strategy_cfg.leverage
-                cash -= margin_cost
-                logger.info(f"MARGIN DEDUCTED: {margin_cost:.2f} (Lev: {strategy_cfg.leverage}x). Remaining cash: {cash:.2f}")"""
+new_func = '''async def _fetch_ohlcv_paginated(
+    client: httpx.AsyncClient,
+    symbol_bybit: str,
+    interval: str,
+    since_ms: int,
+    limit: int = 1000,
+) -> List[List]:
+    all_ohlcv: List[List] = []
+    # Bybit V5 возвращает данные от новых к старым.
+    # Начинаем с текущего времени и двигаемся назад к since_ms.
+    current_end = int(datetime.now(tz=timezone.utc).timestamp() * 1000)
+    
+    while current_end > since_ms:
+        params = {
+            "category": "linear",
+            "symbol": symbol_bybit,
+            "interval": interval,
+            "end": current_end,
+            "limit": limit,
+        }
 
-replace_in_file('src/strategy.py', old_entry_cash, new_entry_cash, "Fixed entry cash deduction (margin only)")
+        response = await client.get(f"{BYBIT_BASE_URL}/v5/market/kline", params=params)
+        response.raise_for_status()
+        data = response.json()
 
-# 2. ИСПРАВЛЕНИЕ БУХГАЛТЕРИИ: Возврат МАРЖИ + PnL при закрытии
-old_exit_cash = """            # --- Обновляем кэш: при закрытии_long возвращаем cost + PnL ---
-            # Раньше: cash += exit_price * size (это cost + PnL)
-            # Но cost уже был вычтен при входе → cash += exit_price * size верно
-            cash += exit_price * trade.entry_size"""
+        if data.get("retCode") != 0:
+            logger.error(f"Bybit API error for {symbol_bybit}: {data.get('retMsg')}")
+            break
 
-new_exit_cash = """            # --- ИСПРАВЛЕНО: Возвращаем МАРЖУ + PnL при закрытии фьючерса ---
-            margin_returned = (trade.entry_price * trade.entry_size) / strategy_cfg.leverage
-            cash += margin_returned + gross_pnl - commission"""
+        raw_list = data.get("result", {}).get("list", [])
+        if not raw_list:
+            break
 
-replace_in_file('src/strategy.py', old_exit_cash, new_exit_cash, "Fixed exit cash return (margin + pnl)")
+        all_ohlcv.extend(raw_list)
+        
+        # raw_list отсортирован от новых к старым.
+        # Последний элемент - самая старая свеча в этом батче.
+        oldest_ts = int(raw_list[-1][0])
+        
+        # Сдвигаем конец окна времени на 1 мс перед самой старой свечей
+        current_end = oldest_ts - 1
+        
+        # Если получили меньше лимита, значит это самые старые доступные данные
+        if len(raw_list) < limit:
+            break
+            
+        # Защита от бесконечного цикла (макс ~50k свечей = ~5.7 лет для 1h)
+        if len(all_ohlcv) > 50000:
+            logger.warning(f"Reached max safety limit for {symbol_bybit}, stopping fetch.")
+            break
 
-# Также исправим закрытие при HALT (там та же логика)
-old_halt_cash = """                    trade.is_closed = True
-                    cash += row["close"] * trade.entry_size
-                    result.trades.append(trade)"""
+    # all_ohlcv сейчас идет от новых к старым. Переворачиваем, чтобы было от старых к новым.
+    all_ohlcv.reverse()
+    
+    # Удаляем возможные дубликаты на стыке батчей
+    unique_ohlcv = []
+    seen_ts = set()
+    for candle in all_ohlcv:
+        ts = int(candle[0])
+        if ts not in seen_ts:
+            seen_ts.add(ts)
+            unique_ohlcv.append(candle)
 
-new_halt_cash = """                    trade.is_closed = True
-                    # Возвращаем маржу + PnL при принудительном закрытии
-                    margin_returned = (trade.entry_price * trade.entry_size) / strategy_cfg.leverage
-                    cash += margin_returned + pnl
-                    result.trades.append(trade)"""
+    return unique_ohlcv'''
 
-replace_in_file('src/strategy.py', old_halt_cash, new_halt_cash, "Fixed halt cash return (margin + pnl)")
+if re.search(old_func_pattern, content):
+    content = re.sub(old_func_pattern, new_func, content)
+    with open("src/data_loader.py", "w", encoding="utf-8") as f:
+        f.write(content)
+    print("✅ Функция _fetch_ohlcv_paginated успешно заменена на корректную версию с использованием параметра 'end'.")
+else:
+    print("⚠️  Не удалось найти старую функцию _fetch_ohlcv_paginated для замены.")
+    print("💡 Возможно, она уже была изменена или форматирование отличается.")
 
-# 3. ИСПРАВЛЕНИЕ NameError в data_loader.py
-old_fallback_def = """_FALLBACK_SYMBOLS_SPOT = [
-    "BTC/USDT", "ETH/USDT", "SOL/USDT", "BNB/USDT", "XRP/USDT",
-    "DOGE/USDT", "ADA/USDT", "AVAX/USDT", "LINK/USDT", "MATIC/USDT",
-    "DOT/USDT", "UNI/USDT", "ATOM/USDT", "LTC/USDT", "ETC/USDT",
-    "FIL/USDT", "APT/USDT", "ARBN/USDT", "NEAR/USDT", "ALGO/USDT",
-    "FTM/USDT", "SAND/USDT", "MANA/USDT", "AXS/USDT", "THETA/USDT",
-    "ICP/USDT", "VET/USDT", "HBAR/USDT", "EGLD/USDT", "XTZ/USDT",
-]
-_FALLBACK_SYMBOLS_FUTURES = [s + ":USDT" for s in _FALLBACK_SYMBOLS_SPOT]"""
-
-# Упростим до одного списка с динамическим добавлением :USDT, чтобы избежать NameError
-new_fallback_def = """_FALLBACK_SYMBOLS_BASE = [
-    "BTC/USDT", "ETH/USDT", "SOL/USDT", "BNB/USDT", "XRP/USDT",
-    "DOGE/USDT", "ADA/USDT", "AVAX/USDT", "LINK/USDT", "MATIC/USDT",
-    "DOT/USDT", "UNI/USDT", "ATOM/USDT", "LTC/USDT", "ETC/USDT",
-    "FIL/USDT", "APT/USDT", "ARBN/USDT", "NEAR/USDT", "ALGO/USDT",
-    "FTM/USDT", "SAND/USDT", "MANA/USDT", "AXS/USDT", "THETA/USDT",
-    "ICP/USDT", "VET/USDT", "HBAR/USDT", "EGLD/USDT", "XTZ/USDT",
-]"""
-
-replace_in_file('src/data_loader.py', old_fallback_def, new_fallback_def, "Fixed fallback symbols definition")
-
-old_fallback_ret = """        # Fallback: если API не доступен — используем хардкод
-        logger.warning("All attempts failed, using fallback symbols")
-        top = self.cfg.data.top_coins
-        symbols = _FALLBACK_SYMBOLS_FUTURES[:top] if self.cfg.data.market_type == "futures" else _FALLBACK_SYMBOLS_SPOT[:top]
-        logger.info("Using fallback: %d symbols", len(symbols))
-        return symbols"""
-
-new_fallback_ret = """        # Fallback: если API не доступен — используем хардкод
-        logger.warning("All attempts failed, using fallback symbols")
-        top = self.cfg.data.top_coins
-        base_symbols = _FALLBACK_SYMBOLS_BASE[:top]
-        # Для фьючерсов CCXT требует суффикс :USDT
-        symbols = [s + ":USDT" if not s.endswith(":USDT") else s for s in base_symbols] if self.cfg.data.market_type == "futures" else base_symbols
-        logger.info("Using fallback: %d symbols", len(symbols))
-        return symbols"""
-
-replace_in_file('src/data_loader.py', old_fallback_ret, new_fallback_ret, "Fixed fallback return logic")
-
-print("\n🎉 Бухгалтерия фьючерсов исправлена!")
 PYTHON_SCRIPT
 
-echo -e "${GREEN}🚀 Готово! Теперь выполни:${NC}"
-echo -e "  rm -rf data_cache/"
-echo -e "  python src/main.py"
-echo -e "${YELLOW}💡 Убедись, что в config.yaml указано leverage: 5 (или 10). При leverage=1 риск 2% со стопом 2% потребует 100% маржи, что корректно, но выглядит страшно.${NC}"
+echo "🚀 Готово! Теперь выполни:"
+echo "  rm -rf data_cache/"
+echo "  python src/main.py"
+echo "💡 Теперь загрузка данных будет идти от настоящего к прошлому, что гарантирует корректную пагинацию Bybit V5 без зацикливания."

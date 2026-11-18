@@ -64,83 +64,37 @@ class Trade:
 # Проверка условий входа
 # ---------------------------------------------------------------------------
 
-
 def check_entry_conditions(
     df: pd.DataFrame,
     idx: int,
     strategy_cfg,
 ) -> Tuple[bool, Dict[str, bool]]:
-    """
-    Проверить все условия для входа LONG в баре idx.
-
-    Условия (M3):
-    1. trend_score >= 0
-    2. low[idx] <= lower_band[idx] (коснулись нижней полосы)
-    3. close[idx] > lower_band[idx] (закрылись выше — отскок!)
-    4. RSI(14) < 35 ИЛИ close[idx] > open[idx] (подтверждение разворота)
-    5. ATR_pct в диапазоне [1.0, 6.0]
-    6. volume[idx] > SMA(volume, 50)
-    7. volume[idx] >= 1.5 * SMA(volume, 20)[idx]  ← ФИЛЬТР ОБЪЁМА (защита от "падающего ножа")
-
-    Параметры
-    ---------
-    df : pd.DataFrame — с колонками индикаторов
-    idx : int — позиция в DataFrame
-    strategy_cfg : StrategyConfig
-
-    Возвращает
-    ----------
-    (bool, Dict) — (condition_met, {name: True/False для каждого условия})
-    """
     row = df.iloc[idx]
     conditions: Dict[str, bool] = {}
 
-    # Условие 1: тренд
-    conditions["trend_score_ge_0"] = row["trend_score"] >= 0
+    # 1. Базовый тренд (цена не должна быть в глубоком медвежьем тренде)
+    # Используем мягкий фильтр: цена выше 95% от SMA200
+    if pd.notna(row.get("sma_200", np.nan)):
+        conditions["above_sma200"] = row["close"] > (row["sma_200"] * 0.95)
+    else:
+        conditions["above_sma200"] = True
 
-    # Условие 2: коснулись нижней полосы (текущая свеча ниже или равна нижней)
+    # 2. Цена коснулась нижней полосы и закрылась выше неё (классический отскок)
     conditions["touch_lower"] = row["low"] <= row["lower_band"]
-
-    # Условие 3: закрылась выше нижней полосы — отскок
     conditions["close_above_lower"] = row["close"] > row["lower_band"]
 
-    # Условие 4: RSI < threshold ИЛИ close > open (бычье закрытие)
+    # 3. Подтверждение разворота: RSI перепродан ИЛИ бычья свеча
     conditions["rsi_or_bullish"] = (row["rsi"] < strategy_cfg.rsi_threshold) or (row["close"] > row["open"])
 
-    # Условие 5: ATR_pct в допустимом диапазоне
+    # 4. Фильтр волатильности (чтобы не торговать в мертвом боковике)
     conditions["atr_pct_in_range"] = (
         strategy_cfg.atr_pct_min <= row["atr_pct"] <= strategy_cfg.atr_pct_max
     )
 
-    # Условие 6: объём выше среднего
-    conditions["volume_above_sma"] = row.get("volume_above", False)
-
-    # Условие 7: ФИЛЬТР ОБЪЁМА — подтверждение отскока повышенным объёмом
-    # Объём на входе должен быть >= 1.5 * среднему объёму за 20 периодов
-    # Это защищает от ложных отскоков ("падающий нож")
-    if "volume_sma_20" in row.index and row["volume_sma_20"] > 0:
-        conditions["volume_confirmation"] = row["volume"] >= 1.5 * row["volume_sma_20"]
-    else:
-        conditions["volume_confirmation"] = True  # Если нет данных, пропускаем этот фильтр
-
-    # Условие 8: Цена выше SMA200 (долгосрочный тренд вверх)
-    if pd.notna(row.get("sma_200", np.nan)):
-        conditions["above_sma200"] = row["close"] > row["sma_200"]
-    else:
-        conditions["above_sma200"] = False  # Не торгуем, пока индикатор не рассчитан
-
-    # Условие 9: ADX > threshold (есть тренд, избегаем "мертвых" боковиков)
-    if pd.notna(row.get("adx", np.nan)):
-        conditions["adx_trend"] = row["adx"] > strategy_cfg.adx_threshold
-    else:
-        conditions["adx_trend"] = False
-
-    # Все должны выполниться
     all_met = all(conditions.values())
     conditions["all_met"] = all_met
 
     return all_met, conditions
-
 
 # ---------------------------------------------------------------------------
 # Проверка условий выхода
@@ -155,22 +109,6 @@ def check_exit_conditions(
 ) -> Tuple[bool, str]:
     """
     Проверить условия выхода для открытой позиции.
-
-    Условия (M4):
-    - Тейк: close[idx] >= upper_band[idx]
-    - Стоп: close[idx] <= stop_price
-    - Трейлинг: max_price_since_entry - 1.5*ATR >= current price
-
-    Параметры
-    ---------
-    trade : Trade — открытая сделка
-    df : pd.DataFrame
-    idx : int
-    strategy_cfg : StrategyConfig
-
-    Возвращает
-    ----------
-    (bool, reason) — (exit_needed, exit_reason)
     """
     row = df.iloc[idx]
 
@@ -224,8 +162,6 @@ def calculate_position_size(
     # Максимальный размер, который позволяет маржа с учётом плеча
     max_position_size = (equity * leverage) / entry_price
 
-    # КРИТИЧЕСКИ ВАЖНО: если требуемый размер превышает лимит плеча, 
-    # открытие сделки нарушит риск-менеджмент. Мы пропускаем её, а не открываем на максимум.
     if required_size > max_position_size:
         return 0.0
 
@@ -251,35 +187,27 @@ def apply_costs(
 ) -> Tuple[float, float]:
     """
     Рассчитать стоимость комиссии и проскальзывания.
-
-    Параметры
-    ----------
-    include_entry : bool — включать комиссию за вход (при открытии)
-    include_exit : bool — включать комиссию за выход (при закрытии)
-
-    Возвращает
-    ----------
-    (total_commission, total_slippage)
     """
+    entry_notional = entry_price * size
+    exit_notional = exit_price * size
+    
     # Комиссия (от стоимости позиции)
-    notional = entry_price * size
-    side_fee = notional * (taker_fee + maker_fee) / 2  # усредняем
+    entry_fee = entry_notional * (taker_fee + maker_fee) / 2
+    exit_fee = exit_notional * (taker_fee + maker_fee) / 2
 
     commission = 0.0
     if include_entry:
-        commission += side_fee
+        commission += entry_fee
     if include_exit:
-        commission += side_fee
+        commission += exit_fee
 
-    # Проскальзывание (случайная величина ~ N(0, slippage_pct))
-    # Для детерминированного бэктеста берём 0 (мат. ожидание)
     slippage = 0.0
 
     # Фандер (только для futures)
     funding_cost = 0.0
     if funding_pct > 0:
         funding_periods = holding_hours / 8  # каждые 8 часов
-        funding_cost = notional * funding_pct * funding_periods
+        funding_cost = entry_notional * funding_pct * funding_periods
 
     return commission + funding_cost, slippage
 
@@ -296,21 +224,6 @@ def generate_signals(
 ) -> pd.DataFrame:
     """
     Проанализировать DataFrame символа и добавить сигнальные колонки.
-
-    Колонки:
-    - signal: 1 = вход LONG, 0 = нет сигнала, -1 = сигнал выхода
-    - entry_price: цена входа
-    - stop_price: цена стопа
-
-    Параметры
-    ---------
-    df : pd.DataFrame — с индикаторами
-    strategy_cfg : StrategyConfig
-    fee_rate : float
-
-    Возвращает
-    ----------
-    pd.DataFrame — с колонкой 'signal'
     """
     df = df.copy()
     df["signal"] = 0
@@ -358,27 +271,12 @@ def simulate_trading(
 ) -> SimulationResult:
     """
     Прогнать симуляцию торговли по всем символам.
-
-    ВАЖНО: cash уменьшается при ВХОДЕ (position_cost) и увеличивается при ВЫХОДЕ.
-    equity = cash + unrealized_pnl.
-
-    Параметры
-    ---------
-    symbols_data : Dict[str, pd.DataFrame] — символ -> OHLCV с индикаторами
-    strategy_cfg : StrategyConfig
-    backtest_cfg : BacktestConfig
-    fee_rate : float
-    slippage_pct : float
-    funding_pct : float — фандер для futures
-
-    Возвращает
-    ----------
-    SimulationResult
     """
     result = SimulationResult()
     initial_equity = backtest_cfg.initial_cash
     cash = initial_equity
     result.cash = cash
+    current_equity = cash  # FIX: Инициализация current_equity до цикла
 
     # Состояние
     open_positions: Dict[str, Trade] = {}  # symbol -> Trade
@@ -417,6 +315,7 @@ def simulate_trading(
         for symbol, trade, reason in symbols_to_close:
             df = symbols_data[symbol]
             row = df.loc[dt]
+            idx = df.index.get_loc(dt)  # FIX: корректный индекс для holding_bars
 
             # Цена выхода
             if reason == "trailing_stop":
@@ -446,17 +345,16 @@ def simulate_trading(
             # Реализованный PnL = gross - комиссия
             pnl = gross_pnl - commission
 
-            # --- ИСПРАВЛЕНО: Возвращаем МАРЖУ + PnL при закрытии фьючерса ---
+            # Возвращаем МАРЖУ + PnL при закрытии фьючерса
             margin_returned = (trade.entry_price * trade.entry_size) / strategy_cfg.leverage
-            cash += margin_returned + gross_pnl - commission
+            cash += margin_returned + pnl
 
-            # --- Обновляем сделку ---
+            # Обновляем сделку
             trade.exit_time = dt
             trade.exit_price = exit_price
             trade.exit_reason = reason
             trade.pnl = pnl
-            trade.pnl_pct = pnl / (trade.entry_price * trade.entry_size) * 100.0 if trade.entry_price * trade.entry_size > 0 else 0.0
-            # holding_bars = количество баров с момента входа
+            trade.pnl_pct = (pnl / (trade.entry_price * trade.entry_size) * 100.0) if (trade.entry_price * trade.entry_size) > 0 else 0.0
             trade.holding_bars = max(1, idx - trade.entry_bar) if hasattr(trade, 'entry_bar') and idx >= trade.entry_bar else 1
             trade.commission = commission
             trade.is_closed = True
@@ -474,7 +372,7 @@ def simulate_trading(
             if dt not in df.index:
                 continue
 
-            # --- Корреляционный фильтр ---
+            # Корреляционный фильтр
             if not check_correlation_filter(
                 symbol, set(open_positions.keys()),
                 None,
@@ -501,7 +399,6 @@ def simulate_trading(
                 if size <= 0:
                     continue
 
-                # --- ПРАВДИВЫЙ РАСЧЁТ РИСКА: проверяем что стоимость позиции <= equity ---
                 position_cost = entry_price * size
                 if position_cost > current_equity:
                     logger.warning(
@@ -510,16 +407,17 @@ def simulate_trading(
                     )
                     continue
 
-                # Проверка: после открытия cash должен остаться >= 0
-                remaining_cash = cash - position_cost
+                # FIX: Для фьючерсов списывается только маржа, а не полная стоимость!
+                margin_cost = position_cost / strategy_cfg.leverage
+                remaining_cash = cash - margin_cost
                 if remaining_cash < 0:
                     logger.warning(
-                        "After position cash would be negative (%.2f), skipping %s",
+                        "After margin deduction cash would be negative (%.2f), skipping %s",
                         remaining_cash, symbol
                     )
                     continue
 
-                # --- ДОП. ПРОВЕРКА: total risk не должен превышать X% от equity ---
+                # ДОП. ПРОВЕРКА: total risk не должен превышать X% от equity
                 single_risk = size * abs(entry_price - stop_price)
                 total_risk = single_risk + sum(
                     t.entry_size * abs(t.entry_price - t.stop_price)
@@ -534,7 +432,7 @@ def simulate_trading(
                     )
                     continue
 
-                # --- ПРОВЕРКА ЛИКВИДАЦИИ (для futures с плечом) ---
+                # ПРОВЕРКА ЛИКВИДАЦИИ (для futures с плечом)
                 if strategy_cfg.leverage > 1:
                     estimated_liq = estimate_liquidation_price(
                         entry_price, strategy_cfg.leverage, is_long=True
@@ -556,7 +454,7 @@ def simulate_trading(
                 logger.info(
                     f"OPEN {symbol}: entry={entry_price:.4f}, stop={stop_price:.4f}, "
                     f"dist={abs(entry_price-stop_price):.4f}, size={size:.4f}, "
-                    f"cost={entry_price*size:.2f}, cash={cash:.2f}, risk_amt={cash*strategy_cfg.risk_per_trade:.2f}"
+                    f"cost={position_cost:.2f}, cash={cash:.2f}, risk_amt={current_equity*strategy_cfg.risk_per_trade:.2f}"
                 )
                 
                 trade = Trade(
@@ -569,12 +467,11 @@ def simulate_trading(
                     take_profit_price=None,
                     max_price=entry_price,
                     max_stop=stop_price,
-                    equity_at_entry=cash,
+                    equity_at_entry=current_equity,
                     fee_rate=fee_rate,
                 )
 
-                # --- ИСПРАВЛЕНО: Вычитаем МАРЖУ, а не полную стоимость (фьючерсы) ---
-                margin_cost = position_cost / strategy_cfg.leverage
+                # Вычитаем МАРЖУ, а не полную стоимость (фьючерсы)
                 cash -= margin_cost
                 logger.info(f"MARGIN DEDUCTED: {margin_cost:.2f} (Lev: {strategy_cfg.leverage}x). Remaining cash: {cash:.2f}")
 
@@ -592,8 +489,8 @@ def simulate_trading(
             if dt in df.index:
                 row = df.loc[dt]
                 # Обновляем max price для трейлинга
-                if row["close"] > (trade.max_price or trade.entry_price):
-                    trade.max_price = row["close"]
+                if row["high"] > (trade.max_price or trade.entry_price):
+                    trade.max_price = row["high"]
                 # Unrealized PnL = (current - entry) * size
                 unrealized_pnl += (row["close"] - trade.entry_price) * trade.entry_size
 
@@ -606,17 +503,20 @@ def simulate_trading(
                 "HALT TRIGGERED: equity=%.2f < initial=%.2f * 0.5",
                 current_equity, initial_equity
             )
-            # Принудительно закрываем ВСЕ позиции по корректной логике фьючерсов
+            # Принудительно закрываем ВСЕ позиции
             for symbol, trade in list(open_positions.items()):
                 df = symbols_data.get(symbol, pd.DataFrame())
                 
-                # Определяем цену выхода
+                # Определяем цену выхода и индекс
                 if not df.empty and dt in df.index:
                     exit_price = df.loc[dt, "close"]
+                    idx = df.index.get_loc(dt)
                 elif not df.empty:
                     exit_price = df["close"].iloc[-1]
+                    idx = len(df) - 1
                 else:
                     exit_price = trade.entry_price
+                    idx = trade.entry_bar
 
                 gross_pnl = (exit_price - trade.entry_price) * trade.entry_size
                 holding_hours = max(1, int((dt - trade.entry_time).total_seconds() / 3600))
@@ -643,7 +543,6 @@ def simulate_trading(
                 trade.holding_bars = max(1, idx - trade.entry_bar) if hasattr(trade, 'entry_bar') and idx >= trade.entry_bar else 1
                 trade.is_closed = True
                 
-                # ИСПРАВЛЕНО: Возвращаем МАРЖУ + PnL, а не полную стоимость позиции!
                 margin_returned = (trade.entry_price * trade.entry_size) / strategy_cfg.leverage
                 cash += margin_returned + pnl
                 
@@ -659,17 +558,17 @@ def simulate_trading(
         if not df.empty:
             last_known_price = df["close"].iloc[-1]
             last_dt = df.index[-1]
+            idx = len(df) - 1
         else:
             last_known_price = trade.entry_price
             last_dt = trade.entry_time
+            idx = trade.entry_bar
 
-        # PnL = (last_price - entry) * size - выходная комиссия
         gross_pnl = (last_known_price - trade.entry_price) * trade.entry_size
-        # Входная + выходная комиссия через apply_costs
         exit_commission, _ = apply_costs(
             trade.entry_price, last_known_price, trade.entry_size,
             is_long=True,
-            maker_fee=trade.fee_rate,
+            maker_fee=strategy_cfg.maker_fee,
             taker_fee=strategy_cfg.taker_fee,
             slippage_pct=slippage_pct,
             funding_pct=funding_pct,
@@ -682,10 +581,13 @@ def simulate_trading(
         trade.exit_price = last_known_price
         trade.exit_reason = "eod"
         trade.pnl = pnl
-        # holding_bars для EOD — используем entry_bar если доступен
-        all_dates_sorted = sorted(all_dates)
-        trade.holding_bars = max(1, len(all_dates_sorted) - all_dates_sorted.index(trade.entry_time)) if trade.entry_time in all_dates_sorted else 1
+        trade.pnl_pct = (pnl / (trade.entry_price * trade.entry_size) * 100.0) if (trade.entry_price * trade.entry_size) > 0 else 0.0
+        trade.holding_bars = max(1, idx - trade.entry_bar) if hasattr(trade, 'entry_bar') and idx >= trade.entry_bar else 1
         trade.is_closed = True
+        
+        margin_returned = (trade.entry_price * trade.entry_size) / strategy_cfg.leverage
+        cash += margin_returned + pnl
+        
         result.trades.append(trade)
 
     # --- 7. Equity curve ---

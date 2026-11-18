@@ -1,156 +1,312 @@
 #!/usr/bin/env python3
 """
 Grid Search для оптимизации параметров стратегии Range Trading.
+
+Ключевые особенности:
+1. Данные загружаются ОДИН РАЗ в начале (экономия времени)
+2. Для каждой комбинации создаётся ГЛУБОКАЯ КОПИЯ данных (предотвращает модификацию)
+3. В логах видно, какие параметры применяются и что результат меняется
+4. Защита от мусорных результатов (слишком мало сделок)
+5. Красивый вывод с прогрессом и ETA
 """
 
 import copy
 import itertools
 import logging
 import time
+from dataclasses import dataclass
 from pathlib import Path
+from typing import Dict, List
 
 import pandas as pd
 
 from src.config import Config
-from src.backtest_engine import BacktestEngine
+from src.data_loader import DataLoader
+from src.indicators import add_all_indicators
+from src.strategy import generate_signals, simulate_trading
+from src.metrics import compute_metrics
 
-# Подавляем информационные логи во время оптимизации для чистоты вывода и скорости
-logging.getLogger("src.backtest_engine").setLevel(logging.WARNING)
-logging.getLogger("src.strategy").setLevel(logging.WARNING)
-logging.getLogger("src.data_loader").setLevel(logging.WARNING)
+# Настраиваем логирование: подавляем лишние сообщения, но оставляем важные
 logging.getLogger("httpx").setLevel(logging.WARNING)
+logging.getLogger("src.data_loader").setLevel(logging.WARNING)
+logging.getLogger("src.backtest_engine").setLevel(logging.WARNING)
 
-def run_single_backtest(params: dict, base_cfg: Config) -> dict:
-    """Запускает один прогон бэктеста с заданными параметрами."""
-    # Глубокая копия конфигурации, чтобы не мутировать оригинал
+@dataclass
+class GridResult:
+    """Результат одной комбинации параметров."""
+    params: Dict
+    total_trades: int
+    total_return: float
+    max_dd_pct: float
+    calmar: float
+    sharpe: float
+    win_rate: float
+    profit_factor: float
+    avg_holding_bars: float
+    commissions: float
+
+def run_single_backtest(
+    params: Dict,
+    raw_data: Dict[str, pd.DataFrame],
+    base_cfg: Config
+) -> GridResult:
+    """
+    Запускает бэктест с заданными параметрами.
+    
+    ВАЖНО: Создаёт глубокую копию данных, чтобы не модифицировать оригинал.
+    """
+    # Создаём глубокую копию конфигурации
     cfg = copy.deepcopy(base_cfg)
     
     # Применяем параметры из сетки
     cfg.strategy.rsi_threshold = params["rsi_threshold"]
-    cfg.strategy.adx_threshold = params["adx_threshold"]
     cfg.strategy.stop_multiplier = params["stop_multiplier"]
     cfg.strategy.atr_pct_min = params["atr_pct_min"]
     cfg.strategy.atr_pct_max = params["atr_pct_max"]
+    cfg.strategy.risk_per_trade = params["risk_per_trade"]
     
-    # Запускаем движок
-    engine = BacktestEngine(cfg)
-    engine.run()
+    # Создаём ГЛУБОКУЮ КОПИЮ данных для этой комбинации
+    # Это критически важно, т.к. simulate_trading модифицирует DataFrame inplace
+    symbols_data = {}
+    for symbol, df in raw_data.items():
+        df_copy = df.copy(deep=True)
+        
+        # Рассчитываем индикаторы с текущими параметрами
+        df_with_indicators = add_all_indicators(df_copy, cfg.strategy)
+        
+        # Генерируем сигналы
+        df_with_signals = generate_signals(
+            df_with_indicators, 
+            cfg.strategy, 
+            fee_rate=cfg.strategy.maker_fee
+        )
+        
+        symbols_data[symbol] = df_with_signals
     
-    m = engine.metrics
+    # Запускаем симуляцию
+    funding_pct = 0.0
+    if cfg.data.market_type == "futures" and not cfg.strategy.use_real_funding:
+        funding_pct = cfg.strategy.fixed_funding_pct
     
-    return {
-        **params,
-        "total_return": m.total_return,
-        "max_dd_pct": m.max_drawdown_pct,
-        "sharpe": m.sharpe_ratio,
-        "calmar": m.calmar_ratio,
-        "win_rate": m.win_rate,
-        "profit_factor": m.profit_factor,
-        "total_trades": m.total_trades,
-    }
+    result = simulate_trading(
+        symbols_data,
+        cfg.strategy,
+        cfg.backtest,
+        fee_rate=cfg.strategy.maker_fee,
+        slippage_pct=cfg.strategy.slippage_pct,
+        funding_pct=funding_pct,
+    )
+    
+    # Считаем метрики
+    metrics = compute_metrics(
+        result.trades,
+        result.equity_curve,
+        cfg.backtest.initial_cash,
+        timeframe=cfg.data.timeframe,
+        final_equity_override=result.final_equity
+    )
+    
+    return GridResult(
+        params=params,
+        total_trades=metrics.total_trades,
+        total_return=metrics.total_return,
+        max_dd_pct=metrics.max_drawdown_pct,
+        calmar=metrics.calmar_ratio,
+        sharpe=metrics.sharpe_ratio,
+        win_rate=metrics.win_rate,
+        profit_factor=metrics.profit_factor,
+        avg_holding_bars=metrics.avg_holding_bars,
+        commissions=metrics.total_commissions,
+    )
 
 def main():
-    print("🚀 Запуск Grid Search оптимизации...")
-    print("⚠️  Убедитесь, что в config.yaml установлено top_coins=10 и data_years=1 для скорости!\n")
+    print("=" * 80)
+    print("🚀 GRID SEARCH ОПТИМИЗАЦИЯ ПАРАМЕТРОВ СТРАТЕГИИ")
+    print("=" * 80)
+    print()
     
-    # 1. Базовая конфигурация
+    # 1. Загружаем конфигурацию
+    print("📋 Загрузка конфигурации из config.yaml...")
     base_cfg = Config()
+    print(f"   ✓ Таймфрейм: {base_cfg.data.timeframe}")
+    print(f"   ✓ Монет: {base_cfg.data.top_coins}")
+    print(f"   ✓ Период: {base_cfg.data.data_years} лет(года)")
+    print(f"   ✓ Плечо: {base_cfg.strategy.leverage}x")
+    print()
     
-    # 2. Сетка параметров для перебора
+    # 2. Загружаем данные ОДИН РАЗ
+    print("⏳ Загрузка исторических данных с Bybit (это может занять 1-2 минуты)...")
+    data_loader = DataLoader(base_cfg)
+    raw_data = data_loader.load_for_backtest()
+    
+    if not raw_data:
+        print("❌ Ошибка: не удалось загрузить данные. Проверьте интернет и config.yaml.")
+        return
+    
+    print(f"✅ Данные загружены: {len(raw_data)} символов")
+    for symbol, df in list(raw_data.items())[:3]:
+        print(f"   • {symbol}: {len(df)} свечей ({df.index[0].strftime('%Y-%m-%d')} → {df.index[-1].strftime('%Y-%m-%d')})")
+    if len(raw_data) > 3:
+        print(f"   ... и ещё {len(raw_data) - 3} символов")
+    print()
+    
+    # 3. Определяем сетку параметров
     param_grid = {
-        "rsi_threshold": [30, 35, 40],
-        "adx_threshold": [15, 20, 25],
-        "stop_multiplier": [1.5, 1.8, 2.0],
-        "atr_pct_min": [0.5, 1.0],
-        "atr_pct_max": [4.0, 6.0, 8.0],
+        "rsi_threshold": [30, 35, 40],           # Порог RSI для входа
+        "stop_multiplier": [1.5, 1.8, 2.0],      # Множитель ATR для стопа
+        "atr_pct_min": [0.5, 1.0, 1.5],          # Минимальная волатильность ATR%
+        "atr_pct_max": [4.0, 6.0, 8.0],          # Максимальная волатильность ATR%
+        "risk_per_trade": [0.01, 0.015, 0.02],   # Риск на сделку (1%, 1.5%, 2%)
     }
     
     keys = list(param_grid.keys())
     values = list(param_grid.values())
     combinations = list(itertools.product(*values))
     
-    print(f"🔍 Всего комбинаций для проверки: {len(combinations)}")
-    print("⏱️  Это может занять от 30 минут до нескольких часов в зависимости от мощности ПК.\n")
+    print("🔍 Сетка параметров для оптимизации:")
+    for key, vals in param_grid.items():
+        print(f"   • {key}: {vals}")
+    print(f"\n📊 Всего комбинаций: {len(combinations)}")
+    print()
     
-    results = []
+    # 4. Запускаем оптимизацию
+    print("=" * 80)
+    print("🏃 НАЧАЛО ОПТИМИЗАЦИИ")
+    print("=" * 80)
+    print()
+    
+    results: List[GridResult] = []
     start_time = time.time()
     
     for i, combo in enumerate(combinations):
         params = dict(zip(keys, combo))
         
-        # Индикатор прогресса
-        elapsed = time.time() - start_time
-        avg_time = elapsed / (i + 1) if i > 0 else 10
-        eta = avg_time * (len(combinations) - i - 1)
-        
-        print(f"[{i+1}/{len(combinations)}] ETA: {eta/60:.1f} мин | "
-              f"RSI<{params['rsi_threshold']} ADX>{params['adx_threshold']} "
-              f"Stop={params['stop_multiplier']}x ... ", end="", flush=True)
+        # Выводим информацию о текущей комбинации
+        print(f"[{i+1:3d}/{len(combinations)}]", end=" ")
+        print(f"RSI<{params['rsi_threshold']:2d} ", end="")
+        print(f"Stop={params['stop_multiplier']:.1f}x ", end="")
+        print(f"ATR%[{params['atr_pct_min']:.1f}-{params['atr_pct_max']:.1f}] ", end="")
+        print(f"Risk={params['risk_per_trade']*100:.1f}% ... ", end="", flush=True)
         
         try:
-            res = run_single_backtest(params, base_cfg)
-            results.append(res)
+            # Запускаем бэктест
+            result = run_single_backtest(params, raw_data, base_cfg)
+            results.append(result)
             
-            # Краткий вывод результата
-            print(f"✅ Return: {res['total_return']:.1%} | DD: {res['max_dd_pct']:.1%} | "
-                  f"Calmar: {res['calmar']:.3f} | Trades: {res['total_trades']}")
+            # Выводим результат
+            print(f"✅ Сделок: {result.total_trades:3d} | ", end="")
+            print(f"Return: {result.total_return:>6.1%} | ", end="")
+            print(f"MaxDD: {result.max_dd_pct:>5.1%} | ", end="")
+            print(f"Calmar: {result.calmar:.3f} | ", end="")
+            print(f"PF: {result.profit_factor:.2f}")
+            
         except Exception as e:
             print(f"❌ Ошибка: {e}")
+        
+        # Показываем ETA каждые 10 итераций
+        if (i + 1) % 10 == 0:
+            elapsed = time.time() - start_time
+            avg_time = elapsed / (i + 1)
+            eta = avg_time * (len(combinations) - i - 1)
+            print(f"       ⏱️  Прошло: {elapsed/60:.1f} мин | ETA: {eta/60:.1f} мин")
+            print()
     
     total_time = time.time() - start_time
-    print(f"\n⏱️  Оптимизация завершена за {total_time/60:.1f} минут.\n")
+    print()
+    print("=" * 80)
+    print(f"✅ ОПТИМИЗАЦИЯ ЗАВЕРШЕНА за {total_time/60:.1f} минут")
+    print("=" * 80)
+    print()
     
-    # 3. Обработка результатов
+    # 5. Анализ результатов
     if not results:
-        print("⚠️  Не получено ни одного результата.")
+        print("❌ Не получено ни одного результата.")
         return
-        
-    df = pd.DataFrame(results)
     
-    # Фильтрация заведомо плохих результатов
-    # Минимум 50 сделок для статистической значимости
-    # Максимальная просадка не более 30% (можно изменить под свои риски)
+    df = pd.DataFrame([
+        {
+            **r.params,
+            "total_trades": r.total_trades,
+            "total_return": r.total_return,
+            "max_dd_pct": r.max_dd_pct,
+            "calmar": r.calmar,
+            "sharpe": r.sharpe,
+            "win_rate": r.win_rate,
+            "profit_factor": r.profit_factor,
+            "avg_holding_bars": r.avg_holding_bars,
+            "commissions": r.commissions,
+        }
+        for r in results
+    ])
+    
+    # Фильтруем заведомо плохие результаты
     filtered_df = df[
-        (df["total_trades"] >= 50) & 
-        (df["max_dd_pct"] <= 0.30) &
-        (df["profit_factor"] >= 1.1)
+        (df["total_trades"] >= 30) &       # Минимум 30 сделок для статистики
+        (df["max_dd_pct"] <= 0.40) &       # Максимальная просадка не более 40%
+        (df["profit_factor"] >= 1.05)      # Стратегия должна быть прибыльной
     ].copy()
     
     if filtered_df.empty:
-        print("⚠️  Не найдено ни одной конфигурации, удовлетворяющей базовым фильтрам:")
-        print("   (Min 50 trades, Max DD <= 30%, Profit Factor >= 1.1)")
-        print("💡 Совет: Попробуйте расширить сетку параметров или смягчить фильтры в коде.")
+        print("⚠️  НИ ОДНА конфигурация не прошла базовые фильтры:")
+        print("   • Минимум 30 сделок")
+        print("   • Максимальная просадка <= 40%")
+        print("   • Profit Factor >= 1.05")
+        print()
+        print("💡 Показываю ТОП-5 по Calmar Ratio без фильтров:")
+        print()
         
-        print("\n📊 ТОП-5 по Calmar Ratio (без фильтров):")
-        print(df.sort_values("calmar", ascending=False).head(5).to_string(index=False))
+        top5 = df.sort_values("calmar", ascending=False).head(5)
+        for idx, row in top5.iterrows():
+            print(f"   RSI<{int(row['rsi_threshold'])} ", end="")
+            print(f"Stop={row['stop_multiplier']:.1f}x ", end="")
+            print(f"ATR%[{row['atr_pct_min']:.1f}-{row['atr_pct_max']:.1f}] ", end="")
+            print(f"Risk={row['risk_per_trade']*100:.1f}%")
+            print(f"   → Сделок: {int(row['total_trades'])} | ", end="")
+            print(f"Return: {row['total_return']:.1%} | ", end="")
+            print(f"MaxDD: {row['max_dd_pct']:.1%} | ", end="")
+            print(f"Calmar: {row['calmar']:.3f} | ", end="")
+            print(f"PF: {row['profit_factor']:.2f}")
+            print()
     else:
-        # Расчет оценки робастности: Calmar * sqrt(кол-во сделок / 100)
-        # Это поощряет как высокую доходность при низкой просадке, так и достаточное количество сделок
-        filtered_df["robustness_score"] = filtered_df["calmar"] * ((filtered_df["total_trades"] / 100.0) ** 0.5)
+        # Сортируем по Calmar Ratio (доходность с поправкой на риск)
+        filtered_df = filtered_df.sort_values("calmar", ascending=False)
         
-        # Сортировка по оценке робастности (по убыванию)
-        filtered_df = filtered_df.sort_values("robustness_score", ascending=False)
+        print("🏆 ТОП-10 НАИБОЛЕЕ УСТОЙЧИВЫХ КОНФИГУРАЦИЙ:")
+        print()
         
-        print("="*100)
-        print("🏆 ТОП-10 НАИБОЛЕЕ УСТОЙЧИВЫХ КОНФИГУРАЦИЙ")
-        print("="*100)
-        
-        for idx, row in filtered_df.head(10).iterrows():
-            print(f"\n#{idx+1} | Score: {row['robustness_score']:.3f}")
-            print(f"   Параметры : RSI<{row['rsi_threshold']}, ADX>{row['adx_threshold']}, "
-                  f"Stop={row['stop_multiplier']}x, ATR% [{row['atr_pct_min']}-{row['atr_pct_max']}]")
-            print(f"   Метрики   : Return={row['total_return']:.1%} | MaxDD={row['max_dd_pct']:.1%} | "
-                  f"Calmar={row['calmar']:.3f} | PF={row['profit_factor']:.2f} | WR={row['win_rate']:.1%} | "
-                  f"Сделок={int(row['total_trades'])}")
-            
-    # 4. Сохранение полного отчета в CSV
-    output_file = "results/grid_search_results.csv"
-    Path("results").mkdir(parents=True, exist_ok=True)
+        for rank, (idx, row) in enumerate(filtered_df.head(10).iterrows(), 1):
+            print(f"#{rank:2d} | Calmar: {row['calmar']:.3f}")
+            print(f"    Параметры: RSI<{int(row['rsi_threshold'])} | ", end="")
+            print(f"Stop={row['stop_multiplier']:.1f}x | ", end="")
+            print(f"ATR%[{row['atr_pct_min']:.1f}-{row['atr_pct_max']:.1f}] | ", end="")
+            print(f"Risk={row['risk_per_trade']*100:.1f}%")
+            print(f"    Метрики:   Return: {row['total_return']:.1%} | ", end="")
+            print(f"MaxDD: {row['max_dd_pct']:.1%} | ", end="")
+            print(f"Sharpe: {row['sharpe']:.2f} | ", end="")
+            print(f"PF: {row['profit_factor']:.2f} | ", end="")
+            print(f"WR: {row['win_rate']:.1%} | ", end="")
+            print(f"Сделок: {int(row['total_trades'])}")
+            print()
     
-    # Сортируем полный датафрейм по Calmar для удобства просмотра в Excel
-    df = df.sort_values("calmar", ascending=False)
-    df.to_csv(output_file, index=False)
-    print(f"\n💾 Полный отчет сохранен в: {output_file}")
+    # 6. Сохраняем полный отчёт в CSV
+    output_dir = Path("results")
+    output_dir.mkdir(exist_ok=True)
+    
+    output_file = output_dir / "grid_search_results.csv"
+    df_sorted = df.sort_values("calmar", ascending=False)
+    df_sorted.to_csv(output_file, index=False)
+    
+    print("=" * 80)
+    print(f"💾 Полный отчёт сохранён в: {output_file}")
+    print("=" * 80)
+    print()
+    print("📊 Статистика по всем комбинациям:")
+    print(f"   • Всего протестировано: {len(results)}")
+    print(f"   • Прошли фильтры: {len(filtered_df)}")
+    print(f"   • Средний Return: {df['total_return'].mean():.1%}")
+    print(f"   • Средний MaxDD: {df['max_dd_pct'].mean():.1%}")
+    print(f"   • Средний Calmar: {df['calmar'].mean():.3f}")
+    print()
 
 if __name__ == "__main__":
     main()
